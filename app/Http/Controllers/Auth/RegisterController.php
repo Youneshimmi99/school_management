@@ -40,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('role:admin');
+        $this->middleware('role:admin|teacher');
     }
 
     /**
@@ -67,7 +67,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if($data['role'] == 'teacher'){
+        if($data['role'] == 'teacher' && auth()->user()->hasRole('admin')){
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -76,7 +76,7 @@ class RegisterController extends Controller
         $user->assignRole('teacher');
         return $user; 
         }
-        elseif($data['role'] == 'student'){
+        elseif($data['role'] == 'student' || auth()->user()->hasRole('teacher')){
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
