@@ -1,0 +1,92 @@
+.counteur-counteur-event{
+    max-width: 2000px;
+    margin: 0 auto;
+}
+.counteur-event{
+    color: rgba(77,73,97,1);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px ;
+    margin: 0 auto;
+    width: 80%;
+    background: linear-gradient(0deg, rgba(194,135,17,0.3981793400954131) 0%, rgba(77, 73, 97, 0.767) 100%);
+    height: auto;
+ 
+    padding: 5%;
+    box-shadow: rgba(172, 172, 172, 0.719) 0px 10px 20px;
+    border-radius: 5px;
+}
+.counteur-event h1{
+    color: rgb(47, 45, 63);
+}
+.btn {
+    font-size: 20px !important;
+    letter-spacing: .05rem;
+    border: none !important;
+}
+
+/* ----------------  Input file style  ----------------- */
+.label-file ,.label-file2{
+  
+    color: #ffffff !important;
+    background-color: rgba(77,73,97,1) !important;
+  
+   
+}
+.label-file:hover,.label-file2:hover {
+    background-color: rgb(194, 135, 17) !important;
+}
+
+
+.file_input,.file_input2 {
+    display: none;
+}
+
+
+#demo,#demo2{
+
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 17px ;
+
+  color: #25a5c4;
+}
+
+
+
+  /************* submit button ************/
+  .submit_button{
+
+      
+      background-color: rgba(77,73,97,1) !important;
+      color: rgb(255, 255, 255) !important;
+  }
+  .submit_button:hover{
+    border: none;
+      background-color: rgb(194, 135, 17) !important;
+  }
+.conteur-images-submit{
+display: flex;
+}
+.conteur-images-submit:lang(fr)>div:last-of-type {
+    margin-left: auto;
+  }
+  .conteur-images-submit:lang(ar)>div:last-of-type {
+    margin-right: auto;
+  }
+/*********** media ************/
+
+@media only screen and (max-width:724px) { 
+    .message{
+        padding: 1.5%;
+        font-size: 16px;   
+       
+    }
+    
+    .counteur-event{
+        width: 90%; 
+        padding: 3%;  
+    }
+
+    .btn {
+        font-size: 15px !important; 
+    }
+}

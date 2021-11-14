@@ -5,8 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                @role('admin')
                 <div class="card-header">{{ __('Register') }}</div>
-
+                @else
+                <div class="card-header">{{ __('Register Student') }}</div>
+                @endrole
+                
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -66,10 +70,13 @@
 
                             <div class="col-md-6">
                                 <select name="role" id="role-select" class="form-control @error('role') is-invalid @enderror">
+                                    @role('admin')
                                     <option selected disabled style="text-align:center;">-- Please choose a role --</option>
                                     <option value="teacher">Teacher</option>
                                     <option value="student">Student</option>
-  
+                                    @else
+                                    <option selected disabled value="student">Student</option>
+                                    @endrole
                                 </select>    
                                 @error('role')
                                 <span class="invalid-feedback" role="alert">

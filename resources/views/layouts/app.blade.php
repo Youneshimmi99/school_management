@@ -60,6 +60,10 @@
                                     <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
                                     @endrole
 
+                                    @role('admin')
+                                    <a class="dropdown-item" href="{{ route('grade.index') }}">{{ __('grades.index.grades') }}</a>
+                                    @endrole
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -79,7 +83,7 @@
         </nav>
 
         <main class="py-4">
-            @include('include.messages')
+            {{-- @include('include.messages') --}}
             @yield('content')
         </main>
     </div>
