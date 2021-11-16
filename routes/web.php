@@ -15,10 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 include('grade.php');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
+//admin   
+Route::get('/login/admin', 'AuthController@IndexLoginAdmin');
+Route::get('/administration', 'AuthController@IndexDashboardAdmin');
+Route::post('/loginadmin', 'AuthController@LoginAdmin');
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+
