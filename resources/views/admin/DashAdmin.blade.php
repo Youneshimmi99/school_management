@@ -9,9 +9,9 @@
     <title>Focus - Bootstrap Admin Dashboard </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link href="/van/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
-    <link href="/van/chartist/css/chartist.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    {{-- <link href="./vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <link href="./vendor/chartist/css/chartist.min.css" rel="stylesheet"> --}}
+    <link href="./css/style.css" rel="stylesheet">
 
 </head>
 
@@ -937,17 +937,19 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
-    <script src="/van/global/global.min.js"></script>
+    <script src="./vendor/global/global.min.js"></script>
+{{-- //scrool --}}
     <script src="./js/quixnav-init.js"></script>
+
     <script src="./js/custom.min.js"></script>
 
-    <script src="/van/chartist/js/chartist.min.js"></script>
+    {{-- <script src="./vendor/chartist/js/chartist.min.js"></script>
 
-    <script src="/van/moment/moment.min.js"></script>
-    <script src="/van/pg-calendar/js/pignose.calendar.min.js"></script>
+    <script src="./vendor/moment/moment.min.js"></script>
+    <script src="./vendor/pg-calendar/js/pignose.calendar.min.js"></script>
 
 
-    <script src="./js/dashboard/dashboard-2.js"></script>
+    <script src="./js/dashboard/dashboard-2.js"></script> --}}
     <!-- Circle progress -->
 
 </body>

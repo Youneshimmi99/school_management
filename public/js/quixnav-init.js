@@ -1,5 +1,5 @@
 (function($) {
-    "use strict"
+    "use strict";
 
     new quixSettings({
         typography: "roboto",
@@ -14,6 +14,4 @@
         containerLayout: "wide",
         direction: "ltr"
     });
-
-
 })(jQuery);
