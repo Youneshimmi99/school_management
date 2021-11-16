@@ -63,6 +63,7 @@
         <div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
+                    {{-- <h1>{{ Auth::guard("admin")->user()->email }}</h1> --}}
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
                             <div class="search_bar dropdown">
@@ -151,10 +152,15 @@
                                         <i class="icon-envelope-open"></i>
                                         <span class="ml-2">Inbox </span>
                                     </a>
-                                    <a href="./page-login.html" class="dropdown-item">
+                                    <form method="POST" action="{{ url('/lougout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">
                                         <i class="icon-key"></i>
                                         <span class="ml-2">Logout </span>
-                                    </a>
+                                    </button>
+                                       
+                                   
+                                    </form>
                                 </div>
                             </li>
                         </ul>

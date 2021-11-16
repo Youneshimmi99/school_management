@@ -23,17 +23,20 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => $request->password
                 ]);
-        if ($attempt ){
-            // return Auth::check();
-            // return view('Admin.admin');
+        if ($attempt){
+            // return view("admin.DashAdmin");
             // $request->session()->regenerate();
-            // return "success";
-            return redirect('/administration');
+            return redirect('/administration');     
         }else {
           return back()->withErrors([
             'email' => 'Vos informations d\'identification ne sont pas correctes !',
         ]);
         }
-        
+    }
+    public function LougoutAdmin(){
+        if (Auth::guard("admin")->check()) {
+             Auth::guard("admin")->logout();
+             return redirect('/login/admin'); 
+        }   
     }
 }
