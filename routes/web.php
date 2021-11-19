@@ -25,7 +25,7 @@ include('grade.php');
 
 Route::get('/login/admin', 'AuthController@IndexLoginAdmin')->name("loginadmin");
 Route::post('/loginadmin', 'AuthController@LoginAdmin');
-Route::post('/lougout', 'AuthController@LougoutAdmin');
+
 
 
 
@@ -35,6 +35,7 @@ Route::middleware(['admin'])->group(function () {
     
     include('classe.php');
 
+    Route::post('/logout', 'AuthController@LougoutAdmin');
 });
 
 
