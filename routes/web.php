@@ -31,6 +31,10 @@ Route::post('/lougout', 'AuthController@LougoutAdmin');
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/administration', 'AuthController@IndexDashboardAdmin');
+
+    
+    include('classe.php');
+
 });
 
 
