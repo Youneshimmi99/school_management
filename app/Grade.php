@@ -13,4 +13,9 @@ class Grade extends Model
     {
         return $this->belongsTo(Cycle::class, 'cycle_id');
     }
+
+    public function Classe()
+    {
+        return $this->hasMany(Classe::class);
+    }
 }

@@ -31,15 +31,12 @@ Route::post('/loginadmin', 'AuthController@LoginAdmin');
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/administration', 'AuthController@IndexDashboardAdmin');
+    include('classe.php');
     Route::post('/logout', 'AuthController@LougoutAdmin');
     Route::post('/add/prof', 'AuthController@AddProf');
     Route::get('/subjects', 'AuthController@GetSubjects');
     Route::get('/cycles', 'AuthController@GetCycles');
     Route::get('/grades/{name}', 'AuthController@GetGrades');
-
-
-
-
 });
 
 
