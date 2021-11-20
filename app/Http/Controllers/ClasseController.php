@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Classe;
+use App\Grade;
+use App\Option;
+use App\Branch;
 use Illuminate\Http\Request;
+
 
 class ClasseController extends Controller
 {
