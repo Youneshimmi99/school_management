@@ -1,6 +1,8 @@
 import Dashboard from "./components/Admin/DashboardAdmin.vue";
 import NiveauAdmin from "./components/Admin/NiveauAdmin.vue";
 import ViewNiveaux from "./components/Admin/ViewNiveaux.vue";
+import AddTechear from "./components/Admin/AddTechear.vue";
+import CreateClass from "./components/Admin/CreateClass.vue";
 
 const routes = [
     {
@@ -17,6 +19,16 @@ const routes = [
         path: "/afficher_niveaux",
         name: "nivaus",
         component: ViewNiveaux
+    },
+    {
+        path: "/ajouter_professeur",
+        name: "ajouter_prof",
+        component: AddTechear
+    },
+    {
+        path: "/creer_classe",
+        name: "creer_classe",
+        component: CreateClass
     }
 ];
 

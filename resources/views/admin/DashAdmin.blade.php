@@ -12,6 +12,7 @@
     {{-- <link href="./vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
     <link href="./vendor/chartist/css/chartist.min.css" rel="stylesheet"> --}}
     <link href="./css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../vendor/select2/css/select2.min.css">
 
 </head>
 
@@ -200,11 +201,11 @@
                                     Ajouter admin
                                 </router-link>
                             </li>
-                            <li><router-link tag="a" to="/afficher_niveaux"  class="nav-link">Ajouter professeur </router-link></li>
+                            <li><router-link tag="a" to="/ajouter_professeur"  class="nav-link">Ajouter professeur </router-link></li>
                             <li><router-link tag="a" to="/afficher_niveaux"  class="nav-link">Ajouter l'élève</router-link></li>
                         </ul>
                     </li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                    {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-app-store"></i><span class="nav-text">Niveau</span></a>
                         <ul aria-expanded="false">
                             
@@ -216,12 +217,12 @@
                             <li><router-link tag="a" to="/niveau"  class="nav-link">Créer un Niveau</router-link></li>
                             
                         </ul>
-                    </li>
+                    </li> --}}
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-chart-bar-33"></i><span class="nav-text">Classe</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="./chart-morris.html">afficher les classes</a></li>
-                            <li><a href="./chart-flot.html">Créer une Classe </a></li>
+                            <li><router-link to="/creer_classe">afficher les classes</router-link></li>
+                            <li><router-link  to="/creer_classe">Créer une Classe </a></li>
                             <li><a href="./chart-flot.html">Les classe Archives </a></li>
 
                             
@@ -358,13 +359,15 @@
     <script src="./js/quixnav-init.js"></script>
 
     <script src="./js/custom.min.js"></script>
+    <script src="./vendor/select2/js/select2.full.min.js"></script>
+    <script src="./js/plugins-init/select2-init.js"></script>
 
     {{-- <script src="./vendor/chartist/js/chartist.min.js"></script>
 
     <script src="./vendor/moment/moment.min.js"></script>
     <script src="./vendor/pg-calendar/js/pignose.calendar.min.js"></script>
 
-
+ 
     <script src="./js/dashboard/dashboard-2.js"></script> --}}
     <!-- Circle progress -->
 
