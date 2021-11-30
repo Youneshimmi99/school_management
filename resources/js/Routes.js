@@ -3,6 +3,7 @@ import NiveauAdmin from "./components/Admin/NiveauAdmin.vue";
 import ViewNiveaux from "./components/Admin/ViewNiveaux.vue";
 import AddTechear from "./components/Admin/AddTechear.vue";
 import CreateClass from "./components/Admin/CreateClass.vue";
+import ViewClass from "./components/Admin/ViewClass.vue";
 
 const routes = [
     {
@@ -29,6 +30,11 @@ const routes = [
         path: "/creer_classe",
         name: "creer_classe",
         component: CreateClass
+    },
+    {
+        path: "/classes",
+        name: "classes",
+        component: ViewClass
     }
 ];
 

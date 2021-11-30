@@ -36,7 +36,11 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/add/prof', 'AuthController@AddProf');
     Route::get('/subjects', 'AuthController@GetSubjects');
     Route::get('/cycles', 'AuthController@GetCycles');
-    Route::get('/grades/{name}', 'AuthController@GetGrades');
+    Route::get('/grades/{id}', 'AuthController@GetGrades');
+    Route::get('/getclasses/{id}','AdminController@GetClasses');
+    Route::get('/branches/{id}','AdminController@GetBranchs');
+    Route::post('/class/add', 'AdminController@AddClasse');
+
 });
 
 

@@ -7,7 +7,7 @@ use App\Grade;
 use App\Option;
 use App\Branch;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 class ClasseController extends Controller
 {
@@ -18,18 +18,29 @@ class ClasseController extends Controller
      */
     public function index()
     {
-        $classes = Classe::orderBy('number','desc')->get();
-        $grades = Grade::orderBy('number','desc')->get();
-        $options = Option::orderBy('id','desc')->get();
-        $branchs = Branch::orderBy('id','desc')->get();
+        // $classes = Classe::orderBy('number','desc')->get();
+        // $grades = Grade::orderBy('number','desc')->get();
+        // $options = Option::orderBy('id','desc')->get();
+        // $branchs = Branch::orderBy('id','desc')->get();
 
-        return response()->json([
-            "status" => "success",
-            "classes" => $classes,
-            "grades" => $grades,
-            "options" => $options,
-            "branchs" => $branchs
-        ]);
+        // return response()->json([
+        //     "status" => "success",
+        //     "classes" => $classes,
+        //     "grades" => $grades,
+        //     "options" => $options,
+        //     "branchs" => $branchs
+        // ]);
+        // $classes=Classe::all();
+        // return response()->json(["status"=>"success","classes"=>$classes]);
+    $classes=DB::table('classes')
+                            ->join('grades','grades.id','=','classes.grade_id')
+                            ->join('options','options.id','=','classes.option_id')
+                            ->join('branchs','branchs.id','=','classes.branch_id')
+                            ->get();
+                            
+      return response()->json(["status"=>"success","classes"=>$classes]);
+
+    //   select * from classes inner join grades on grades.id = classes.grade_id
     }
 
     /**

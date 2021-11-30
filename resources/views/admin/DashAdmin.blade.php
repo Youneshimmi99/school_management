@@ -221,7 +221,7 @@
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-chart-bar-33"></i><span class="nav-text">Classe</span></a>
                         <ul aria-expanded="false">
-                            <li><router-link to="/creer_classe">afficher les classes</router-link></li>
+                            <li><router-link to="/classes">afficher les classes</router-link></li>
                             <li><router-link  to="/creer_classe">Créer une Classe </a></li>
                             <li><a href="./chart-flot.html">Les classe Archives </a></li>
 

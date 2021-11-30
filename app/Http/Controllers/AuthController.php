@@ -10,6 +10,8 @@ use App\Subject;
 use App\Cycle;
 use App\Grade;
 use App\Teacher;
+use App\Option;
+
 
 
 class AuthController extends Controller
@@ -76,7 +78,7 @@ class AuthController extends Controller
 
     }
     public function GetSubjects(){
-        $subjects=Subject::all();
+        $subjects=Option::all();
         if($subjects)
         return response()->json(["status"=>"success","subjects"=>$subjects]);
         else return respoonse()->json(["status"=>"error"]);
@@ -87,14 +89,13 @@ class AuthController extends Controller
         return response()->json(["status"=>"success","cycles"=>$Cycles]);
         else return respoonse()->json(["status"=>"error"]);
     }
-    public function GetGrades($name){
-
-        $Cycles=Cycle::where('name',$name)->get();
-        $grades=Grade::where('cycle_id',$Cycles[0]["id"])->get();
-        $countGrades=Grade::where('cycle_id',$Cycles[0]["id"])->count();
+    public function GetGrades($id){
+        // $Cycles=Cycle::where('name',$name)->get();
+        $grades=Grade::where('cycle_id',$id)->get();
+        $countGrades=Grade::where('cycle_id',$id)->count();
         $gardesName=[];
          for ($i=0; $i <$countGrades ; $i++) { 
-            $gardesName[] = ["name"=>$grades[$i]["name"]];
+            $gardesName[] = ["name"=>$grades[$i]["nameGrade"],"id"=>$grades[$i]["id"]];
          }
         if($gardesName)
         return response()->json(["status"=>"success","gradesname"=>$gardesName]);
