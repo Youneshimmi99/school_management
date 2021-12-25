@@ -16,7 +16,7 @@ class AddSubjectIdFieldToTeachersTable extends Migration
         Schema::table('teachers', function (Blueprint $table) {
 
             if (! Schema::hasColumn('teachers','subject_id')) {
-                $table->integer('subject_id')->unsigned()->nullable()->after('name');
+                $table->bigInteger('subject_id')->unsigned()->nullable()->after('name');
                 $table->foreign('subject_id')->references('id')->on('subjects');
 
             }

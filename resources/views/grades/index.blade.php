@@ -5,7 +5,53 @@
 
 @extends('layouts.app')
 @section('content')
+<form  action="{{ route('teacher_absences.update',1) }}" method="post" class="del-form" >
 
+
+  
+  <div class="form-group "> 
+    <label for="price">Prix</label>
+    <input type="number" name="teacher_id" class="form-control" placeholder="Prix">
+    </div>
+  
+    <div>
+      <input type="date" name="start_date" >
+
+      </div>
+  <div class="column column-5"><button  class="btn " type="submit"><span class="fa fa-plus"></span></button></div>
+
+  @method('PUT')
+  @csrf
+</form>
+{{-- <a href="/classe/archive" class="btn btn-primary">Edit</a>
+
+<form  action="{{ route('timetable.update',1) }}" method="post" class="del-form" enctype="multipart/form-data" >
+
+  <div class="form-group">
+    <label for="title">Titre</label>
+    <input type="text" name="nameTimetable" class="form-control" placeholder="Titre">
+  </div>
+  
+  <div class="form-group "> 
+    <label for="price">Prix</label>
+    <input type="number" name="teacher_id" class="form-control" placeholder="Prix">
+    </div>
+  
+    <input type="number" name="student_id" class="form-control" hidden placeholder="Prix">
+    <div>
+      <input type="file" name="file" class="file_input2"  accept="image/*">
+
+      </div>
+  <div class="column column-5"><button  class="btn " type="submit"><span class="fa fa-plus"></span></button></div>
+
+  @method('PUT')
+  @csrf
+</form> --}}
+{{-- <form onsubmit = "return confirm('xxx');" action="{{ route('classe.destroy', 2) }}" method="post" class="del-form">
+  <div class="column column-5"><button  class="btn " type="submit"><span class="fa fa-trash"></span></button></div>
+    @method('delete')
+  @csrf
+</form> --}}
 <div class="main-container">
 <!-- Button trigger modal -->
 
@@ -55,11 +101,11 @@
 </div>
 
 
-@if(Session::get('errors'))
+{{-- @if(Session::get('errors'))
 <script>
 window.onload = function(){
   document.getElementById('createGrade').click();
 }
 </script>
-@endif
+@endif --}}
 @endsection

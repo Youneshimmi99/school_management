@@ -18,20 +18,7 @@ class ClasseController extends Controller
      */
     public function index()
     {
-        // $classes = Classe::orderBy('number','desc')->get();
-        // $grades = Grade::orderBy('number','desc')->get();
-        // $options = Option::orderBy('id','desc')->get();
-        // $branchs = Branch::orderBy('id','desc')->get();
 
-        // return response()->json([
-        //     "status" => "success",
-        //     "classes" => $classes,
-        //     "grades" => $grades,
-        //     "options" => $options,
-        //     "branchs" => $branchs
-        // ]);
-        // $classes=Classe::all();
-        // return response()->json(["status"=>"success","classes"=>$classes]);
     $classes=DB::table('classes')
                             ->join('grades','grades.id','=','classes.grade_id')
                             ->join('options','options.id','=','classes.option_id')
@@ -42,6 +29,28 @@ class ClasseController extends Controller
 
     //   select * from classes inner join grades on grades.id = classes.grade_id
     }
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function archive()
+    {
+
+    $classes=Classe::onlyTrashed()->get();
+                            
+      return response()->json(["status"=>"success","classes"=>$classes]);
+
+    }
+
+	public function trash($id)
+	{
+		$classe = Classe::findOrFail($id)->delete();
+
+        return response()->json(["status"=>"success","classe"=>$classe]);
+	}
+
 
     /**
      * Show the form for creating a new resource.
@@ -122,8 +131,10 @@ class ClasseController extends Controller
      * @param  \App\Classe  $classe
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Classe $classe)
+    public function destroy($id)
     {
-        //
+		$classe = Classe::onlyTrashed()->findOrFail($id)->forceDelete();
+        
+        return response()->json(["status"=>"success","classe"=>$classe]);
     }
 }

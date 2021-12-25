@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateExercicesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('exercices', function (Blueprint $table) {
+            $table->id();
+            $table->string('nameExercice');
+            $table->string('descriptionExercice');
+            $table->string('fileExercice');
+            $table->integer('sessionExercice');
+            $table->bigInteger('course_id')->unsigned()->nullable();
+
+            $table->timestamps();
+
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('exercices');
+    }
+}
