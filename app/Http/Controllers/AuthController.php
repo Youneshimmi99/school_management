@@ -48,37 +48,39 @@ class AuthController extends Controller
         }   
     }
     public function AddProf(Request $request){
-       
-        $request->validate([
-                'name' =>'required',
-                'email'=>'required',
-                'password'       =>'required',
-                'password2'       =>'required',
-                'subject_id'      =>'required',
-                'tele'      =>'required',  
-            ]);
-            if ($request->password==$request->password2) {
+       return  $request['IdClasse'];
+
+        // $request->validate([
+        //         $request['FromProf']['name'] =>'required',
+        //         // 'email'=>'required',
+        //         // 'password'       =>'required',
+        //         // 'password2'       =>'required',
+        //         // 'subject_id'      =>'required',
+        //         // 'tele'      =>'required',  
+        //     ]);
+            if ( $request['FromProf']['password']== $request['FromProf']['password2']) {
                $Teacher=new Teacher();
-                $subjectId=Subject::where('name',$request->subject_id)->get();
-                $Teacher->name=$request->name;
-                $Teacher->subject_id=$subjectId[0]['id'];
-                $Teacher->email=$request->email;
-                $Teacher->password=\Hash::make($request->password);
-                $Teacher->tele=$request->tele;
+               
+                $Teacher->name=$request['FromProf']['name'];
+                $Teacher->subject_id=$request['FromProf']['subject_id'];
+                $Teacher->email=$request['FromProf']['email'];
+                $Teacher->password=\Hash::make($request['FromProf']['password']);
+                $Teacher->tele=$request['FromProf']['tele'];
                 if ($Teacher->save()) {
+                    
                     return response()->json(["status"=>"success"]);
                 }else return response()->json(["status"=>"error"]);
             }else return response()->json(["password"=>"error","msg"=>"Vos mot de passe  ne sont pas correctes !"]);
-       
-
-
-
-
-
-
+  
     }
     public function GetSubjects(){
         $subjects=Option::all();
+        if($subjects)
+        return response()->json(["status"=>"success","subjects"=>$subjects]);
+        else return respoonse()->json(["status"=>"error"]);
+    }
+    public function GetSubjectsProf(){
+        $subjects=Subject::all();
         if($subjects)
         return response()->json(["status"=>"success","subjects"=>$subjects]);
         else return respoonse()->json(["status"=>"error"]);

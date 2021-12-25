@@ -23,6 +23,7 @@ class CreateTeachersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            //  $table->softDeletes();
         });
     }
 
@@ -34,5 +35,6 @@ class CreateTeachersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('teachers');
+        //  $table->dropSoftDeletes();
     }
 }

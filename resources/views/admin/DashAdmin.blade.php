@@ -6,13 +6,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Focus - Bootstrap Admin Dashboard </title>
+    <title>Dashboard </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     {{-- <link href="./vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
     <link href="./vendor/chartist/css/chartist.min.css" rel="stylesheet"> --}}
     <link href="./css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="../vendor/select2/css/select2.min.css">
+        <link rel="stylesheet" href="./vendor/toastr/css/toastr.min.css">
 
 </head>
 
@@ -197,12 +198,12 @@
                                 class="icon icon-single-04"></i><span class="nav-text">Ajouter un Compte</span></a>
                         <ul aria-expanded="false">
                             <li>
-                                <router-link tag="a" to="/niveu"  class="nav-link">
+                                <router-link tag="a" to="/ajouter_admin"  class="nav-link">
                                     Ajouter admin
                                 </router-link>
                             </li>
                             <li><router-link tag="a" to="/ajouter_professeur"  class="nav-link">Ajouter professeur </router-link></li>
-                            <li><router-link tag="a" to="/afficher_niveaux"  class="nav-link">Ajouter l'élève</router-link></li>
+                            <li><router-link tag="a" to="/ajouter_eleve"  class="nav-link">Ajouter l'élève</router-link></li>
                         </ul>
                     </li>
                     {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
@@ -361,6 +362,12 @@
     <script src="./js/custom.min.js"></script>
     <script src="./vendor/select2/js/select2.full.min.js"></script>
     <script src="./js/plugins-init/select2-init.js"></script>
+
+      <!-- Toastr -->
+    <script src="./vendor/toastr/js/toastr.min.js"></script>
+
+    <!-- All init script -->
+    <script src="./js/plugins-init/toastr-init.js"></script>
 
     {{-- <script src="./vendor/chartist/js/chartist.min.js"></script>
 

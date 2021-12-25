@@ -111,6 +111,12 @@
                 </div>
 
                 <div class="d-flex justify-content-end mt-4">
+                  <button
+                    type="button"
+                    class="btn mb-2 mr-2"
+                    v-bind:class="{'btn-info':add,'btn-primary':!add}"
+                    v-bind:id="{'toastr-info-top-right':add }"
+                  >Info</button>
                   <button type="button" @click="AddClasse" class="btn btn-primary">Ajouter</button>
                 </div>
               </form>
@@ -125,6 +131,7 @@
 export default {
   data() {
     return {
+      add: true,
       addadmin: true,
       spinner: false,
       Subjects: [],
@@ -190,7 +197,10 @@ export default {
       });
     },
     AddClasse() {
-      axios.post("/class/add", this.FormClasse).then(response => {});
+      axios.post("/class/add", this.FormClasse).then(response => {
+        if (response.data["status"] == "success") {
+        }
+      });
     }
   },
   created() {

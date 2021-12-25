@@ -40,6 +40,7 @@
                                     <form id="login-form" class="form" method="post" action="{{ url('/loginadmin') }}"">
                                              {{ csrf_field() }}
                                         <div class="form-group">
+                                           
                                             <label><strong>Email</strong></label>
                                             <input type="email" name="email" class="form-control" value="admin@gmail.com">
                                         </div>
