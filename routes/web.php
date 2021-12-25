@@ -32,6 +32,8 @@ Route::post('/loginadmin', 'AuthController@LoginAdmin');
 Route::middleware(['admin'])->group(function () {
     Route::get('/administration', 'AuthController@IndexDashboardAdmin');
     include('classe.php');
+    include('timetable.php');
+    include('teacher_absences.php');
     Route::post('/logout', 'AuthController@LougoutAdmin');
     Route::post('/add/prof', 'AuthController@AddProf');
     Route::get('/subjects', 'AuthController@GetSubjects');
