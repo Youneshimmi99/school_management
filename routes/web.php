@@ -27,7 +27,7 @@ Route::get('/login/admin', 'AuthController@IndexLoginAdmin')->name("loginadmin")
 Route::post('/loginadmin', 'AuthController@LoginAdmin');
 
 
-
+include('course.php'); 
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/administration', 'AuthController@IndexDashboardAdmin');
