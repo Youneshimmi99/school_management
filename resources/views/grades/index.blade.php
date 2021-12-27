@@ -5,11 +5,37 @@
 
 @extends('layouts.app')
 @section('content')
-<form  action="{{ route('teacher_absences.update',1) }}" method="post" class="del-form" >
 
 
+
+  <form  action="{{ route('course.update',2) }}" method="post" class="del-form" enctype="multipart/form-data" >
+
+    <div class="form-group">
+      <label for="title">Titre</label>
+      <input type="text" name="nameCourse" class="form-control" placeholder="Titre">
+    </div>
+    
+    <div class="form-group "> 
+      <label for="price">teacher</label>
+      <input type="number" name="teacher_id" class="form-control" placeholder="teacher">
+      </div>
+
+      <label for="price">grade</label>
+      <input type="number" name="grade_id" class="form-control" placeholder="grade">
+
+      
+      <label for="price">session</label>
+      <input type="number" name="sessionCourse" class="form-control" placeholder="grade">
+      <div>
+        <input type="file" name="fileCourse" class="file_input2"  accept="image/*">
   
-  <div class="form-group "> 
+        </div>
+    <div class="column column-5"><button  class="btn " type="submit"><span class="fa fa-plus"></span></button></div>
+    @method('PUT')
+    @csrf
+  </form>
+
+  {{-- <div class="form-group "> 
     <label for="price">Prix</label>
     <input type="number" name="teacher_id" class="form-control" placeholder="Prix">
     </div>
@@ -22,7 +48,7 @@
 
   @method('PUT')
   @csrf
-</form>
+</form> --}}
 {{-- <a href="/classe/archive" class="btn btn-primary">Edit</a>
 
 <form  action="{{ route('timetable.update',1) }}" method="post" class="del-form" enctype="multipart/form-data" >
@@ -47,11 +73,11 @@
   @method('PUT')
   @csrf
 </form> --}}
-{{-- <form onsubmit = "return confirm('xxx');" action="{{ route('classe.destroy', 2) }}" method="post" class="del-form">
+<form onsubmit = "return confirm('xxx');" action="{{ route('course.destroy', 2) }}" method="post" class="del-form">
   <div class="column column-5"><button  class="btn " type="submit"><span class="fa fa-trash"></span></button></div>
     @method('delete')
   @csrf
-</form> --}}
+</form>
 <div class="main-container">
 <!-- Button trigger modal -->
 
