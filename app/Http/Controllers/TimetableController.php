@@ -36,13 +36,14 @@ class TimetableController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request,[
-            'nameTimetable' => 'required|max:255',  
-            'file' => 'required',
-            // 'teaher_id' => 'required_without:student_id',
-            // 'student_id' => 'required_without:teacher_id',
+        // return $request->classe_id;
+        // $this->validate($request,[
+        //     'nameTimetable' => 'required|max:255',  
+        //     'file' => 'required',
+        //     // 'teaher_id' => 'required_without:student_id',
+        //     // 'student_id' => 'required_without:teacher_id',
         
-        ]);
+        // ]);
 
         $timetable = new Timetable;
 
@@ -53,20 +54,24 @@ class TimetableController extends Controller
             $extension = $request->file('file')->getClientOriginalExtension();
             $filenameToStore=$filename.''.\Carbon\Carbon::now()->timestamp.'main.'.$extension;
             $path =$request->file('file')->storeAs('public/timetable_files',$filenameToStore);
-        
             $timetable->file='storage/timetable_files/'.$filenameToStore; 
-        }
+            $timetable->teacher_id =$request->teacher_id;
+            // $timetable->class_id=$request->classe_id;
+            $timetable->nameTimetable =$request->nameTimetable;
+            $timetable->save();
+             return response()->json(["status"=>"success"]);
+        } return response()->json(["status"=>"error"]);
 
-        if($request->has('teacher_id')){
-            $timetable->teacher_id =$request->input('teacher_id');
-        }else if($request->has('student_id')){
-            $timetable->student_id =$request->input('student_id');
-        }
+        // if($request->has('teacher_id')){
+        //     $timetable->teacher_id =$request->teacher_id;
+        // }else if($request->has('student_id')){
+        //     $timetable->student_id =$request->input('student_id');
+        // }
 
-        $timetable->nameTimetable =$request->input('nameTimetable');
-        $timetable->save();
+       
+        
 
-        return response()->json(["status"=>"success","timetable"=>$timetable]);
+       
     }
 
     /**

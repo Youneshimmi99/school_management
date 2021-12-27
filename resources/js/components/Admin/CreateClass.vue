@@ -199,6 +199,13 @@ export default {
     AddClasse() {
       axios.post("/class/add", this.FormClasse).then(response => {
         if (response.data["status"] == "success") {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Ajouté !",
+            text: "Une classe a été enregistré",
+            showConfirmButton: true
+          });
         }
       });
     }

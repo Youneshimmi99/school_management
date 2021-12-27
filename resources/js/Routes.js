@@ -6,12 +6,30 @@ import CreateClass from "./components/Admin/CreateClass.vue";
 import ViewClass from "./components/Admin/ViewClass.vue";
 import AddAdmin from "./components/Admin/AddAdmin.vue";
 import AddStudent from "./components/Admin/AddStudent.vue";
+import ArchiveClasse from "./components/Admin/ArchiveClasse.vue";
+import AllTeacher from "./components/Admin/AllTeachers.vue";
+import TimeTableTeahcer from "./components/Admin/TimeTbaleTeacher.vue";
 
 const routes = [
     {
         path: "/accueil",
         name: "dash",
         component: Dashboard
+    },
+    {
+        path: "/timetableteahcer",
+        name: "TimeTableTeacer",
+        component: TimeTableTeahcer
+    },
+    {
+        path: "/professeurs",
+        name: "professeurs",
+        component: AllTeacher
+    },
+    {
+        path: "/archives",
+        name: "archive",
+        component: ArchiveClasse
     },
     {
         path: "/ajouter_admin",

@@ -189,30 +189,7 @@
                           >ajouter</i>
                         </span>
                       </div>
-                      <!-- <label class="text-dark">Affectation des classes</label>
-
-                      <select
-                        class="multi-select-placeholder js-states"
-                        multiple="multiple"
-                        placeholder="Niveau"
-                        v-model="IdClasse"
-                        required
-                      >
-                        <option
-                          v-for="(item,index) in Classes"
-                          :key="index"
-                          :value="item.id"
-                        >{{ item.nameClasse }}</option>
-                      </select>
-                      <div class="invalid-feedback">cette champs ç'est obligatoire*</div>-->
                     </div>
-
-                    <!-- <div class="col-lg-6" v-if="this.CyclesName=='Lycée'">
-                      <label class="text-dark">branche</label>
-                      <select class="form-control form-control">
-                        <option>Small select</option>
-                      </select>
-                    </div>-->
                   </div>
 
                   <div class="d-flex justify-content-end mt-4">
@@ -230,7 +207,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
+            <h5 class="modal-title">Modifier</h5>
             <button type="button" class="close" data-dismiss="modal">
               <span>&times;</span>
             </button>
@@ -425,7 +402,7 @@ import "sweetalert2/src/sweetalert2.scss";
 export default {
   data() {
     return {
-      addadmin: false,
+      addadmin: true,
       spinner: false,
       Subjects: [],
       Cycles: [],
@@ -439,12 +416,12 @@ export default {
       IdGrade: "",
       IdClasse: [],
       FromProf: {
-        name: "",
+        name: "test1",
         subject_id: "",
-        email: "",
-        tele: "",
-        password: "",
-        password2: ""
+        email: "sacascasc@gmail.com",
+        tele: "34234324",
+        password: "12345678",
+        password2: "12345678"
       },
 
       inputs: [

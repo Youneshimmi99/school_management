@@ -14,6 +14,7 @@
     <link href="./css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="../vendor/select2/css/select2.min.css">
         <link rel="stylesheet" href="./vendor/toastr/css/toastr.min.css">
+         <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
 </head>
 
@@ -224,7 +225,7 @@
                         <ul aria-expanded="false">
                             <li><router-link to="/classes">afficher les classes</router-link></li>
                             <li><router-link  to="/creer_classe">Créer une Classe </a></li>
-                            <li><a href="./chart-flot.html">Les classe Archives </a></li>
+                            <li><router-link to="/archives">Les classe Archives </router-link></li>
 
                             
                         </ul>
@@ -237,9 +238,9 @@
                             <li><a href="./page-login.html">Login</a></li> --}}
                             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Les professeurs</a>
                                 <ul aria-expanded="false">
-                                    <li><a href="./page-error-400.html">Listes des Professeurs</a></li>
+                                    <li><router-link to="/professeurs">Listes des Professeurs</router-link></li>
                                     {{-- <li><a href="./page-error-403.html">Error 403</a></li> --}}
-                                    <li><a href="./page-error-404.html">Ajouter l'emploi du Temps </a></li>
+                                    <li><router-link to="/timetableteahcer">Ajouter l'emploi du Temps </router-link></li>
                                 </ul>
                             </li>
                              <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Classe</a>
@@ -368,6 +369,8 @@
 
     <!-- All init script -->
     <script src="./js/plugins-init/toastr-init.js"></script>
+    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="./js/plugins-init/datatables.init.js"></script>
 
     {{-- <script src="./vendor/chartist/js/chartist.min.js"></script>
 

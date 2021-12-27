@@ -38,17 +38,27 @@ class ClasseController extends Controller
     public function archive()
     {
 
-    $classes=Classe::onlyTrashed()->get();
-                            
-      return response()->json(["status"=>"success","classes"=>$classes]);
+        // $classes=Classe::onlyTrashed()->get();
+        $classes=DB::table('classes')
+                            ->join('grades','grades.id','=','classes.grade_id')
+                            ->join('options','options.id','=','classes.option_id')
+                            ->select('classes.id','classes.nameClasse','classes.numberCls','grades.nameGrade','options.nameOption')
+                            // ->where('classes.deleted_at',
+                            ->whereNotNull('classes.deleted_at')
+                            ->get();        
+        return response()->json(["status"=>"success","classes"=>$classes]);
 
     }
 
-	public function trash($id)
+	public function TrashStudent($id)
 	{
-		$classe = Classe::findOrFail($id)->delete();
+        $classe = Classe::findOrFail($id)->delete();
+        if ($classe) {
+           return response()->json(["status"=>"success"]);
+        }
+        
 
-        return response()->json(["status"=>"success","classe"=>$classe]);
+       
 	}
 
 
@@ -137,4 +147,10 @@ class ClasseController extends Controller
         
         return response()->json(["status"=>"success","classe"=>$classe]);
     }
+    public function Restore($id)
+	{
+        $classe = Classe::onlyTrashed()->findOrFail($id)->restore();
+
+        return response()->json(["status"=>"success","classe"=>$classe]);
+	}
 }

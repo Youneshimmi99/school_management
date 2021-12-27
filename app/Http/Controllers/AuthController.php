@@ -11,6 +11,8 @@ use App\Cycle;
 use App\Grade;
 use App\Teacher;
 use App\Option;
+use App\Teacher_classe;
+
 
 
 
@@ -48,8 +50,13 @@ class AuthController extends Controller
         }   
     }
     public function AddProf(Request $request){
-       return  $request['IdClasse'];
-
+    //    return $request['IdClasse'][2]['name'];
+        $CountIdclasse=count($request['IdClasse']);
+        $ClasseID=[];
+         for ($j=0; $j <$CountIdclasse ; $j++) { 
+            $ClasseID[] = ["id"=>$request['IdClasse'][$j]['name']];
+         }
+        //  return $ClasseID[1]['id'];
         // $request->validate([
         //         $request['FromProf']['name'] =>'required',
         //         // 'email'=>'required',
@@ -67,7 +74,12 @@ class AuthController extends Controller
                 $Teacher->password=\Hash::make($request['FromProf']['password']);
                 $Teacher->tele=$request['FromProf']['tele'];
                 if ($Teacher->save()) {
-                    
+                    for ($i=0; $i < $CountIdclasse; $i++) { 
+                        $Teacher_classe=new Teacher_classe();
+                       $Teacher_classe->teacher_id=$Teacher->id;
+                       $Teacher_classe->class_id=$ClasseID[$i]['id'];
+                       $Teacher_classe->save();
+                    }
                     return response()->json(["status"=>"success"]);
                 }else return response()->json(["status"=>"error"]);
             }else return response()->json(["password"=>"error","msg"=>"Vos mot de passe  ne sont pas correctes !"]);

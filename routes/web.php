@@ -31,7 +31,12 @@ Route::post('/loginadmin', 'AuthController@LoginAdmin');
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/administration', 'AuthController@IndexDashboardAdmin');
-    include('classe.php');
+    // include('classe.php');
+    Route::get('classe/archive', 'ClasseController@archive')->name('classe.archive'); 
+// Route::resource('classe', 'ClasseController',['except'=>['destroy']]);
+    Route::post('classe/delete/{id}', 'ClasseController@TrashStudent');
+    Route::post('classe/destroy/{id}', 'ClasseController@destroy');
+    Route::post('classe/restore/{id}', 'ClasseController@Restore');
     include('timetable.php');
     include('teacher_absences.php');
     Route::post('/logout', 'AuthController@LougoutAdmin');
@@ -46,9 +51,22 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/class/add', 'AdminController@AddClasse');
     Route::post('/add/admin', 'AdminController@AddAdmin');
     Route::get('/teachers','AdminController@Allteachers');
-    Route::get('/teachers/edit/{id}','AdminController@IditTeacher');
+    Route::get('teachers/emploidone','AdminController@ConfirmTimeTable');
+
+    Route::get('/teachers/classes','AdminController@AllteachersClasses');
+    Route::get('/classes_teachers/{id}','AdminController@ClassesTeacher');
+
+    Route::get('/teachers/edit/{id}','AdminController@EditTeacher');
     Route::post('/teachers/update','AdminController@UpdateTeacher');
     Route::post('/delete/teacher/{id}','AdminController@DeleteTeacher');
+    Route::post('/delete/emploi/{id}','AdminController@DeleteTimeTable');
+
+    Route::post('/addstudent','AdminController@AddStudent');
+    Route::get('/students','AdminController@AllStudents');
+    Route::get('/student/edit/{id}','AdminController@editStudent');
+    Route::post('/student/update','AdminController@UpdateStudent');
+    Route::post('/delete/student/{id}','AdminController@DeleteStudent');
+
 
 
 

@@ -8,6 +8,11 @@ use App\Option;
 use App\Branch;
 use App\Admin;
 use App\Teacher;
+use App\Student;
+use App\Teacher_classe;
+use App\Timetable;
+
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -22,7 +27,9 @@ class AdminController extends Controller
                             ->join('grades','grades.id','=','classes.grade_id')
                             ->join('options','options.id','=','classes.option_id')
                             ->join('branchs','branchs.id','=','classes.branch_id')
+                            ->select('classes.id','classes.nameClasse','classes.numberCls','grades.nameGrade','options.nameOption','branchs.nameBranch')
                             ->where('grades.cycle_id',$id)
+                            ->where('classes.deleted_at',NULL)
                             ->get();
                            
          }
@@ -30,7 +37,9 @@ class AdminController extends Controller
             $classes=DB::table('classes')
                             ->join('grades','grades.id','=','classes.grade_id')
                             ->join('options','options.id','=','classes.option_id')
+                            ->select('classes.id','classes.nameClasse','classes.numberCls','grades.nameGrade','options.nameOption')
                             ->where('grades.cycle_id',$id)
+                            ->where('classes.deleted_at',NULL)
                             ->get();
                            
          }
@@ -38,7 +47,9 @@ class AdminController extends Controller
              $classes=DB::table('classes')
                             ->join('grades','grades.id','=','classes.grade_id')
                             ->join('options','options.id','=','classes.option_id')
+                            ->select('classes.id','classes.nameClasse','classes.numberCls','grades.nameGrade','options.nameOption')
                             ->where('grades.cycle_id',$id)
+                            ->where('classes.deleted_at',NULL)
                             ->get();
                            
          }
@@ -104,13 +115,81 @@ class AdminController extends Controller
                             ->get();
                             // return $teachers;
         return response()->json(["status"=>"success","teachers"=>$teachers]);
+    }
+    public function ConfirmTimeTable(){
+        $teachers=DB::table('teachers')
+                            ->join('timetables','timetables.teacher_id','=','teachers.id')
+                            ->join('subjects','subjects.id','=','teachers.subject_id')
+                            ->select('timetables.id','teachers.name','subjects.namesub','timetables.nameTimetable')
+                            ->get();
+                            // return $teachers;
+        return response()->json(["status"=>"success","teachers"=>$teachers]);
+    }
+    public function AllteachersClasses(){
+        $teachers=DB::table('teachers')
+                            ->join('subjects','subjects.id','=','teachers.subject_id')
+                            ->select('teachers.id','teachers.name','teachers.email','teachers.image','teachers.tele','subjects.namesub')
+                            ->get();
+                            // return $teachers;
+        $teachers_classes=DB::table('teacher_classes')
+                            ->join('classes','classes.id','=','teacher_classes.class_id')
+                            ->join('teachers','teachers.id','=','teacher_classes.teacher_id')
+                            ->select('teachers.id','classes.nameClasse')
+                            ->get();
+                            // return $teachers;                 
+        return response()->json(["status"=>"success","teachers"=>$teachers,"teacher_classes"=>$teachers_classes]);
 
     }
-    public function IditTeacher($id){
-      
+     public function AllStudents(){
+        $students=Student::all();
+        return response()->json(["status"=>"success","students"=>$students]);
+
+    }
+    ///1111
+    public function ClassesTeacher($id){
+        $teachers_classes=DB::table('teacher_classes')
+                            ->join('classes','classes.id','=','teacher_classes.class_id')
+                            ->join('teachers','teachers.id','=','teacher_classes.teacher_id')
+                            ->select('classes.id','classes.nameClasse')
+                            ->where('teachers.id',$id)
+                            ->get();
+                            $Conutteachers_classes=DB::table('teacher_classes')
+                            ->join('classes','classes.id','=','teacher_classes.class_id')
+                            ->join('teachers','teachers.id','=','teacher_classes.teacher_id')
+                            ->select('classes.id','classes.nameClasse')
+                            ->where('teachers.id',$id)
+                            ->count();
+
+
         $teacher=Teacher::find($id);
+        $teacher_classe=Teacher_classe::where('teacher_id',$id);
+   
+
+                            // return $teachers;                 
+        return response()->json(["status"=>"success","teachers"=>$teacher,"teacher_classes"=>$teachers_classes,"countTeacherClasses"=>$Conutteachers_classes]);
+
+    }
+
+   
+    ///2222
+    public function EditTeacher($id){
+       
+        $teacher=Teacher::find($id);
+        $teacher_classe=Teacher_classe::where('teacher_id',$id);
+        $teacher_classe=DB::table('teacher_classes')
+                            ->join('teachers','teachers.id','teacher_classes.teacher_id')
+                            ->join('classes','classes.id','teacher_classes.class_id')
+                            ->select('classes.id','classes.nameClasse')
+                            ->where('teacher_classes.teacher_id',$id)
+                            ->get();
+                            
         // return $teacher;
-        return response()->json(["status"=>"success","teachers"=>$teacher]);
+        return response()->json(["status"=>"success","teachers"=>$teacher,"classes_teacher"=>$teacher_classe]);
+    }
+    public function editStudent($id){
+        $student=Student::find($id);
+        // return $teacher;
+        return response()->json(["status"=>"success","student"=>$student]);
     }
     public function UpdateTeacher(Request $request){
         
@@ -138,6 +217,23 @@ class AdminController extends Controller
         }
 
     }
+    public function UpdateStudent(Request $request){
+        $student=Student::find($request['student']['id']);
+        if ($request['student']['password']===$request['student']['password']) {
+            // if (!Student::where('email',$request['student']['email'])->count()) {
+                    $student->name=$request['student']['name'];
+                    $student->email=$request['student']['email'];
+                    $student->password=\Hash::make($request['student']['password']);
+                    $student->tele=$request['student']['tele'];
+                    if ($student->save()) {
+                        return response()->json(["status"=>"success"]);
+                    }else return response()->json(["status"=>"error"]);
+                // }return response()->json(["email"=>"error","msg"=>"Ce email déjà utilisée !"]);
+        }else {
+          return response()->json(["password"=>"error","msg"=>"Vos mot de passe  ne sont pas correctes !"]);
+        }
+
+    }
     public function DeleteTeacher($id){
         // return $id;
         $teacher=Teacher::find($id);
@@ -147,5 +243,52 @@ class AdminController extends Controller
            return response()->json(["status"=>"success"]);
         }return response()->json(["status"=>"faild"]);
     }
+     public function DeleteTimeTable($id){
+        // return $id;
+        $Timetable=Timetable::find($id);
+        // return $teacher;
+        // $teacher->delete();
+        if ($Timetable->delete()) {
+           return response()->json(["status"=>"success"]);
+        }return response()->json(["status"=>"faild"]);
+    }
+    public function DeleteStudent($id){
+        $student=Student::find($id);
+        if ($student->delete()) {
+           return response()->json(["status"=>"success"]);
+        }return response()->json(["status"=>"faild"]);
+    }
+     public function AddStudent(Request $request){
+        
+        //  return $request['student']['password'];   
+            // $request->validate([
+            //     'name' =>'required',
+            //     'email'=>'required',
+            //     'password'       =>'required',
+            //     'password2'       =>'required',
+            //     'tele'      =>'required',  
+            // ]);
+            // $countEmail=;
+            if ($request['student']['password']==$request['student']['password2']) {
+                 if (!Student::where('email',$request['student']['email'])->count()) {
+                    $student=new Student();
+                    $student->name=$request['student']['name'];
+                    $student->email=$request['student']['email'];
+                    $student->password=\Hash::make($request['student']['password']);
+                    $student->tele=$request['student']['tele'];
+                    if ($student->save()) {
+                        return response()->json(["status"=>"success"]);
+                    }else return response()->json(["status"=>"error"]);
+                }return response()->json(["email"=>"error","msg"=>"Ce email déjà utilisée !"]);
+            }else return response()->json(["password"=>"error","msg"=>"Vos mot de passe  ne sont pas correctes !"]);
+      }
+      public function TrashStudent($id){
+
+        
+        $classe = Classe::find($id);
+        return $classe;
+          
+      }
+
 }
 
