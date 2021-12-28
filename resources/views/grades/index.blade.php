@@ -6,13 +6,30 @@
 @extends('layouts.app')
 @section('content')
 
+<form  action="{{ route('exercice.store') }}" method="post" class="del-form" enctype="multipart/form-data" >
 
+  <div class="form-group">
+    <label for="title">nameExercice</label>
+    <input type="text" name="nameExercice" class="form-control" placeholder="nameExercice">
+  </div>
+  
+    <label for="price">course_id</label>
+    <input type="number" name="course_id" class="form-control" placeholder="course_id">
 
-  <form  action="{{ route('course.update',2) }}" method="post" class="del-form" enctype="multipart/form-data" >
+    
+    <div>
+      <input type="file" name="fileExercice" class="file_input2"  accept="image/*,application/pdf">
+
+      </div>
+  <div class="column column-5"><button  class="btn " type="submit"><span class="fa fa-plus"></span></button></div>
+  {{-- @method('PUT') --}}
+  @csrf
+</form>
+  <form  action="{{ route('exam.store') }}" method="post" class="del-form" enctype="multipart/form-data" >
 
     <div class="form-group">
-      <label for="title">Titre</label>
-      <input type="text" name="nameCourse" class="form-control" placeholder="Titre">
+      <label for="title">nameExam</label>
+      <input type="text" name="nameExam" class="form-control" placeholder="nameExam">
     </div>
     
     <div class="form-group "> 
@@ -24,14 +41,14 @@
       <input type="number" name="grade_id" class="form-control" placeholder="grade">
 
       
-      <label for="price">session</label>
-      <input type="number" name="sessionCourse" class="form-control" placeholder="grade">
+      <label for="price">sessionExam</label>
+      <input type="number" name="sessionExam" class="form-control" placeholder="sessionExam">
       <div>
-        <input type="file" name="fileCourse" class="file_input2"  accept="image/*">
+        <input type="file" name="fileExam" class="file_input2"  accept="image/*,application/pdf">
   
         </div>
     <div class="column column-5"><button  class="btn " type="submit"><span class="fa fa-plus"></span></button></div>
-    @method('PUT')
+    {{-- @method('PUT') --}}
     @csrf
   </form>
 
@@ -73,7 +90,7 @@
   @method('PUT')
   @csrf
 </form> --}}
-<form onsubmit = "return confirm('xxx');" action="{{ route('course.destroy', 2) }}" method="post" class="del-form">
+<form onsubmit = "return confirm('xxx');" action="{{ route('exam.destroy',1) }}" method="post" class="del-form">
   <div class="column column-5"><button  class="btn " type="submit"><span class="fa fa-trash"></span></button></div>
     @method('delete')
   @csrf

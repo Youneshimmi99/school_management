@@ -28,6 +28,8 @@ Route::post('/loginadmin', 'AuthController@LoginAdmin');
 
 
 include('course.php'); 
+include('exercice.php'); 
+include('exam.php'); 
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/administration', 'AuthController@IndexDashboardAdmin');

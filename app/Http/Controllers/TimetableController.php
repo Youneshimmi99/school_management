@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Timetable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TimetableController extends Controller
 {
@@ -87,6 +88,31 @@ class TimetableController extends Controller
         return response()->json(["status"=>"success","timetable"=>$timetable]);
 
     }
+
+    public function teacherTimetable($id)
+    {
+        $timetable = DB::table('timetables')
+        ->join('teachers','teachers.id','=','timetables.teacher_id')
+        ->select('teachers.id','teachers.name','teachers.subject_id','teachers.image','timetables.id','timetables.nameTimetable','timetables.file')
+        ->where('timetables.teacher_id',$id)
+        ->get();
+
+        return response()->json(["status"=>"success","timetable"=>$timetable]);
+
+    }
+
+    // public function studentTimetable($id)
+    // {
+    //     $timetable = DB::table('timetables')
+    //     ->join('students','students.class_id','=','timetables.class_id')
+    //     ->join('classes','classes.id','=','timetables.class_id')
+    //     ->select('students.id','students.name','classes.nameClasse','classes.numberCls','timetables.id','timetables.nameTimetable','timetables.file')
+    //     ->where('timetables.class_id',$id)
+    //     ->get();
+
+    //     return response()->json(["status"=>"success","timetable"=>$timetable]);
+
+    // }
 
     /**
      * Show the form for editing the specified resource.

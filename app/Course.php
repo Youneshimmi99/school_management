@@ -10,4 +10,9 @@ class Course extends Model
     use SoftDeletes;
 
     protected $table='courses';
+
+    public function Exercices()
+    {
+        return $this->hasMany(Exercice::class);
+    }
 }

@@ -80,10 +80,11 @@ class CourseController extends Controller
 
         //upload image
         if($request->hasFile('fileCourse')){
-            $filenameWithExt = $request->file('fileCourse')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // $filenameWithExt = $request->file('fileCourse')->getClientOriginalName();
+            // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('fileCourse')->getClientOriginalExtension();
-            $filenameToStore=$filename.''.\Carbon\Carbon::now()->timestamp.'main.'.$extension;
+            // $filenameToStore=$filename.''.\Carbon\Carbon::now()->timestamp.'main.'.$extension;
+            $filenameToStore=\Carbon\Carbon::now()->timestamp.'main.'.$extension;
             $path =$request->file('fileCourse')->storeAs('public/courses',$filenameToStore);
         
             $course->fileCourse='storage/courses/'.$filenameToStore; 
@@ -168,10 +169,11 @@ class CourseController extends Controller
   
              }
 
-            $filenameWithExt = $request->file('fileCourse')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // $filenameWithExt = $request->file('fileCourse')->getClientOriginalName();
+            // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('fileCourse')->getClientOriginalExtension();
-            $filenameToStore=$filename.''.\Carbon\Carbon::now()->timestamp.'main.'.$extension;
+            // $filenameToStore=$filename.''.\Carbon\Carbon::now()->timestamp.'main.'.$extension;
+            $filenameToStore=\Carbon\Carbon::now()->timestamp.$extension;
             $path =$request->file('fileCourse')->storeAs('public/courses',$filenameToStore);
         
             $course->fileCourse='storage/courses/'.$filenameToStore; 

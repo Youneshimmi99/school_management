@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeDescriptionCourseFieldInCoursesTable extends Migration
+class AddDeletedAtFieldToExercicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class ChangeDescriptionCourseFieldInCoursesTable extends Migration
      */
     public function up()
     {
-        Schema::table('courses', function (Blueprint $table) {
-            $table->string('descriptionCourse')->nullable()->change();
+        Schema::table('exercices', function (Blueprint $table) {
+            if (! Schema::hasColumn('exercices','deleted_at')) {
+                $table->softDeletes()->after('course_id');
+            }
         });
     }
 
@@ -25,8 +27,8 @@ class ChangeDescriptionCourseFieldInCoursesTable extends Migration
      */
     public function down()
     {
-        Schema::table('courses', function (Blueprint $table) {
-            $table->string('descriptionCourse')->change();
+        Schema::table('exercices', function (Blueprint $table) {
+            $table->dropSoftDeletes();
         });
     }
 }
