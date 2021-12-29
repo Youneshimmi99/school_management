@@ -73,9 +73,12 @@ Route::middleware(['admin'])->group(function () {
 
     Route::post('/addstudent','AdminController@AddStudent');
     Route::get('/students','AdminController@AllStudents');
+    Route::get('/get/admins','AdminController@AllAdmins');
     Route::get('/student/edit/{id}','AdminController@editStudent');
     Route::post('/student/update','AdminController@UpdateStudent');
     Route::post('/delete/student/{id}','AdminController@DeleteStudent');
+
+
 
 
 

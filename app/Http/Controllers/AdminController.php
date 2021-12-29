@@ -188,8 +188,15 @@ class AdminController extends Controller
     }
      public function AllStudents(){
         $students=Student::all();
-        return response()->json(["status"=>"success","students"=>$students]);
-
+        if ($students) {
+             return response()->json(["status"=>"success","students"=>$students]);
+        }return response()->json(["status"=>"error"]);
+    }
+    public function AllAdmins(){
+        $admins=Admin::all();
+        if ($admins) {
+           return response()->json(["status"=>"success","admins"=>$admins]);
+        }return response()->json(["status"=>"error"]);
     }
     ///1111
     public function ClassesTeacher($id){

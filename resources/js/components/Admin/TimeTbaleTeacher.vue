@@ -309,7 +309,7 @@ export default {
     },
     GetTeachers() {
       this.Teachers = [];
-      axios.get("/teachers/notimetable").then(response => {
+      axios.get("/teachersWithoutTimetable").then(response => {
         if (response.data["status"] == "success") {
           this.Teachers = response.data["teachers"];
         }
@@ -367,6 +367,7 @@ export default {
 
       axios.post("/timetable", this.timetables, config).then(response => {
         if (response.data["status"] == "success") {
+          this.GetTeachers();
         }
       });
     },

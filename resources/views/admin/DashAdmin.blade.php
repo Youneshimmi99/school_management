@@ -246,9 +246,9 @@
                             </li>
                              <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Classe</a>
                                 <ul aria-expanded="false">
-                                    <li><router-link to="/timetable/classe">Afficher l'emploi du temps</router-link></li>
+                                    <li><router-link to="/timetable/classe">Ajouter l'emploi du temps</router-link></li>
                                     {{-- <li><a href="./page-error-403.html">Error 403</a></li> --}}
-                                    <li><a href="./page-error-404.html">Ajouter l'emploi du Temps</a></li>
+                                    {{-- <li><a href="./page-error-404.html">Ajouter l'emploi du Temps</a></li> --}}
                                 </ul>
                             </li>
                         </ul>

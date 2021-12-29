@@ -111,7 +111,6 @@ class TimetableController extends Controller
     public function teachersWithoutTimetable()
     {
         $timetables = Timetable::whereNotNull('teacher_id')->get();
-
         foreach($timetables as $timetable){
             $teachers_id[]=$timetable->teacher_id;
         }

@@ -165,7 +165,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Bordered Table</h4>
+            <h4 class="card-title">Les enseignants</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -175,35 +175,29 @@
               >
                 <thead>
                   <tr>
-                    <th scope="col">Task</th>
-                    <th scope="col">Progress</th>
-                    <th scope="col">Deadline</th>
-                    <th scope="col">Label</th>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Nom et prenom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Tele</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Air Conditioner</td>
-                    <td>
-                      <div class="progress" style>
-                        <div class="progress-bar bg-primary" style="width: 70%;" role="progressbar">
-                          <span class="sr-only">70% Complete</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Apr 20,2018</td>
-                    <td>
-                      <span class="badge badge-primary">70%</span>
-                    </td>
+                  <tr v-for="(item,index) in Admins" :key="index">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.tele }}</td>
                     <td>
                       <span>
                         <a
                           href="javascript:void()"
                           class="mr-4"
-                          data-toggle="tooltip"
+                          data-toggle="modal"
+                          data-target=".bd-example-modal-lg"
                           data-placement="top"
                           title="Edit"
+                          @click="EditTeacher(item.id)"
                         >
                           <i class="fa fa-pencil color-muted"></i>
                         </a>
@@ -212,146 +206,7 @@
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Close"
-                        >
-                          <i class="fa fa-close color-danger"></i>
-                        </a>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Textiles</td>
-                    <td>
-                      <div class="progress" style="background: rgba(76, 175, 80, .1)">
-                        <div class="progress-bar bg-success" style="width: 70%;" role="progressbar">
-                          <span class="sr-only">70% Complete</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>May 27,2018</td>
-                    <td>
-                      <span class="badge badge-success">70%</span>
-                    </td>
-                    <td>
-                      <span>
-                        <a
-                          href="javascript:void()"
-                          class="mr-4"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Edit"
-                        >
-                          <i class="fa fa-pencil color-muted"></i>
-                        </a>
-                        <a
-                          href="javascript:void()"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Close"
-                        >
-                          <i class="fa fa-close color-danger"></i>
-                        </a>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Milk Powder</td>
-                    <td>
-                      <div class="progress" style="background: rgba(70, 74, 83, .1)">
-                        <div class="progress-bar bg-dark" style="width: 70%;" role="progressbar">
-                          <span class="sr-only">70% Complete</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>May 18,2018</td>
-                    <td>
-                      <span class="badge badge-dark">70%</span>
-                    </td>
-                    <td>
-                      <span>
-                        <a
-                          href="javascript:void()"
-                          class="mr-4"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Edit"
-                        >
-                          <i class="fa fa-pencil color-muted"></i>
-                        </a>
-                        <a
-                          href="javascript:void()"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Close"
-                        >
-                          <i class="fa fa-close color-danger"></i>
-                        </a>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Vehicles</td>
-                    <td>
-                      <div class="progress" style="background: rgba(255, 87, 34, .1)">
-                        <div class="progress-bar bg-danger" style="width: 70%;" role="progressbar">
-                          <span class="sr-only">70% Complete</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Mar 27,2018</td>
-                    <td>
-                      <span class="badge badge-danger">70%</span>
-                    </td>
-                    <td>
-                      <span>
-                        <a
-                          href="javascript:void()"
-                          class="mr-4"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Edit"
-                        >
-                          <i class="fa fa-pencil color-muted"></i>
-                        </a>
-                        <a
-                          href="javascript:void()"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Close"
-                        >
-                          <i class="fa fa-close color-danger"></i>
-                        </a>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Boats</td>
-                    <td>
-                      <div class="progress" style="background: rgba(255, 193, 7, .1)">
-                        <div class="progress-bar bg-warning" style="width: 70%;" role="progressbar">
-                          <span class="sr-only">70% Complete</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>Jun 28,2018</td>
-                    <td>
-                      <span class="badge badge-warning">70%</span>
-                    </td>
-                    <td>
-                      <span>
-                        <a
-                          href="javascript:void()"
-                          class="mr-4"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Edit"
-                        >
-                          <i class="fa fa-pencil color-muted"></i>
-                        </a>
-                        <a
-                          href="javascript:void()"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Close"
+                          @click="DeleteTeacher(item.id)"
                         >
                           <i class="fa fa-close color-danger"></i>
                         </a>
@@ -374,6 +229,7 @@ export default {
       addadmin: true,
       spinner: false,
       Subjects: [],
+      Admins: [],
       FromAdmin: {
         name: "sacas",
         email: "scasc",
@@ -388,8 +244,20 @@ export default {
       axios.post("/add/admin", this.FromAdmin).then(response => {
         console.log("test");
       });
-    }
+    },
+    GetAllAdmins() {
+      axios.get("/get/admins").then(response => {
+        if (response.data["status"] == "success") {
+          this.admins = response.data["admins"];
+          console.log(this.admins);
+        }
+      });
+    },
+    EditTeacher() {},
+    DeleteTeacher() {}
   },
-  created() {}
+  created() {
+    this.GetAllAdmins();
+  }
 };
 </script>

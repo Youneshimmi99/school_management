@@ -2132,157 +2132,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       addadmin: true,
       spinner: false,
       Subjects: [],
+      Admins: [],
       FromAdmin: {
         name: "sacas",
         email: "scasc",
@@ -2297,9 +2153,23 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/add/admin", this.FromAdmin).then(function (response) {
         console.log("test");
       });
-    }
+    },
+    GetAllAdmins: function GetAllAdmins() {
+      var _this = this;
+
+      axios.get("/get/admins").then(function (response) {
+        if (response.data["status"] == "success") {
+          _this.admins = response.data["admins"];
+          console.log(_this.admins);
+        }
+      });
+    },
+    EditTeacher: function EditTeacher() {},
+    DeleteTeacher: function DeleteTeacher() {}
   },
-  created: function created() {}
+  created: function created() {
+    this.GetAllAdmins();
+  }
 });
 
 /***/ }),
@@ -5601,7 +5471,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
 
       this.Teachers = [];
-      axios.get("/teachers/notimetable").then(function (response) {
+      axios.get("/teachersWithoutTimetable").then(function (response) {
         if (response.data["status"] == "success") {
           _this6.Teachers = response.data["teachers"];
         }
@@ -5646,6 +5516,8 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.Timetables.File);
     },
     AjouerEmploi: function AjouerEmploi(idTeacher) {
+      var _this8 = this;
+
       //   alert(idTeacher);
       var config = {
         headers: {
@@ -5657,11 +5529,13 @@ __webpack_require__.r(__webpack_exports__);
       this.timetables.append("nameTimetable", this.Timetables.NameTimeTable);
       this.timetables.append("teacher_id", this.FromProf.id);
       axios.post("/timetable", this.timetables, config).then(function (response) {
-        if (response.data["status"] == "success") {}
+        if (response.data["status"] == "success") {
+          _this8.GetTeachers();
+        }
       });
     },
     UpdateTeacher: function UpdateTeacher() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.post("/teachers/update", this.FromProf).then(function (response) {
         if (response.data["status"] == "success") {
@@ -5673,11 +5547,11 @@ __webpack_require__.r(__webpack_exports__);
             showConfirmButton: false,
             timer: 1900
           });
-          _this8.Teachers = [];
+          _this9.Teachers = [];
 
-          _this8.GetTeachers();
+          _this9.GetTeachers();
 
-          _this8.FromProf = [];
+          _this9.FromProf = [];
         }
 
         if (response.data["password"] == "error") {
@@ -5688,7 +5562,7 @@ __webpack_require__.r(__webpack_exports__);
             text: "Vos mot de passe  ne sont pas correctes !",
             showConfirmButton: true
           });
-          _this8.FromProf = [];
+          _this9.FromProf = [];
         }
       })["catch"](function (error) {
         if (error.response.status == 422) {
@@ -5699,12 +5573,12 @@ __webpack_require__.r(__webpack_exports__);
             text: "Tous les champs c'est obligatoire !",
             showConfirmButton: true
           });
-          _this8.FromProf = [];
+          _this9.FromProf = [];
         }
       });
     },
     DeleteTeacher: function DeleteTeacher(IdTeacher) {
-      var _this9 = this;
+      var _this10 = this;
 
       sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_0___default.a.fire({
         title: "Es-tu sûr?",
@@ -5719,9 +5593,9 @@ __webpack_require__.r(__webpack_exports__);
         if (result.isConfirmed) {
           axios.post("/delete/teacher/" + IdTeacher).then(function (response) {
             if (response.data["status"] == "success") {
-              _this9.Teachers = [];
+              _this10.Teachers = [];
 
-              _this9.GetTeachers();
+              _this10.GetTeachers();
             }
           });
           sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_0___default.a.fire("Supprimé!", "L'enseignant a été supprimé.", "success");
@@ -48983,7 +48857,95 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _vm._m(2)
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c(
+                "table",
+                {
+                  staticClass:
+                    "table table-bordered verticle-middle table-responsive-sm",
+                  staticStyle: { color: "black" }
+                },
+                [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.Admins, function(item, index) {
+                      return _c("tr", { key: index }, [
+                        _c("td", [_vm._v(_vm._s(item.id))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.email))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.tele))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("span", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "mr-4",
+                                attrs: {
+                                  href: "javascript:void()",
+                                  "data-toggle": "modal",
+                                  "data-target": ".bd-example-modal-lg",
+                                  "data-placement": "top",
+                                  title: "Edit"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.EditTeacher(item.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-pencil color-muted"
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "javascript:void()",
+                                  "data-toggle": "tooltip",
+                                  "data-placement": "top",
+                                  title: "Close"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.DeleteTeacher(item.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-close color-danger"
+                                })
+                              ]
+                            )
+                          ])
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -49036,420 +48998,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("h4", { staticClass: "card-title" }, [_vm._v("Bordered Table")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "table-responsive" }, [
-              _c(
-                "table",
-                {
-                  staticClass:
-                    "table table-bordered verticle-middle table-responsive-sm",
-                  staticStyle: { color: "black" }
-                },
-                [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Task")]),
-                      _vm._v(" "),
-                      _c("th", { attrs: { scope: "col" } }, [
-                        _vm._v("Progress")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { attrs: { scope: "col" } }, [
-                        _vm._v("Deadline")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Label")]),
-                      _vm._v(" "),
-                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tbody", [
-                    _c("tr", [
-                      _c("td", [_vm._v("Air Conditioner")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("div", { staticClass: "progress" }, [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "progress-bar bg-primary",
-                              staticStyle: { width: "70%" },
-                              attrs: { role: "progressbar" }
-                            },
-                            [
-                              _c("span", { staticClass: "sr-only" }, [
-                                _vm._v("70% Complete")
-                              ])
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Apr 20,2018")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "badge badge-primary" }, [
-                          _vm._v("70%")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "mr-4",
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Edit"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-pencil color-muted"
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Close"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-close color-danger"
-                              })
-                            ]
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Textiles")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "progress",
-                            staticStyle: { background: "rgba(76, 175, 80, .1)" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "progress-bar bg-success",
-                                staticStyle: { width: "70%" },
-                                attrs: { role: "progressbar" }
-                              },
-                              [
-                                _c("span", { staticClass: "sr-only" }, [
-                                  _vm._v("70% Complete")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("May 27,2018")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "badge badge-success" }, [
-                          _vm._v("70%")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "mr-4",
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Edit"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-pencil color-muted"
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Close"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-close color-danger"
-                              })
-                            ]
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Milk Powder")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "progress",
-                            staticStyle: { background: "rgba(70, 74, 83, .1)" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "progress-bar bg-dark",
-                                staticStyle: { width: "70%" },
-                                attrs: { role: "progressbar" }
-                              },
-                              [
-                                _c("span", { staticClass: "sr-only" }, [
-                                  _vm._v("70% Complete")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("May 18,2018")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "badge badge-dark" }, [
-                          _vm._v("70%")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "mr-4",
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Edit"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-pencil color-muted"
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Close"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-close color-danger"
-                              })
-                            ]
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Vehicles")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "progress",
-                            staticStyle: { background: "rgba(255, 87, 34, .1)" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "progress-bar bg-danger",
-                                staticStyle: { width: "70%" },
-                                attrs: { role: "progressbar" }
-                              },
-                              [
-                                _c("span", { staticClass: "sr-only" }, [
-                                  _vm._v("70% Complete")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Mar 27,2018")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "badge badge-danger" }, [
-                          _vm._v("70%")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "mr-4",
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Edit"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-pencil color-muted"
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Close"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-close color-danger"
-                              })
-                            ]
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Boats")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "progress",
-                            staticStyle: { background: "rgba(255, 193, 7, .1)" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "progress-bar bg-warning",
-                                staticStyle: { width: "70%" },
-                                attrs: { role: "progressbar" }
-                              },
-                              [
-                                _c("span", { staticClass: "sr-only" }, [
-                                  _vm._v("70% Complete")
-                                ])
-                              ]
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Jun 28,2018")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "badge badge-warning" }, [
-                          _vm._v("70%")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "mr-4",
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Edit"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-pencil color-muted"
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "javascript:void()",
-                                "data-toggle": "tooltip",
-                                "data-placement": "top",
-                                title: "Close"
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-close color-danger"
-                              })
-                            ]
-                          )
-                        ])
-                      ])
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Les enseignants")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Profile")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nom et prenom")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tele")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
       ])
     ])
   }
