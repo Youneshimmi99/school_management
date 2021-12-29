@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Timetable;
+use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -98,6 +99,19 @@ class TimetableController extends Controller
         ->get();
 
         return response()->json(["status"=>"success","timetable"=>$timetable]);
+
+    }
+
+    public function teachersWithoutTimetable()
+    {
+        $timetables = Timetable::whereNotNull('teacher_id')->get();
+
+        foreach($timetables as $timetable){
+            $teachers_id[]=$timetable->teacher_id;
+        }
+        $teachers = Teacher::whereNotIn('id', $teachers_id)->get();
+
+        return response()->json(["status"=>"success","teachers"=>$teachers]);
 
     }
 
