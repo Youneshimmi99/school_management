@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Course;
-
+use App\Teacher;
+use Illuminate\Support\Facades\DB;
 class CourseController extends Controller
 {
     /**
@@ -219,5 +220,24 @@ class CourseController extends Controller
         $course->forceDelete();
         
         return response()->json(["status"=>"success","course"=>$course]);
+    }
+
+    public function teacherCourses($id){
+
+        $teacher_courses=Teacher::find($id)->courses;
+
+        return response()->json(["status"=>"success","teacher_courses"=>$teacher_courses]);
+    }
+
+    public function subjectCourses($id){
+
+        $subject_courses=DB::table('teachers')
+        ->join('courses','courses.teacher_id','=','teachers.id')
+        ->join('subjects','subjects.id','=','teachers.subject_id')
+        ->select('subjects.namesub','teachers.name as nameTeacher','courses.nameCourse','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
+        ->where('teachers.subject_id','=',$id)
+        ->get();
+
+        return response()->json(["status"=>"success","subject_courses"=>$subject_courses]);
     }
 }

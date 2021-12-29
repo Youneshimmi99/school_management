@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Exam;
+use App\Teacher;
+use Illuminate\Support\Facades\DB;
 
 class ExamController extends Controller
 {
@@ -204,5 +206,25 @@ class ExamController extends Controller
         $exam->forceDelete();
         
         return response()->json(["status"=>"success","exam"=>$exam]);
+    }
+
+
+    public function teacherExams($id){
+
+        $teacher_exams=Teacher::find($id)->exams;
+
+        return response()->json(["status"=>"success","teacher_exams"=>$teacher_exams]);
+    }
+
+    public function subjectExams($id){
+
+        $subject_exams=DB::table('teachers')
+        ->join('exams','exams.teacher_id','=','teachers.id')
+        ->join('subjects','subjects.id','=','teachers.subject_id')
+        ->select('subjects.namesub','teachers.name as nameTeacher','exams.nameExam','exams.descriptionExam','exams.fileExam','exams.sessionExam')
+        ->where('teachers.subject_id','=',$id)
+        ->get();
+
+        return response()->json(["status"=>"success","subject_exams"=>$subject_exams]);
     }
 }
