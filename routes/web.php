@@ -30,7 +30,7 @@ Route::post('/loginadmin', 'AuthController@LoginAdmin');
 include('course.php'); 
 include('exercice.php'); 
 include('exam.php'); 
-
+include('teacher.php'); 
 Route::middleware(['admin'])->group(function () {
     Route::get('/administration', 'AuthController@IndexDashboardAdmin');
     // include('classe.php');

@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
-    
+    protected $table='teachers';
+
+    public function Subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id');
+    }
 }
