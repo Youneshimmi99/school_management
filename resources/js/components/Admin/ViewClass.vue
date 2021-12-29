@@ -7,12 +7,7 @@
           <div class="float-right col-lg-4">
             <!-- <label class="text-dark">Cycle</label> -->
             <select class="form-control form-control" @change="GetClass(IdCycle)" v-model="IdCycle">
-              <option
-                v-for="(item,index) in Cycles"
-                :key="index"
-                :value="item.id"
-                selected
-              >{{ item.name }}</option>
+              <option v-for="(item,index) in Cycles" :key="index" :value="item.id">{{ item.name }}</option>
             </select>
           </div>
         </div>
@@ -20,7 +15,7 @@
           <div class="table-responsive">
             <table
               class="table table-bordered verticle-middle table-responsive-sm"
-              style="color:black"
+              style="color:black;text-align:center;"
             >
               <thead>
                 <tr>
@@ -38,18 +33,22 @@
                   <td>{{ item.numberCls }}</td>
                   <td>{{ item.nameGrade }}</td>
                   <td>{{ item.nameOption }}</td>
-                  <td>{{ item.nameBranch }}</td>
+                  <td v-if="!item.nameBranch">----------</td>
+                  <td v-else>{{ item.nameBranch }}</td>
                   <td>
                     <span>
-                      <a
+                      <!-- <a
                         href="javascript:void()"
                         class="mr-4"
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Edit"
                       >
-                        <i class="fa fa-pencil color-muted"></i>
-                      </a>
+                        <span class="badge badge-info">
+                          <i class="fas fa-trash-restore"></i>
+                          <span>&ensp;Modifier</span>
+                        </span>
+                      </a>-->
                       <a
                         href="javascript:void()"
                         data-toggle="tooltip"
@@ -57,7 +56,10 @@
                         title="Close"
                         @click="DeleteClasse(item.id)"
                       >
-                        <i class="fa fa-close color-danger"></i>
+                        <span class="badge badge-danger">
+                          <i class="far fa-trash-alt"></i>
+                          <span>&ensp;Supprimer</span>
+                        </span>
                       </a>
                     </span>
                   </td>

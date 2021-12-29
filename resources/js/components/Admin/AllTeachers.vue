@@ -12,131 +12,12 @@
           </div>
           <div class="modal-body">
             <form class="needs-validation" novalidate>
-              <div class="row mb-3">
-                <div class="col-lg-6">
-                  <label class="text-dark">Nom L'emploi de temps</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="Timetables.NameTimeTable"
-                    id="val-timetable"
-                    name="val-timetable"
-                    placeholder="Nom L'emploi de temps"
-                  >
-                  <div class="invalid-feedback">cette champs ç'est obligatoire*</div>
-                </div>
-                <div class="col-lg-6">
-                  <label class="text-dark">Ficher</label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    id="file"
-                    ref="file"
-                    v-on:change="handleFileUpload()"
-                  >
-                  <div class="invalid-feedback">cette champs ç'est obligatoire*</div>
-                </div>
-              </div>
-              <div class="row mt-3 mb-3" v-if="TeacherClasses">
-                <div class="col-lg-6">
-                  <div>
-                    <label
-                      style="color:black;"
-                    >Les classes affecté au ce professeur : {{ FromProf.name }}</label>
-                  </div>
-                  <table
-                    class="table-bordered verticle-middle table-responsive-sm"
-                    style="color:black;text-align:center;"
-                  >
-                    <tr>
-                      <td v-for="(item,index) in TeacherClasses" :key="index">{{ item.nameClasse }}</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-              <!-- <div class="row mb-3">
-                <div class="col-lg-6">
-                  <label class="text-dark">Niveau</label>
-
-                  <select class="form-control form-control" v-model="IdClasse">
-                    <option
-                      v-for="(item,index) in Classes"
-                      :key="index"
-                      :value="item.id"
-                    >{{ item.nameClasse }}</option>
-                  </select>
-                  <div class="invalid-feedback">cette champs ç'est obligatoire*</div>
-                </div>
-              </div>-->
-              <div class="row mb-3">
-                <div class="col-lg-6">
-                  <label class="text-dark">Nom et Prenom</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="val-username"
-                    name="val-username"
-                    v-model="FromProf.name"
-                    disabled="disabled"
-                    style="background-color:#40404024"
-                    placeholder="Saisie nom et prenom.."
-                  >
-                  <div class="invalid-feedback">cette champs ç'est obligatoire*</div>
-                </div>
-                <div class="col-lg-6">
-                  <label class="text-dark">Email</label>
-                  <input
-                    type="email"
-                    v-model="FromProf.email"
-                    class="form-control"
-                    id="val-email"
-                    style="background-color:#40404024"
-                    name="val-email"
-                    disabled
-                    placeholder="Saisie l'email"
-                  >
-                  <div class="invalid-feedback">cette champs ç'est obligatoire*</div>
-                </div>
-              </div>
-
-              <div class="row mt-3">
-                <div class="col-lg-6">
-                  <label class="text-dark">Tele</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="FromProf.tele"
-                    id="val-username"
-                    name="val-username"
-                    style="background-color:#40404024"
-                    placeholder="tele"
-                    disabled
-                  >
-                  <div class="invalid-feedback">cette champs ç'est obligatoire*</div>
-                </div>
-                <div class="col-lg-6">
-                  <label class="text-dark">Matière</label>
-
-                  <select
-                    class="form-control form-control"
-                    v-model="FromProf.subject_id"
-                    style="background-color:#40404024"
-                    disabled
-                  >
-                    <option
-                      v-for="(item,index) in Subjects"
-                      :key="index"
-                      :value="item.id"
-                    >{{ item.namesub }}</option>
-                  </select>
-                  <div class="invalid-feedback">cette champs ç'est obligatoire*</div>
-                </div>
-              </div>
+              <img width="100%" height="35%" :src="'/'+this.TeleTimeTable">
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary" @click="AjouerEmploi(FromProf.id)">Ajouter</button>
+            <button type="button" class="btn btn-primary">Telecharger</button>
           </div>
         </div>
       </div>
@@ -174,12 +55,12 @@
                     </td>
                     <td>
                       <a
-                        href="javascript:void()"
-                        class="mr-4"
                         data-toggle="modal"
                         data-target=".bd-example-modal-lg"
                         data-placement="top"
-                        title="Edit"
+                        class="mr-4"
+                        title="telecharger"
+                        @click="TelechargerTimeTableTeacher(item.id)"
                       >
                         <span class="badge badge-info">
                           <i class="fa fa-pencil"></i>
@@ -233,6 +114,7 @@ export default {
       IdGrade: "",
       IdClasse: "",
       Grades: [],
+      TeleTimeTable: "",
       Timetables: {
         File: "",
         NameTimeTable: ""
@@ -254,6 +136,23 @@ export default {
     };
   },
   methods: {
+    TelechargerTimeTableTeacher(IDTimeTableTeacher) {
+      //   alert(IDTimeTableTeacher);
+      this.TeleTimeTable = [];
+      axios.get("/teacherTimetable/" + IDTimeTableTeacher).then(response => {
+        if (response.data["status"] == "success") {
+          this.TeleTimeTable = response.data["timetable"]["file"];
+        }
+      });
+    },
+    // downloadImg() {
+    //   const url = window.URL.createObjectURL(new Blob([this.TeleTimeTable]));
+    //   const link = document.createElement("a");
+    //   link.href = url;
+    //   link.setAttribute("download", this.TeleTimeTable); //or any other extension
+    //   document.body.appendChild(link);
+    //   link.click();
+    // },
     GitViewAddTechear() {
       this.spinner = true;
       setTimeout(() => {

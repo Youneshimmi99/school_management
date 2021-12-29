@@ -224,7 +224,8 @@
                                 class="icon icon-chart-bar-33"></i><span class="nav-text">Classe</span></a>
                         <ul aria-expanded="false">
                             <li><router-link to="/classes">afficher les classes</router-link></li>
-                            <li><router-link  to="/creer_classe">Créer une Classe </a></li>
+                             <li><router-link  to="/creer_classe">Créer une Classe </a></li>
+                            <li><router-link to="/affectation/classes">affectation des classes</router-link></li>
                             <li><router-link to="/archives">Les classe Archives </router-link></li>
 
                             
@@ -245,7 +246,7 @@
                             </li>
                              <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Classe</a>
                                 <ul aria-expanded="false">
-                                    <li><a href="./page-error-400.html">Afficher l'emploi du temps</a></li>
+                                    <li><router-link to="/timetable/classe">Afficher l'emploi du temps</router-link></li>
                                     {{-- <li><a href="./page-error-403.html">Error 403</a></li> --}}
                                     <li><a href="./page-error-404.html">Ajouter l'emploi du Temps</a></li>
                                 </ul>
@@ -367,6 +368,7 @@
       <!-- Toastr -->
     <script src="./vendor/toastr/js/toastr.min.js"></script>
 
+    <script src="https://kit.fontawesome.com/47e2cff383.js" crossorigin="anonymous"></script>
     <!-- All init script -->
     <script src="./js/plugins-init/toastr-init.js"></script>
     <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>

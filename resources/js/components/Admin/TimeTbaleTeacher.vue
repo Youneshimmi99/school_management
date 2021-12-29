@@ -163,7 +163,7 @@
             <div class="table-responsive">
               <table
                 class="table table-bordered verticle-middle table-responsive-sm"
-                style="color:black"
+                style="color:black;text-align:center;"
               >
                 <thead>
                   <tr>
@@ -190,9 +190,14 @@
                         data-placement="top"
                         @click="GetClassesTeacher(item.id)"
                       >
+                        <!-- <i class="fas fa-cloud-upload"></i> -->
+                        <!-- <span class="badge badge-info">
+                          <i class="far fa-download"></i>
+                          <span>&ensp;</span>
+                        </span>-->
                         <span class="badge badge-info">
-                          <i class="fa fa-pencil"></i>
-                          <span>Upload l'empoi de temps</span>
+                          <i class="fas fa-upload"></i>
+                          <span>&ensp;Upload l'empoi de temps</span>
                         </span>
                       </a>
                     </td>
@@ -304,7 +309,7 @@ export default {
     },
     GetTeachers() {
       this.Teachers = [];
-      axios.get("/teachers/classes").then(response => {
+      axios.get("/teachers/notimetable").then(response => {
         if (response.data["status"] == "success") {
           this.Teachers = response.data["teachers"];
         }
@@ -352,7 +357,7 @@ export default {
       console.log(this.Timetables.File);
     },
     AjouerEmploi(idTeacher) {
-      alert(idTeacher);
+      //   alert(idTeacher);
       const config = { headers: { "Content-Type": "multipart/form-data" } };
       //   document.getElementById("val-ficher").value = [];
 

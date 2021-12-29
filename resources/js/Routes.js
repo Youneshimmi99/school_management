@@ -9,12 +9,24 @@ import AddStudent from "./components/Admin/AddStudent.vue";
 import ArchiveClasse from "./components/Admin/ArchiveClasse.vue";
 import AllTeacher from "./components/Admin/AllTeachers.vue";
 import TimeTableTeahcer from "./components/Admin/TimeTbaleTeacher.vue";
+import AffectationClasses from "./components/Admin/AffectationClasses.vue";
+import TimeTableClasse from "./components/Admin/TimeTableClasse.vue";
 
 const routes = [
     {
         path: "/accueil",
         name: "dash",
         component: Dashboard
+    },
+    {
+        path: "/timetable/classe",
+        name: "timetaleclassse",
+        component: TimeTableClasse
+    },
+    {
+        path: "/affectation/classes",
+        name: "affectationclasses",
+        component: AffectationClasses
     },
     {
         path: "/timetableteahcer",

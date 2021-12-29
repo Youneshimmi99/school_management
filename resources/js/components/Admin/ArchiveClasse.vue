@@ -12,7 +12,7 @@
           <div class="table-responsive">
             <table
               class="table table-bordered verticle-middle table-responsive-sm"
-              style="color:black"
+              style="color:black;text-align:center;"
             >
               <thead>
                 <tr>
@@ -39,8 +39,10 @@
                         title="Edit"
                         @click="Restore(item.id)"
                       >
-                        <i class="fas fa-trash-restore"></i>
-                        <!-- <i class="fa fa-pencil color-muted"></i> -->
+                        <span class="badge badge-info">
+                          <i class="fas fa-trash-restore"></i>
+                          <span>&ensp;Restore</span>
+                        </span>
                       </a>
                       <a
                         href="javascript:void()"
@@ -49,7 +51,10 @@
                         title="Close"
                         @click="DeleteForce(item.id)"
                       >
-                        <i class="fa fa-close color-danger"></i>
+                        <span class="badge badge-danger">
+                          <i class="far fa-trash-alt"></i>
+                          <span>&ensp;Supprimer</span>
+                        </span>
                       </a>
                     </span>
                   </td>

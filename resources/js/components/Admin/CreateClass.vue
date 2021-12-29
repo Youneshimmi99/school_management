@@ -111,13 +111,16 @@
                 </div>
 
                 <div class="d-flex justify-content-end mt-4">
-                  <button
+                  <!-- <button
                     type="button"
                     class="btn mb-2 mr-2"
                     v-bind:class="{'btn-info':add,'btn-primary':!add}"
                     v-bind:id="{'toastr-info-top-right':add }"
-                  >Info</button>
-                  <button type="button" @click="AddClasse" class="btn btn-primary">Ajouter</button>
+                  >Info</button>-->
+                  <button type="button" @click="AddClasse" class="btn btn-primary">
+                    <i class="far fa-plus-square"></i>
+                    <span>&ensp;Ajouter</span>
+                  </button>
                 </div>
               </form>
             </div>

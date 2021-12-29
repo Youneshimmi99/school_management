@@ -43,17 +43,23 @@ Route::middleware(['admin'])->group(function () {
     include('teacher_absences.php');
     Route::post('/logout', 'AuthController@LougoutAdmin');
     Route::post('/add/prof', 'AuthController@AddProf');
+    Route::post('/add/classes/teacher', 'AuthController@AddTeacherClasses');
     Route::get('/subjects', 'AuthController@GetSubjects');
     Route::get('/subjectsprof', 'AuthController@GetSubjectsProf');
     Route::get('/cycles', 'AuthController@GetCycles');
     Route::get('/grades/{id}', 'AuthController@GetGrades');
     Route::get('/getclasses/{id}','AdminController@GetClasses');
     Route::get('/getclassesbyid/{id}','AdminController@GetClassesByIdGrade');
+    Route::get('/getclassesbyid/notimeTable/{id}','AdminController@ClasseTimeTableOk');
+
+
     Route::get('/branches/{id}','AdminController@GetBranchs');
     Route::post('/class/add', 'AdminController@AddClasse');
     Route::post('/add/admin', 'AdminController@AddAdmin');
     Route::get('/teachers','AdminController@Allteachers');
     Route::get('teachers/emploidone','AdminController@ConfirmTimeTable');
+    Route::get('/teachers/notimetable','AdminController@AllteachersNotTimetable');
+    
 
     Route::get('/teachers/classes','AdminController@AllteachersClasses');
     Route::get('/classes_teachers/{id}','AdminController@ClassesTeacher');
@@ -61,6 +67,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/teachers/edit/{id}','AdminController@EditTeacher');
     Route::post('/teachers/update','AdminController@UpdateTeacher');
     Route::post('/delete/teacher/{id}','AdminController@DeleteTeacher');
+    Route::post('/delete/teacher/classe/{id}','AdminController@DelteTeacherClasse');
+
     Route::post('/delete/emploi/{id}','AdminController@DeleteTimeTable');
 
     Route::post('/addstudent','AdminController@AddStudent');

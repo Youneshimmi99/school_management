@@ -61,6 +61,30 @@ class AdminController extends Controller
         $classes=Classe::WHERE('grade_id',$id)->get();
         return response()->json(["status"=>"success","classes"=>$classes]);
     }
+    public function ClasseTimeTableOk($id){
+        // $timetable=TimeTable::all();
+         $timetable = TimeTable::select("class_id")
+                    ->whereNotNull('class_id' )
+                    ->get()->ToArray();
+        // return $timetable;
+       
+       
+        // $classes=Classe::WHERE('grade_id',$id)->get();
+        $classesTimeTblesuccess=DB::table('classes')
+                    ->join('timetables','timetables.class_id','=','classes.id')
+                    ->join('grades','grades.id','=','classes.grade_id')
+                    ->select('timetables.id','classes.nameClasse','classes.numberCls','timetables.class_id')
+                    ->where('classes.grade_id','=',$id)
+                    ->get();
+        $classesTimeTblePending=DB::table('classes')
+                    ->join('grades','grades.id','=','classes.grade_id')
+                    ->select('classes.id','classes.nameClasse','classes.numberCls')
+                    ->where('classes.grade_id','=',$id)
+                    ->whereNotIn('classes.id',$timetable)
+                    
+                    ->get();            
+        return response()->json(["status"=>"success","classesTimeTblesuccess"=>$classesTimeTblesuccess,'classesTimeTblePending'=>$classesTimeTblePending]);
+    }
     public function GetBranchs($id){
         
         // return $id;
@@ -83,6 +107,9 @@ class AdminController extends Controller
         $classe->numberCls=$request->number;
         $classe->grade_id=$request->IdGrade;
         $classe->option_id=$request->Option_id;
+        if ($request->branch_id) {
+            $classe->branch_id=$request->branch_id;
+        }
         if ($classe->save()) {
             return response()->json(["status"=>"success"]);
         }
@@ -134,7 +161,26 @@ class AdminController extends Controller
         $teachers_classes=DB::table('teacher_classes')
                             ->join('classes','classes.id','=','teacher_classes.class_id')
                             ->join('teachers','teachers.id','=','teacher_classes.teacher_id')
-                            ->select('teachers.id','classes.nameClasse')
+                            ->join('subjects','subjects.id','=','teachers.subject_id')
+                            ->select('teacher_classes.id','teacher_classes.teacher_id','classes.nameClasse')
+                            ->get();
+                            // return $teachers;                 
+        return response()->json(["status"=>"success","teachers"=>$teachers,"teacher_classes"=>$teachers_classes]);
+
+    }
+    public function AllteachersNotTimetable(){
+        $teachers=DB::table('teachers')
+                            ->join('subjects','subjects.id','=','teachers.subject_id')
+                            ->select('teachers.id','teachers.name','teachers.email','teachers.image','teachers.tele','subjects.namesub')
+                            ->whereNotIn('teachers.id',DB::table('timetables')->where('teacher_id','=','teachers.id')->pluck('teacher_id')->toArray())
+                            ->get();
+        // 
+                            // return $teachers;
+        $teachers_classes=DB::table('teacher_classes')
+                            ->join('classes','classes.id','=','teacher_classes.class_id')
+                            ->join('teachers','teachers.id','=','teacher_classes.teacher_id')
+                            ->join('subjects','subjects.id','=','teachers.subject_id')
+                            ->select('teacher_classes.id','teacher_classes.teacher_id','classes.nameClasse')
                             ->get();
                             // return $teachers;                 
         return response()->json(["status"=>"success","teachers"=>$teachers,"teacher_classes"=>$teachers_classes]);
@@ -240,6 +286,16 @@ class AdminController extends Controller
         // return $teacher;
         // $teacher->delete();
         if ($teacher->delete()) {
+           return response()->json(["status"=>"success"]);
+        }return response()->json(["status"=>"faild"]);
+    }
+    public function DelteTeacherClasse($id){
+       
+        $teacher_classe=Teacher_classe::find($id);
+        // return $teacher_classe;
+        // return $teacher;
+        // $teacher->delete();
+        if ($teacher_classe->delete()) {
            return response()->json(["status"=>"success"]);
         }return response()->json(["status"=>"faild"]);
     }
