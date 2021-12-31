@@ -5193,11 +5193,81 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       Teachers: [],
       Absences: [],
+      EditAbsencex: [],
+      IdTeacherAbsence: "",
       AbsenceTeacher: {
         teacher_id: "",
         start_date: "",
@@ -5206,32 +5276,109 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    GetTeachers: function GetTeachers() {
+    DeleteAdmin: function DeleteAdmin(idteacherAbsence) {
       var _this = this;
+
+      Swal.fire({
+        title: "Es-tu sûr?",
+        text: "Vous ne pourrez pas revenir en arrière !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Annuler",
+        confirmButtonText: "Oui, supprimez-le !"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.post("/teacher_absence/destroy/" + idteacherAbsence).then(function (response) {
+            if (response.data["status"] == "success") {
+              // this.Alladmins = [];
+              _this.GetAbsencesTeacher();
+            }
+
+            if (response.data["status"] == "impossible") {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Error !",
+                text: "Impossible supprimer votre compte",
+                showConfirmButton: true
+              });
+            }
+          });
+          Swal.fire("Supprimé!", "L'enseignant a été supprimé.", "success");
+        }
+      });
+    },
+    EditAbsenceTeacher: function EditAbsenceTeacher(idTeacherAbsence) {
+      var _this2 = this;
+
+      this.AbsenceTeacher.teacher_id = "", this.AbsenceTeacher.start_date = "", this.AbsenceTeacher.end_date = "", // (this.EditAbsencex = []);
+      this.IdTeacherAbsence = "";
+      axios.get("/teacher_absence/" + idTeacherAbsence).then(function (response) {
+        if (response.data["status"] == "success") {
+          _this2.EditAbsencex = response.data["teacher_absence"];
+          _this2.IdTeacherAbsence = _this2.EditAbsencex[0]["id"];
+          _this2.AbsenceTeacher.teacher_id = _this2.EditAbsencex[0]["teacher_id"];
+          _this2.AbsenceTeacher.start_date = _this2.EditAbsencex[0]["start_date"];
+          _this2.AbsenceTeacher.end_date = _this2.EditAbsencex[0]["end_date"];
+        }
+      });
+    },
+    GetTeachers: function GetTeachers() {
+      var _this3 = this;
 
       this.Teachers = [];
       axios.get("/teachers").then(function (response) {
         if (response.data["status"] == "success") {
-          _this.Teachers = response.data["teachers"];
+          _this3.Teachers = response.data["teachers"];
         }
       });
     },
     GetAbsencesTeacher: function GetAbsencesTeacher() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.Absences = [];
       axios.get("/teacher_absences").then(function (response) {
         if (response.data["status"] == "success") {
-          _this2.Absences = response.data["teachers"];
+          _this4.Absences = response.data["teacher_absences"];
+        }
+      });
+    },
+    UpdateAbsenceTeacher: function UpdateAbsenceTeacher() {
+      var _this5 = this;
+
+      axios.post("/update/teacher/absence/" + this.IdTeacherAbsence, this.AbsenceTeacher).then(function (response) {
+        if (response.data["status"] == "success") {
+          _this5.GetAbsencesTeacher();
+
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Ajouté !",
+            text: "la classe a été affecter",
+            showConfirmButton: true
+          });
+        }
+      })["catch"](function (error) {
+        if (error.response.status == 422) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Error !",
+            text: "Tous les champs c'est obligatoire !",
+            showConfirmButton: true
+          });
+          _this5.FromProf = [];
         }
       });
     },
     CreateAbsence: function CreateAbsence() {
-      var _this3 = this;
+      var _this6 = this;
 
       axios.post("/teacher_absences", this.AbsenceTeacher).then(function (response) {
         if (response.data["status"] == "success") {
-          _this3.GetTeachers();
+          _this6.GetAbsencesTeacher();
 
           Swal.fire({
             position: "center",
@@ -5240,7 +5387,7 @@ __webpack_require__.r(__webpack_exports__);
             text: "L'absence a été enregistré",
             showConfirmButton: true
           });
-          _this3.AbsenceTeacher = [];
+          _this6.AbsenceTeacher = [];
         }
       })["catch"](function (error) {
         if (error.response.status == 422) {
@@ -53312,10 +53459,162 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-absence-modal-lg",
+        attrs: { tabindex: "-1", role: "dialog", "aria-hidden": "true" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "form",
+                { staticClass: "needs-validation", attrs: { novalidate: "" } },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-4" }, [
+                      _c("label", { attrs: { for: "" } }, [
+                        _vm._v("Professeur")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.AbsenceTeacher.teacher_id,
+                            expression: "AbsenceTeacher.teacher_id"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        staticStyle: { "background-color": "#40404024" },
+                        attrs: {
+                          type: "text",
+                          disabled: "disabled",
+                          id: "val-date",
+                          name: "val-date"
+                        },
+                        domProps: { value: _vm.AbsenceTeacher.teacher_id },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.AbsenceTeacher,
+                              "teacher_id",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-4" }, [
+                      _c("label", { attrs: { for: "" } }, [
+                        _vm._v("Date de début")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.AbsenceTeacher.start_date,
+                            expression: "AbsenceTeacher.start_date"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "date",
+                          id: "val-date",
+                          name: "val-date"
+                        },
+                        domProps: { value: _vm.AbsenceTeacher.start_date },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.AbsenceTeacher,
+                              "start_date",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-4" }, [
+                      _c("label", { attrs: { for: "" } }, [
+                        _vm._v("Date de fin")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.AbsenceTeacher.end_date,
+                            expression: "AbsenceTeacher.end_date"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "date",
+                          id: "val-date",
+                          name: "val-date"
+                        },
+                        domProps: { value: _vm.AbsenceTeacher.end_date },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.AbsenceTeacher,
+                              "end_date",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button", "data-dismiss": "modal" },
+                  on: { click: _vm.UpdateAbsenceTeacher }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-plus color-primary" }),
+                  _vm._v(" Modifier\n          ")
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-12" }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(3),
+          _vm._m(5),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "table-responsive" }, [
@@ -53327,33 +53626,68 @@ var render = function() {
                   staticStyle: { color: "black" }
                 },
                 [
-                  _vm._m(4),
+                  _vm._m(6),
                   _vm._v(" "),
                   _c(
                     "tbody",
-                    [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(_vm.Absences) +
-                          "\n                "
-                      ),
-                      _vm._l(_vm.Absences, function(item, index) {
-                        return _c("tr", { key: index }, [
-                          _c("td", [_vm._v(_vm._s(item.id))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.name))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.namesub))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.email))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.tele))]),
-                          _vm._v(" "),
-                          _vm._m(5, true)
+                    _vm._l(_vm.Absences, function(item, index) {
+                      return _c("tr", { key: index }, [
+                        _c("td", [_vm._v(_vm._s(item.id))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.namesub))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.tele))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.start_date))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.end_date))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("span", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "mr-4",
+                                attrs: {
+                                  href: "javascript:void()",
+                                  "data-toggle": "modal",
+                                  "data-target": ".bd-absence-modal-lg",
+                                  "data-placement": "top",
+                                  title: "Edit"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.EditAbsenceTeacher(item.id)
+                                  }
+                                }
+                              },
+                              [_vm._m(7, true)]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "javascript:void()",
+                                  "data-toggle": "tooltip",
+                                  "data-placement": "top",
+                                  title: "Close"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.DeleteAdmin(item.id)
+                                  }
+                                }
+                              },
+                              [_vm._m(8, true)]
+                            )
+                          ])
                         ])
-                      })
-                    ],
-                    2
+                      ])
+                    }),
+                    0
                   )
                 ]
               )
@@ -53427,6 +53761,36 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Modifier l'absense")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_c("span", [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-secondary",
+        attrs: { type: "button", "data-dismiss": "modal" }
+      },
+      [_c("i", { staticClass: "fas fa-times" }), _vm._v(" Annuler\n          ")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "card-title" }, [_vm._v("L'absence")])
     ])
@@ -53443,9 +53807,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Matière")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")]),
-        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tele")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Date de début")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Date de fin")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
       ])
@@ -53455,48 +53821,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("span", [
-        _c(
-          "a",
-          {
-            staticClass: "mr-4",
-            attrs: {
-              href: "javascript:void()",
-              "data-toggle": "modal",
-              "data-target": ".bd-example-modal-lg",
-              "data-placement": "top",
-              title: "Edit"
-            }
-          },
-          [
-            _c("span", { staticClass: "badge badge-info" }, [
-              _c("i", { staticClass: "fa fa-pencil color-muted" }),
-              _vm._v(" "),
-              _c("span", [_vm._v(" Modifier")])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            attrs: {
-              href: "javascript:void()",
-              "data-toggle": "tooltip",
-              "data-placement": "top",
-              title: "Close"
-            }
-          },
-          [
-            _c("span", { staticClass: "badge badge-danger" }, [
-              _c("i", { staticClass: "far fa-trash-alt" }),
-              _vm._v(" "),
-              _c("span", [_vm._v(" Supprimer")])
-            ])
-          ]
-        )
-      ])
+    return _c("span", { staticClass: "badge badge-info" }, [
+      _c("i", { staticClass: "fa fa-pencil color-muted" }),
+      _vm._v(" "),
+      _c("span", [_vm._v(" Modifier")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "badge badge-danger" }, [
+      _c("i", { staticClass: "far fa-trash-alt" }),
+      _vm._v(" "),
+      _c("span", [_vm._v(" Supprimer")])
     ])
   }
 ]
