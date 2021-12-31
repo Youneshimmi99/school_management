@@ -90,7 +90,7 @@
   @method('PUT')
   @csrf
 </form> --}}
-<form onsubmit = "return confirm('xxx');" action="{{ route('exam.destroy',1) }}" method="post" class="del-form">
+<form onsubmit = "return confirm('xxx');" action="{{ route('teacher_absence.destroy',1) }}" method="post" class="del-form">
   <div class="column column-5"><button  class="btn " type="submit"><span class="fa fa-trash"></span></button></div>
     @method('delete')
   @csrf
