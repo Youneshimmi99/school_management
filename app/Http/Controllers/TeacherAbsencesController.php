@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TeacherAbsences;
+use Illuminate\Support\Facades\DB;
 
 class TeacherAbsencesController extends Controller
 {
@@ -69,7 +70,10 @@ class TeacherAbsencesController extends Controller
      */
     public function show($id)
     {
-        //
+        $teacher_absence=TeacherAbsences::find($id);
+
+        return response()->json(["status"=>"success","teacher_absence"=>$teacher_absence]);
+
     }
 
     /**
@@ -123,6 +127,22 @@ class TeacherAbsencesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $teacher_absences=TeacherAbsences::find($id);
+        if($teacher_absences->delete()){
+            return response()->json(["status"=>"success"]);
+        }return response()->json(["status"=>"error"]);
+
+    }
+
+    public function teacherAbsences($id){
+        $teacher_absences=DB::table('teachers')
+        ->join('teacher_absences','teacher_absences.teacher_id','=','teachers.id')
+        ->join('subjects','subjects.id','=','teachers.subject_id')
+        ->select('subjects.namesub','teachers.name as nameTeacher','teacher_absences.start_date','teacher_absences.end_date')
+        ->where('teachers.id','=',$id)
+        ->get();
+
+        return response()->json(["status"=>"success","teacher_absences"=>$teacher_absences]);
+
     }
 }

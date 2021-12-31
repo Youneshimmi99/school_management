@@ -8,7 +8,7 @@ class Option extends Model
 {
     protected $table='options';
 
-    public function Classe()
+    public function Classes()
     {
         return $this->hasMany(Classe::class);
     }

@@ -30,7 +30,7 @@ Route::post('/loginadmin', 'AuthController@LoginAdmin');
 include('course.php'); 
 include('exercice.php'); 
 include('exam.php'); 
-
+include('teacher.php'); 
 Route::middleware(['admin'])->group(function () {
     Route::get('/administration', 'AuthController@IndexDashboardAdmin');
     // include('classe.php');
@@ -80,6 +80,10 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/student/edit/{id}','AdminController@editStudent');
     Route::post('/student/update','AdminController@UpdateStudent');
     Route::post('/delete/student/{id}','AdminController@DeleteStudent');
+    Route::post('/delete/admin/{id}','AdminController@DeleteAdmin');
+
+     Route::get('/admin/edit/{id}','AdminController@EditAdmin');
+    Route::post('/admin/update','AdminController@UpdateAdmin');
     Route::post('/delete/admin/{id}','AdminController@DeleteAdmin');
 
 
