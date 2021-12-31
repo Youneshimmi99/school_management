@@ -38,6 +38,7 @@ class TeacherAbsencesController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $this->validate($request,[
             'teacher_id' => 'required',  
             'start_date' => 'required',
@@ -52,10 +53,10 @@ class TeacherAbsencesController extends Controller
         }
 
         if($teacher_absences->save()){
-            return response()->json(["status"=>"success","teacher_absences"=>$teacher_absences]);
+            return response()->json(["status"=>"success"]);
         }
         else{
-            return response()->json(["status"=>"error","teacher_absences"=>$teacher_absences]);
+            return response()->json(["status"=>"error"]);
         }
 
     }

@@ -254,11 +254,12 @@
                         </ul>
                     </li>
 
+
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-plug"></i><span class="nav-text">L'absense</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="./uc-select2.html">Afficher l'absense</a></li>
-                            <li><a href="./uc-nestable.html">Ajouter l'ansence</a></li>
+                            {{-- <li><a href="./uc-select2.html">Afficher l'absense</a></li> --}}
+                            <li><router-link to="/absence/prof">Ajouter l'absence</router-link></li>
                         </ul>
                     </li>
                     {{-- <li><a href="widget-basic.html" aria-expanded="false"><i class="icon icon-globe-2"></i><span

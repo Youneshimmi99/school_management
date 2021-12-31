@@ -1,13 +1,5 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header"></div>
-        </div>
-      </div>
-    </div>
-
     <!-- Large modal ajouter classe -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -148,7 +140,12 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary" @click="AjouerEmploi(FromProf.id)">Ajouter</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-dismiss="modal"
+              @click="AjouerEmploi(FromProf.id)"
+            >Ajouter</button>
           </div>
         </div>
       </div>
@@ -157,7 +154,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Les enseignants</h4>
+            <h4 class="card-title">Ajouter l'emploi de temps</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -171,7 +168,6 @@
                     <th scope="col">Nom et prenom</th>
                     <th scope="col">Matière</th>
                     <th scope="col">Classes</th>
-                    <th scope="col">Tele</th>
                     <th scope="col">L'emploi de temps</th>
                   </tr>
                 </thead>
@@ -180,8 +176,11 @@
                     <td>{{ item.id }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.namesub }}</td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                      <span v-for="(item2,index2) in TechearClasse" :key="index2">
+                        <span v-if="item2.teacher_id==item.id">{{ item2.nameClasse }} &ensp;</span>
+                      </span>
+                    </td>
                     <td>
                       <a
                         href="javascript:void()"
@@ -236,17 +235,18 @@ export default {
       IdGrade: "",
       IdClasse: "",
       Grades: [],
+      TechearClasse: [],
       Timetables: {
         File: "",
         NameTimeTable: ""
       },
       FromProf: {
-        name: "test1",
+        name: "",
         subject_id: "",
-        email: "sacascasc@gmail.com",
-        tele: "34234324",
-        password: "12345678",
-        password2: "12345678"
+        email: "",
+        tele: "",
+        password: "",
+        password2: ""
       },
 
       inputs: [
@@ -309,9 +309,11 @@ export default {
     },
     GetTeachers() {
       this.Teachers = [];
+      this.TechearClasse = [];
       axios.get("/teachersWithoutTimetable").then(response => {
         if (response.data["status"] == "success") {
           this.Teachers = response.data["teachers"];
+          this.TechearClasse = response.data["teachers_classes"];
         }
       });
     },
@@ -335,41 +337,43 @@ export default {
           }
         });
     },
-    // EditTeacher(idTeacher) {
-    //   (this.FromProf.name = ""),
-    //     (this.FromProf.subject_id = ""),
-    //     (this.FromProf.email = ""),
-    //     (this.FromProf.tele = ""),
-    //     axios.get("/teachers/edit/" + idTeacher).then(response => {
-    //       if (response.data["status"] == "success") {
-    //         this.TeachersIdit = response.data["teachers"];
-    //         this.FromProf.id = this.TeachersIdit.id;
-    //         this.FromProf.name = this.TeachersIdit.name;
-    //         this.FromProf.subject_id = this.TeachersIdit.subject_id;
-    //         this.FromProf.email = this.TeachersIdit.email;
-    //         this.FromProf.tele = this.TeachersIdit.tele;
-    //         this.TeachersCla = response.data["classes_teacher"];
-    //       }
-    //     });
-    // },
+
     handleFileUpload() {
       this.Timetables.File = this.$refs.file.files[0];
       console.log(this.Timetables.File);
     },
     AjouerEmploi(idTeacher) {
-      //   alert(idTeacher);
       const config = { headers: { "Content-Type": "multipart/form-data" } };
-      //   document.getElementById("val-ficher").value = [];
-
       this.timetables.append("file", this.Timetables.File);
       this.timetables.append("nameTimetable", this.Timetables.NameTimeTable);
       this.timetables.append("teacher_id", this.FromProf.id);
-
-      axios.post("/timetable", this.timetables, config).then(response => {
-        if (response.data["status"] == "success") {
-          this.GetTeachers();
-        }
-      });
+      axios
+        .post("/timetable", this.timetables, config)
+        .then(response => {
+          if (response.data["status"] == "success") {
+            this.GetTeachers();
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Ajouté !",
+              text: "L'emploi de temps a été enregistré",
+              showConfirmButton: true
+            });
+          }
+        })
+        .catch(error => {
+          if (error.response.status == 422) {
+            // this.errors = error.response.data.errors;
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Error !",
+              text: "Tous les champs c'est obligatoire !",
+              showConfirmButton: true
+            });
+            // this.FromProf = [];
+          }
+        });
     },
     UpdateTeacher() {
       axios

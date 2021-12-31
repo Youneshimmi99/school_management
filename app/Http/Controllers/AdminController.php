@@ -11,6 +11,7 @@ use App\Teacher;
 use App\Student;
 use App\Teacher_classe;
 use App\Timetable;
+use Illuminate\Support\Facades\Auth;
 
 
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -101,6 +102,17 @@ class AdminController extends Controller
         else return response()->json(["status"=>"error"]);
     }
     public function AddClasse(Request $request){
+        $request->validate([
+                'nameClasse' =>'required',
+                'number'=>'required|numeric',
+                'IdGrade'       =>'required',
+                'Option_id'       =>'required', 
+            ],[
+                'nameClasse.required' => 'Le champ Nom Classe est obligatoire.',
+                'number.required' => 'Le champ Number est obligatoire.',
+                'IdGrade.required' => 'Le champ de Niveau est obligatoire.',
+                'Option_id.required' => 'Le champ de Option est obligatoire.',
+            ]);
         // return $request;
         $classe=new Classe();
         $classe->nameClasse=$request->nameClasse;
@@ -119,7 +131,7 @@ class AdminController extends Controller
         // return $request;
         $request->validate([
                 'name' =>'required',
-                'email'=>'required',
+                'email'=>'required|email',
                 'password'       =>'required',
                 'password2'       =>'required',
                 'tele'      =>'required',  
@@ -193,9 +205,10 @@ class AdminController extends Controller
         }return response()->json(["status"=>"error"]);
     }
     public function AllAdmins(){
+        $idadmin=Auth::guard('admin')->user()->id;
         $admins=Admin::all();
         if ($admins) {
-           return response()->json(["status"=>"success","admins"=>$admins]);
+           return response()->json(["status"=>"success","admins"=>$admins,'idadmin'=>$idadmin]);
         }return response()->json(["status"=>"error"]);
     }
     ///1111
@@ -228,16 +241,22 @@ class AdminController extends Controller
     public function EditTeacher($id){
        
         $teacher=Teacher::find($id);
-        $teacher_classe=Teacher_classe::where('teacher_id',$id);
-        $teacher_classe=DB::table('teacher_classes')
-                            ->join('teachers','teachers.id','teacher_classes.teacher_id')
-                            ->join('classes','classes.id','teacher_classes.class_id')
-                            ->select('classes.id','classes.nameClasse')
-                            ->where('teacher_classes.teacher_id',$id)
-                            ->get();
+        // $teacher_classe=Teacher_classe::where('teacher_id',$id);
+        // $teacher_classe=DB::table('teacher_classes')
+        //                     ->join('teachers','teachers.id','teacher_classes.teacher_id')
+        //                     ->join('classes','classes.id','teacher_classes.class_id')
+        //                     ->select('classes.id','classes.nameClasse')
+        //                     ->where('teacher_classes.teacher_id',$id)
+        //                     ->get();
                             
         // return $teacher;
-        return response()->json(["status"=>"success","teachers"=>$teacher,"classes_teacher"=>$teacher_classe]);
+        return response()->json(["status"=>"success","teachers"=>$teacher]);
+    }
+    public function EditAdmin($id){
+        $admin=Admin::find($id);
+        if ($admin) {
+            return response()->json(["status"=>"success","editadmin"=>$admin]);
+        }return response()->json(["status"=>"error"]);
     }
     public function editStudent($id){
         $student=Student::find($id);
@@ -248,7 +267,7 @@ class AdminController extends Controller
         
               $request->validate([
                 'name'=>'required',
-                'email'=>'required',
+                'email'=>'required|email',
                 'password'       =>'required',
                 'password2'       =>'required',
                 'subject_id'      =>'required',
@@ -270,14 +289,43 @@ class AdminController extends Controller
         }
 
     }
+    public function UpdateAdmin(Request $request){
+        // return $request;
+            $request->validate([
+                'name'=>'required',
+                'email'=>'required|email',
+                'password'       =>'required',
+                'password2'       =>'required',
+                'tele'      =>'required',  
+            ]);
+            $admin=Admin::find($request->id);
+            if ($request->password===$request->password2) {
+                $admin->name=$request->name;
+                $admin->email=$request->email;
+                $admin->tele=$request->tele;
+                $admin->password=\Hash::make($request->password);
+                if($admin->save()){
+                    return response()->json(["status"=>"success"]);
+                }return response()->json(["status"=>"faild"]);
+            }else {
+            return response()->json(["password"=>"error","msg"=>"Vos mot de passe  ne sont pas correctes !"]);
+            }
+
+    }
     public function UpdateStudent(Request $request){
-        $student=Student::find($request['student']['id']);
-        if ($request['student']['password']===$request['student']['password']) {
+        $request->validate([    
+            'name'=>'required',
+            'email'=>'required|email',
+            'password'       =>'required',
+            'tele'      =>'required',  
+        ]);
+        $student=Student::find($request->id);
+        if ($request->password===$request->password2) {
             // if (!Student::where('email',$request['student']['email'])->count()) {
-                    $student->name=$request['student']['name'];
-                    $student->email=$request['student']['email'];
-                    $student->password=\Hash::make($request['student']['password']);
-                    $student->tele=$request['student']['tele'];
+                    $student->name=$request->name;
+                    $student->email=$request->email;
+                    $student->password=\Hash::make($request->password);
+                    $student->tele=$request->tele;
                     if ($student->save()) {
                         return response()->json(["status"=>"success"]);
                     }else return response()->json(["status"=>"error"]);
@@ -321,36 +369,40 @@ class AdminController extends Controller
            return response()->json(["status"=>"success"]);
         }return response()->json(["status"=>"faild"]);
     }
-     public function AddStudent(Request $request){
+    public function DeleteAdmin($id){
+        if (Auth::guard('admin')->user()->id==$id) {
+           return response()->json(["status"=>"impossible"]);
+        } 
+        else {
+            $admin=Admin::find($id);
+            if ($admin->delete()) {
+            return response()->json(["status"=>"success"]);
+            }return response()->json(["status"=>"faild"]);
+        }
         
-        //  return $request['student']['password'];   
-            // $request->validate([
-            //     'name' =>'required',
-            //     'email'=>'required',
-            //     'password'       =>'required',
-            //     'password2'       =>'required',
-            //     'tele'      =>'required',  
-            // ]);
-            // $countEmail=;
-            if ($request['student']['password']==$request['student']['password2']) {
-                 if (!Student::where('email',$request['student']['email'])->count()) {
+    }
+     public function AddStudent(Request $request){ 
+            $request->validate([
+                'name' =>'required',
+                'email'=>'required|email',
+                'password'       =>'required',
+                'password2'       =>'required',
+                'tele'      =>'required',  
+            ]);
+            if ($request->password==$request->password2) {
                     $student=new Student();
-                    $student->name=$request['student']['name'];
-                    $student->email=$request['student']['email'];
-                    $student->password=\Hash::make($request['student']['password']);
-                    $student->tele=$request['student']['tele'];
+                    $student->name=$request->name;
+                    $student->email=$request->email;
+                    $student->password=\Hash::make($request->password);
+                    $student->tele=$request->tele;
                     if ($student->save()) {
                         return response()->json(["status"=>"success"]);
-                    }else return response()->json(["status"=>"error"]);
-                }return response()->json(["email"=>"error","msg"=>"Ce email déjà utilisée !"]);
+                    }else return response()->json(["status"=>"error"]);       
             }else return response()->json(["password"=>"error","msg"=>"Vos mot de passe  ne sont pas correctes !"]);
       }
       public function TrashStudent($id){
-
-        
         $classe = Classe::find($id);
-        return $classe;
-          
+        return $classe;   
       }
 
 }

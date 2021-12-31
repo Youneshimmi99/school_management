@@ -25,6 +25,17 @@
     </div>-->
 
     <!-- row -->
+    <div v-if="errorCheck" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <ol>
+        <li v-if="errors.nameClasse">{{ errors.nameClasse[0] }}</li>
+        <li v-if="errors.IdGrade">{{ errors.IdGrade[0] }}</li>
+        <li v-if="errors.Option_id">{{ errors.Option_id[0] }}</li>
+        <li v-if="errors.number">{{ errors.number[0] }}</li>
+      </ol>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
@@ -111,15 +122,8 @@
                 </div>
 
                 <div class="d-flex justify-content-end mt-4">
-                  <!-- <button
-                    type="button"
-                    class="btn mb-2 mr-2"
-                    v-bind:class="{'btn-info':add,'btn-primary':!add}"
-                    v-bind:id="{'toastr-info-top-right':add }"
-                  >Info</button>-->
-                  <button type="button" @click="AddClasse" class="btn btn-primary">
-                    <i class="far fa-plus-square"></i>
-                    <span>&ensp;Ajouter</span>
+                  <button type="button" @click="AddClasse" class="btn btn-primary btn-rounded">
+                    <i class="fa fa-plus color-primary"></i>&ensp;Ajouter
                   </button>
                 </div>
               </form>
@@ -137,6 +141,8 @@ export default {
       add: true,
       addadmin: true,
       spinner: false,
+      errorCheck: false,
+      errors: [],
       Subjects: [],
       Cycles: [],
       GradesName: [],
@@ -200,17 +206,36 @@ export default {
       });
     },
     AddClasse() {
-      axios.post("/class/add", this.FormClasse).then(response => {
-        if (response.data["status"] == "success") {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Ajouté !",
-            text: "Une classe a été enregistré",
-            showConfirmButton: true
-          });
-        }
-      });
+      this.errors = [];
+      this.errorCheck = false;
+      this.FormClasse = [];
+      axios
+        .post("/class/add", this.FormClasse)
+        .then(response => {
+          if (response.data["status"] == "success") {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Ajouté !",
+              text: "Une classe a été enregistré",
+              showConfirmButton: true
+            });
+          }
+        })
+        .catch(error => {
+          if (error.response.status == 422) {
+            this.errors = error.response.data.errors;
+            this.errorCheck = true;
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Error !",
+              text: "Tous les champs c'est obligatoire !",
+              showConfirmButton: true
+            });
+            // this.FromProf = [];
+          }
+        });
     }
   },
   created() {

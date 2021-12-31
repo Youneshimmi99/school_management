@@ -65,7 +65,10 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/classes_teachers/{id}','AdminController@ClassesTeacher');
 
     Route::get('/teachers/edit/{id}','AdminController@EditTeacher');
+    Route::get('/admin/edit/{id}','AdminController@EditAdmin');
+
     Route::post('/teachers/update','AdminController@UpdateTeacher');
+    Route::post('/admin/update','AdminController@UpdateAdmin');
     Route::post('/delete/teacher/{id}','AdminController@DeleteTeacher');
     Route::post('/delete/teacher/classe/{id}','AdminController@DelteTeacherClasse');
 
@@ -77,6 +80,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/student/edit/{id}','AdminController@editStudent');
     Route::post('/student/update','AdminController@UpdateStudent');
     Route::post('/delete/student/{id}','AdminController@DeleteStudent');
+    Route::post('/delete/admin/{id}','AdminController@DeleteAdmin');
+
+
 
 
 

@@ -11,12 +11,18 @@ import AllTeacher from "./components/Admin/AllTeachers.vue";
 import TimeTableTeahcer from "./components/Admin/TimeTbaleTeacher.vue";
 import AffectationClasses from "./components/Admin/AffectationClasses.vue";
 import TimeTableClasse from "./components/Admin/TimeTableClasse.vue";
+import TeacherAbsence from "./components/Admin/TeacherAbsence.vue";
 
 const routes = [
     {
         path: "/accueil",
         name: "dash",
         component: Dashboard
+    },
+    {
+        path: "/absence/prof",
+        name: "absence_prof",
+        component: TeacherAbsence
     },
     {
         path: "/timetable/classe",
