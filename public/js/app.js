@@ -4993,7 +4993,89 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      CountTechers: 0,
+      CountStudent: 0,
+      countadmin: 0,
+      femaleStudent: 0,
+      CountClasse: 0,
+      GradeClasse: 0,
+      SubjectTeacher: 0
+    };
+  },
+  methods: {
+    AllTeacher: function AllTeacher() {
+      var _this = this;
+
+      axios.get("/allTeachers").then(function (response) {
+        if (response.data["status"] == "success") {
+          _this.CountTechers = response.data["teachers"];
+        }
+      });
+    },
+    CountStudents: function CountStudents() {
+      var _this2 = this;
+
+      axios.get("/allStudents").then(function (response) {
+        if (response.data["status"] == "success") {
+          _this2.CountStudent = response.data["students"];
+        }
+      });
+    },
+    CountAdmin: function CountAdmin() {
+      var _this3 = this;
+
+      axios.get("/alladmins").then(function (response) {
+        if (response.data["status"] == "success") {
+          _this3.countadmin = response.data["maleStudents"];
+        }
+      });
+    },
+    FemaleStudents: function FemaleStudents() {
+      var _this4 = this;
+
+      axios.get("/femaleStudents").then(function (response) {
+        if (response.data["status"] == "success") {
+          _this4.femaleStudent = response.data["femaleStudents"];
+        }
+      });
+    },
+    Allclasses: function Allclasses() {
+      var _this5 = this;
+
+      axios.get("/allClasses").then(function (response) {
+        if (response.data["status"] == "success") {
+          _this5.CountClasse = response.data["classes"];
+        }
+      });
+    },
+    AllGradesClasse: function AllGradesClasse() {
+      var _this6 = this;
+
+      axios.get("/gradesClasses").then(function (response) {
+        if (response.data["status"] == "success") {
+          _this6.CountClasse = response.data["classes"];
+        }
+      });
+    },
+    SubjectTeachers: function SubjectTeachers() {
+      var _this7 = this;
+
+      axios.get("/subjectsTeachers").then(function (response) {
+        if (response.data["status"] == "success") {
+          _this7.GradeClasse = response.data["teachers"];
+        }
+      });
+    }
+  },
+  created: function created() {
+    this.SubjectTeachers();
+    this.AllGradesClasse();
+    this.Allclasses();
+    this.CountAdmin();
+    this.MaleStudents();
+    this.CountStudents();
+    this.AllTeacher();
   }
 });
 
@@ -53081,137 +53163,171 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "row page-titles mx-0" }, [
-        _c("div", { staticClass: "col-sm-6 p-md-0" }, [
-          _c("div", { staticClass: "welcome-text" }, [
-            _c("h4", [_vm._v("Hi, welcome back!")]),
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "stat-widget-one card-body" }, [
+            _vm._m(1),
             _vm._v(" "),
-            _c("p", { staticClass: "mb-0" }, [
-              _vm._v("Your business dashboard template")
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex"
-          },
-          [
-            _c("ol", { staticClass: "breadcrumb" }, [
-              _c("li", { staticClass: "breadcrumb-item" }, [
-                _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                  _vm._v("Layout")
-                ])
-              ]),
+            _c("div", { staticClass: "stat-content d-inline-block" }, [
+              _c("div", { staticClass: "stat-text" }, [_vm._v("Professeurs")]),
               _vm._v(" "),
-              _c("li", { staticClass: "breadcrumb-item active" }, [
-                _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                  _vm._v("Blank")
-                ])
-              ])
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "stat-widget-one card-body" }, [
-              _c("div", { staticClass: "stat-icon d-inline-block" }, [
-                _c("i", { staticClass: "ti-money text-success border-success" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stat-content d-inline-block" }, [
-                _c("div", { staticClass: "stat-text" }, [_vm._v("Profit")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stat-digit" }, [_vm._v("1,012")])
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "stat-widget-one card-body" }, [
-              _c("div", { staticClass: "stat-icon d-inline-block" }, [
-                _c("i", { staticClass: "ti-user text-primary border-primary" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stat-content d-inline-block" }, [
-                _c("div", { staticClass: "stat-text" }, [_vm._v("Customer")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stat-digit" }, [_vm._v("961")])
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "stat-widget-one card-body" }, [
-              _c("div", { staticClass: "stat-icon d-inline-block" }, [
-                _c("i", {
-                  staticClass: "ti-layout-grid2 text-pink border-pink"
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stat-content d-inline-block" }, [
-                _c("div", { staticClass: "stat-text" }, [_vm._v("Projects")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stat-digit" }, [_vm._v("770")])
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "stat-widget-one card-body" }, [
-              _c("div", { staticClass: "stat-icon d-inline-block" }, [
-                _c("i", { staticClass: "ti-link text-danger border-danger" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stat-content d-inline-block" }, [
-                _c("div", { staticClass: "stat-text" }, [_vm._v("Referral")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stat-digit" }, [_vm._v("2,781")])
+              _c("div", { staticClass: "stat-digit" }, [
+                _vm._v(_vm._s(_vm.CountTechers))
               ])
             ])
           ])
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c("h4", { staticClass: "card-title" }, [
-                _vm._v("Fee Collections and Expenses")
+      _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "stat-widget-one card-body" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "stat-content d-inline-block" }, [
+              _c("div", { staticClass: "stat-text" }, [_vm._v("Les élèves")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "stat-digit" }, [
+                _vm._v(_vm._s(_vm.CountStudent))
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "stat-widget-one card-body" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "stat-content d-inline-block" }, [
+              _c("div", { staticClass: "stat-text" }, [_vm._v("Les classes")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "stat-digit" }, [
+                _vm._v(_vm._s(_vm.CountClasse))
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "stat-widget-one card-body" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "stat-content d-inline-block" }, [
+              _c("div", { staticClass: "stat-text" }, [_vm._v("Admins")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "stat-digit" }, [_vm._v(_vm._s())])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(5)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row page-titles mx-0" }, [
+      _c("div", { staticClass: "col-sm-6 p-md-0" }, [
+        _c("div", { staticClass: "welcome-text" }, [
+          _c("h4", [_vm._v("Hi, welcome back!")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "mb-0" }, [
+            _vm._v("Your business dashboard template")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex"
+        },
+        [
+          _c("ol", { staticClass: "breadcrumb" }, [
+            _c("li", { staticClass: "breadcrumb-item" }, [
+              _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                _vm._v("Layout")
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "ct-bar-chart mt-5" })
+            _c("li", { staticClass: "breadcrumb-item active" }, [
+              _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                _vm._v("Blank")
+              ])
             ])
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-4" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "ct-pie-chart" })
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "stat-icon d-inline-block" }, [
+      _c("i", { staticClass: "ti-money text-success border-success" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "stat-icon d-inline-block" }, [
+      _c("i", { staticClass: "ti-user text-primary border-primary" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "stat-icon d-inline-block" }, [
+      _c("i", { staticClass: "ti-layout-grid2 text-pink border-pink" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "stat-icon d-inline-block" }, [
+      _c("i", { staticClass: "ti-link text-danger border-danger" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h4", { staticClass: "card-title" }, [
+              _vm._v("Fee Collections and Expenses")
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "ct-bar-chart mt-5" })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "ct-pie-chart" })
           ])
         ])
       ])

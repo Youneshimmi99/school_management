@@ -8,6 +8,10 @@ use App\Classe;
 use App\Teacher;
 use App\Grade;
 use App\Subject;
+use App\Admin;
+
+
+
 
 class TeacherController extends Controller
 {
@@ -20,7 +24,7 @@ class TeacherController extends Controller
 
     //count male students
     public function maleStudents(){
-        $maleStudents = Student::orderBy('created_at','desc')->where('gender','male')->count();
+        $maleStudents = Admin::orderBy('created_at','desc')->where('gender','male')->count();
 
         return response()->json(["status"=>"success","maleStudents"=>$maleStudents]);
     }
@@ -54,7 +58,6 @@ class TeacherController extends Controller
     //count teachers
     public function allTeachers(){
         $teachers = Teacher::orderBy('created_at','desc')->count();
-
         return response()->json(["status"=>"success","teachers"=>$teachers]);
     }
 
