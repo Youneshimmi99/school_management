@@ -1,23 +1,25 @@
 <template>
   <div>
     <div class="row page-titles mx-0">
-      <div class="col-sm-12s p-md-0">
+      <div class="col-sm-6 p-md-0">
         <div class="welcome-text">
-          <h4>Hi, welcome back!</h4>
-          <p class="mb-1">Validation</p>
+          <span style="font-size:19px;" class="titleheader">
+            <i class="fas fa-calendar-plus"></i> L'absences
+          </span>
         </div>
       </div>
-      <div class="col-sm-6 p-md-0">
+      <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="javascript:void(0)">Form</a>
+            <a href="javascript:void(0)">Accueil</a>
           </li>
           <li class="breadcrumb-item active">
-            <a href="javascript:void(0)">Validation</a>
+            <a href="javascript:void(0)">L'absences</a>
           </li>
         </ol>
       </div>
     </div>
+
     <div class="d-flex justify-content-end">
       <button
         type="button"
@@ -27,7 +29,7 @@
         @click="GetTeachers"
         class="btn btn-primary btn-rounded mb-3"
       >
-        <i class="fa fa-plus color-primary"></i>&ensp;Ajouter
+        <i class="fa fa-plus color-primary"></i>&ensp;Ajouter l'absence
       </button>
     </div>
     <!-- Large modal edit Student -->

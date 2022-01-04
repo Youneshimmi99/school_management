@@ -51,6 +51,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/getclasses/{id}','AdminController@GetClasses');
     Route::get('/getclassesbyid/{id}','AdminController@GetClassesByIdGrade');
     Route::get('/getclassesbyid/notimeTable/{id}','AdminController@ClasseTimeTableOk');
+    Route::get('/adminactive','AdminController@GestAdminActive');
+
 
 
     Route::get('/branches/{id}','AdminController@GetBranchs');

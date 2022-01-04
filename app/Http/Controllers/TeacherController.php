@@ -23,10 +23,10 @@ class TeacherController extends Controller
     }
 
     //count male students
-    public function maleStudents(){
-        $maleStudents = Admin::orderBy('created_at','desc')->where('gender','male')->count();
+    public function Alladmin(){
+        $countAdmin = Admin::orderBy('created_at','desc')->count();
 
-        return response()->json(["status"=>"success","maleStudents"=>$maleStudents]);
+        return response()->json(["status"=>"success","countadmin"=>$countAdmin]);
     }
 
     //count female students
