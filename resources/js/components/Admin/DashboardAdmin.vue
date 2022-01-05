@@ -85,36 +85,38 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="card bg-primary">
-          <div class="card-body pb-0">
-            <div class="row">
-              <div class="col">
-                <h5 class="text-white">Power</h5>
-                <span class="text-white">2017.1.20</span>
-              </div>
-              <div class="col text-right">
-                <h5 class="text-white">
-                  <i class="fa fa-caret-up"></i> 260
-                </h5>
-                <span class="text-white">+12.5(2.8%)</span>
-              </div>
-            </div>
-          </div>
-          <div class="chart-wrapper">
-            <canvas id="chart_widget_1"></canvas>
-          </div>
-        </div>-->
       </div>
       <div class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <div class="chart">
-              <!-- {{SubClasse}} -->
-              <div style="float: right">
-                <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+        <div class="row chart">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Professeur En ligne</h4>
+              </div>
+              <div class="card-body ex1">
+                <div class="basic-list-group">
+                  <ul class="list-group tailleListe">
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-center"
+                      v-for="(item,index) in Teachers"
+                      :key="index"
+                    >
+                      {{ item.name }}
+                      <span class="badge badge-success badge-pill">En ligne</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <highcharts :options="chartOptions"></highcharts>
           </div>
         </div>
       </div>
@@ -127,11 +129,18 @@
 .chart {
   height: 400px;
 }
+.ex1 {
+  height: 380px;
+  overflow: scroll;
+}
 </style>
+
 
 
 <script>
 // import charts from "./charts";
+import HighchartsVue from "highcharts-vue";
+import { Chart } from "highcharts-vue";
 import "echarts";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
@@ -153,7 +162,8 @@ use([
 export default {
   name: "HelloWorld",
   components: {
-    VChart
+    VChart,
+    highcharts: Chart
   },
   provide: {
     [THEME_KEY]: "white"
@@ -166,9 +176,17 @@ export default {
       femaleStudent: 0,
       CountClasse: 0,
       gradeClasses: [],
+      Teachers: [],
       SubClasse: [],
       SubjectTeacher: 0,
       AdminActive: [],
+      chartOptions: {
+        series: [
+          {
+            data: [1, 2, 3] // sample data
+          }
+        ]
+      },
       option: {
         title: {
           text: "Les Classes",
@@ -235,6 +253,14 @@ export default {
     };
   },
   methods: {
+    GetTeachers() {
+      this.Teachers = [];
+      axios.get("/teachers").then(response => {
+        if (response.data["status"] == "success") {
+          this.Teachers = response.data["teachers"];
+        }
+      });
+    },
     getAdminActive() {
       axios.get("/adminactive").then(response => {
         if (response.data["status"] == "success") {
@@ -301,6 +327,7 @@ export default {
     this.CountStudents();
     this.AllTeacher();
     this.getAdminActive();
+    this.GetTeachers();
   }
 };
 </script>

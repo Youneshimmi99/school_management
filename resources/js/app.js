@@ -16,6 +16,7 @@ Vue.component(
 import Vue from "vue";
 import routes from "./Routes";
 import VueRouter from "vue-router";
+import HighchartsVue from "highcharts-vue";
 
 import Swal from "sweetalert2";
 window.Swal = Swal;
