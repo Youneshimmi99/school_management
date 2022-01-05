@@ -39,6 +39,7 @@ class TeacherAbsencesController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $this->validate($request,[
             'teacher_id' => 'required',  
             'start_date' => 'required',
@@ -53,10 +54,10 @@ class TeacherAbsencesController extends Controller
         }
 
         if($teacher_absences->save()){
-            return response()->json(["status"=>"success","teacher_absences"=>$teacher_absences]);
+            return response()->json(["status"=>"success"]);
         }
         else{
-            return response()->json(["status"=>"error","teacher_absences"=>$teacher_absences]);
+            return response()->json(["status"=>"error"]);
         }
 
     }
@@ -69,9 +70,19 @@ class TeacherAbsencesController extends Controller
      */
     public function show($id)
     {
-        $teacher_absence=TeacherAbsences::find($id);
 
-        return response()->json(["status"=>"success","teacher_absence"=>$teacher_absence]);
+        // return $id;
+        // $teacher_absence=TeacherAbsences::find($id);
+
+        // return $teacher_absence;
+        $teacher_absences=DB::table('teachers')
+        ->join('teacher_absences','teacher_absences.teacher_id','=','teachers.id')
+        ->join('subjects','subjects.id','=','teachers.subject_id')
+        ->select('teacher_absences.id','teacher_absences.teacher_id','teachers.name','teacher_absences.start_date','teacher_absences.end_date')
+        ->where('teacher_absences.id',$id)
+        ->get();
+        // return  $teacher_absences;
+        return response()->json(["status"=>"success","teacher_absence"=>$teacher_absences]);
 
     }
 
@@ -93,28 +104,25 @@ class TeacherAbsencesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
+        // return $request;
         $this->validate($request,[
             'teacher_id' => 'required',  
             // 'start_date' => 'required',
         ]);
 
+
         $teacher_absences = TeacherAbsences::find($id);
 
-        $teacher_absences->teacher_id=$request->input('teacher_id');
-        if($request->has('start_date')){
-        $teacher_absences->start_date=$request->input('start_date');
-        }
-        if($request->has('end_date')){
-            $teacher_absences->end_date=$request->input('end_date');
-        }
-
+        $teacher_absences->teacher_id=$request->teacher_id;
+        $teacher_absences->start_date=$request->start_date;
+        $teacher_absences->end_date=$request->end_date;
         if($teacher_absences->save()){
-            return response()->json(["status"=>"success","teacher_absences"=>$teacher_absences]);
+            return response()->json(["status"=>"success"]);
         }
         else{
-            return response()->json(["status"=>"error","teacher_absences"=>$teacher_absences]);
+            return response()->json(["status"=>"error"]);
         }
     }
 
@@ -133,12 +141,11 @@ class TeacherAbsencesController extends Controller
 
     }
 
-    public function teacherAbsences($id){
+    public function teacherAbsences(){
         $teacher_absences=DB::table('teachers')
         ->join('teacher_absences','teacher_absences.teacher_id','=','teachers.id')
         ->join('subjects','subjects.id','=','teachers.subject_id')
-        ->select('subjects.namesub','teachers.name as nameTeacher','teacher_absences.start_date','teacher_absences.end_date')
-        ->where('teachers.id','=',$id)
+        ->select('teacher_absences.id','subjects.namesub','teachers.name','teachers.tele','teacher_absences.start_date','teacher_absences.end_date')
         ->get();
 
         return response()->json(["status"=>"success","teacher_absences"=>$teacher_absences]);

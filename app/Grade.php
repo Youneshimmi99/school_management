@@ -18,4 +18,8 @@ class Grade extends Model
     {
         return $this->hasMany(Classe::class);
     }
+    public function Course()
+    {
+        return $this->hasMany(Course::class);
+    }
 }

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../vendor/select2/css/select2.min.css">
         <link rel="stylesheet" href="./vendor/toastr/css/toastr.min.css">
          <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+             <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
 
 </head>
 
@@ -47,7 +48,8 @@
             <a href="index.html" class="brand-logo">
                 <img class="logo-abbr" src="./images/logo.png" alt="">
                 <img class="logo-compact" src="./images/logo-text.png" alt="">
-                <img class="brand-title" src="./images/logo-text.png" alt="">
+                &ensp;GesEcole
+                {{-- <img class="brand-title" src="./images/logo-text.png" alt=""> --}}
             </a>
 
             <div class="nav-control">
@@ -68,7 +70,7 @@
                 <nav class="navbar navbar-expand">
                     {{-- <h1>{{ Auth::guard("admin")->user()->email }}</h1> --}}
                     <div class="collapse navbar-collapse justify-content-between">
-                        <div class="header-left">
+                        {{-- <div class="header-left">
                             <div class="search_bar dropdown">
                                 <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
                                     <i class="mdi mdi-magnify"></i>
@@ -79,7 +81,7 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <ul class="navbar-nav header-right">
                             {{-- <li class="nav-item dropdown notification_dropdown">
@@ -170,7 +172,7 @@
                                     @csrf
                                     <button type="submit" class="dropdown-item">
                                         <i class="icon-key"></i>
-                                        <span class="ml-2">Logout </span>
+                                        <span class="ml-2">Déconnexion</span>
                                     </button>
                                 </form>
                     </div>
@@ -191,12 +193,13 @@
                     <li class="nav-label first">Main Menu</li>
                     <li>
                         <router-link tag="a" to="/accueil"  class="nav-link">
-                             <i class="icon icon-app-store"></i><span class="nav-text">accueil</span>
+                            <i class="fas fa-bars"></i>
+                             <span class="nav-text">accueil</span>
                         </router-link>
                     </li>
                     <li class="nav-label">Apps</li>
-                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-single-04"></i><span class="nav-text">Ajouter un Compte</span></a>
+                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                         <i class="fas fa-user"></i><span class="nav-text">Ajouter un Compte</span></a>
                         <ul aria-expanded="false">
                             <li>
                                 <router-link tag="a" to="/ajouter_admin"  class="nav-link">
@@ -220,8 +223,9 @@
                             
                         </ul>
                     </li> --}}
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-chart-bar-33"></i><span class="nav-text">Classe</span></a>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                         <i class="fab fa-buromobelexperte"></i>
+                                <span class="nav-text">Classe</span></a>
                         <ul aria-expanded="false">
                             <li><router-link to="/classes">afficher les classes</router-link></li>
                              <li><router-link  to="/creer_classe">Créer une Classe </a></li>
@@ -231,9 +235,8 @@
                             
                         </ul>
                     </li>
-                    <li class="nav-label">Components</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-world-2"></i><span class="nav-text">Emploi du Temps</span></a>
+                    {{-- <li class="nav-label">Components</li> --}}
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"> <i class="fas fa-table"></i><span class="nav-text">Emploi du Temps</span></a>
                         <ul aria-expanded="false">
                             {{-- <li><a href="./page-register.html">Register</a></li>
                             <li><a href="./page-login.html">Login</a></li> --}}
@@ -254,11 +257,13 @@
                         </ul>
                     </li>
 
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-plug"></i><span class="nav-text">L'absense</span></a>
+
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="fas fa-calendar-plus"></i>
+                       <span class="nav-text">L'absense</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="./uc-select2.html">Afficher l'absense</a></li>
-                            <li><a href="./uc-nestable.html">Ajouter l'ansence</a></li>
+                            {{-- <li><a href="./uc-select2.html">Afficher l'absense</a></li> --}}
+                            <li><router-link to="/absence/prof">Ajouter l'absence</router-link></li>
                         </ul>
                     </li>
                     {{-- <li><a href="widget-basic.html" aria-expanded="false"><i class="icon icon-globe-2"></i><span
@@ -316,6 +321,7 @@
                
                     
                     <router-view></router-view>
+                  
                
             </div>
             </div>
@@ -330,8 +336,8 @@
         ***********************************-->
         <div class="footer">
             <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
-                <p>Distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a></p>
+                <p>Copyright © Designed &amp; Developed by </p>
+                <p>Youssef Akchar,Younes Hemmi,Mohamed </p>
             </div>
         </div>
         <!--**********************************
@@ -374,7 +380,11 @@
     <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="./js/plugins-init/datatables.init.js"></script>
 
+     <!-- Chart ChartJS plugin files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+   
     {{-- <script src="./vendor/chartist/js/chartist.min.js"></script>
+    
 
     <script src="./vendor/moment/moment.min.js"></script>
     <script src="./vendor/pg-calendar/js/pignose.calendar.min.js"></script>

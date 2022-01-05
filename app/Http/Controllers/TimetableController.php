@@ -41,13 +41,13 @@ class TimetableController extends Controller
     {
 
         // return $request->classe_id;
-        // $this->validate($request,[
-        //     'nameTimetable' => 'required|max:255',  
-        //     'file' => 'required',
-        //     // 'teaher_id' => 'required_without:student_id',
-        //     // 'student_id' => 'required_without:teacher_id',
+        $this->validate($request,[
+            'nameTimetable' => 'required|max:255',  
+            'file' => 'required',
+            // 'teaher_id' => 'required_without:student_id',
+            // 'student_id' => 'required_without:teacher_id',
         
-        // ]);
+        ]);
 
         $timetable = new Timetable;
 
@@ -114,9 +114,20 @@ class TimetableController extends Controller
         foreach($timetables as $timetable){
             $teachers_id[]=$timetable->teacher_id;
         }
-        $teachers = Teacher::whereNotIn('id', $teachers_id)->get();
+        $teachers = DB::table('teachers')
+                        ->join('subjects','subjects.id','=','teachers.subject_id')
+                        ->select('teachers.id','teachers.name','teachers.email','teachers.image','teachers.tele','subjects.namesub')
+                        ->whereNotIn('teachers.id', $teachers_id)
+                        ->get();
+        $teachers_classes=DB::table('teacher_classes')
+                        ->join('classes','classes.id','=','teacher_classes.class_id')
+                        ->join('teachers','teachers.id','=','teacher_classes.teacher_id')
+                        ->join('subjects','subjects.id','=','teachers.subject_id')
+                        ->select('teacher_classes.id','teacher_classes.teacher_id','classes.nameClasse')
+                        ->get();
+        
 
-        return response()->json(["status"=>"success","teachers"=>$teachers]);
+        return response()->json(["status"=>"success","teachers"=>$teachers,'teachers_classes'=>$teachers_classes]);
 
     }
 

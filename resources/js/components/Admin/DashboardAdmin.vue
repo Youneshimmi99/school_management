@@ -3,17 +3,17 @@
     <div class="row page-titles mx-0">
       <div class="col-sm-6 p-md-0">
         <div class="welcome-text">
-          <h4>Hi, welcome back!</h4>
-          <p class="mb-0">Your business dashboard template</p>
+          <h4>Hi, {{ AdminActive["name"] }}</h4>
+          <p class="mb-0">{{ AdminActive["email"] }}</p>
         </div>
       </div>
       <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="javascript:void(0)">Layout</a>
-          </li>
+          <!-- <li class="breadcrumb-item">
+            <a href="javascript:void(0)">ccueil</a>
+          </li>-->
           <li class="breadcrumb-item active">
-            <a href="javascript:void(0)">Blank</a>
+            <a href="javascript:void(0)">Accueil</a>
           </li>
         </ol>
       </div>
@@ -24,11 +24,11 @@
         <div class="card">
           <div class="stat-widget-one card-body">
             <div class="stat-icon d-inline-block">
-              <i class="ti-money text-success border-success"></i>
+              <i class="fas fa-chalkboard-teacher"></i>
             </div>
             <div class="stat-content d-inline-block">
-              <div class="stat-text">Profit</div>
-              <div class="stat-digit">1,012</div>
+              <div class="stat-text">Professeurs</div>
+              <div class="stat-digit">{{ CountTechers }}</div>
             </div>
           </div>
         </div>
@@ -37,11 +37,11 @@
         <div class="card">
           <div class="stat-widget-one card-body">
             <div class="stat-icon d-inline-block">
-              <i class="ti-user text-primary border-primary"></i>
+              <i class="fas fa-user-graduate"></i>
             </div>
             <div class="stat-content d-inline-block">
-              <div class="stat-text">Customer</div>
-              <div class="stat-digit">961</div>
+              <div class="stat-text">Les élèves</div>
+              <div class="stat-digit">{{ CountStudent }}</div>
             </div>
           </div>
         </div>
@@ -50,11 +50,11 @@
         <div class="card">
           <div class="stat-widget-one card-body">
             <div class="stat-icon d-inline-block">
-              <i class="ti-layout-grid2 text-pink border-pink"></i>
+              <i class="fab fa-buromobelexperte"></i>
             </div>
             <div class="stat-content d-inline-block">
-              <div class="stat-text">Projects</div>
-              <div class="stat-digit">770</div>
+              <div class="stat-text">Les classes</div>
+              <div class="stat-digit">{{ CountClasse }}</div>
             </div>
           </div>
         </div>
@@ -63,11 +63,11 @@
         <div class="card">
           <div class="stat-widget-one card-body">
             <div class="stat-icon d-inline-block">
-              <i class="ti-link text-danger border-danger"></i>
+              <i class="fas fa-users-cog"></i>
             </div>
             <div class="stat-content d-inline-block">
-              <div class="stat-text">Referral</div>
-              <div class="stat-digit">2,781</div>
+              <div class="stat-text">Admins</div>
+              <div class="stat-digit">{{ countadmin }}</div>
             </div>
           </div>
         </div>
@@ -77,28 +77,230 @@
     <div class="row">
       <div class="col-lg-8">
         <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Fee Collections and Expenses</h4>
-          </div>
-          <div class="card-body">
-            <div class="ct-bar-chart mt-5"></div>
+          <div class="card-body pb-0">
+            <div class="row">
+              <div class="col">
+                <v-chart class="chart" :option="option"/>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- <div class="card bg-primary">
+          <div class="card-body pb-0">
+            <div class="row">
+              <div class="col">
+                <h5 class="text-white">Power</h5>
+                <span class="text-white">2017.1.20</span>
+              </div>
+              <div class="col text-right">
+                <h5 class="text-white">
+                  <i class="fa fa-caret-up"></i> 260
+                </h5>
+                <span class="text-white">+12.5(2.8%)</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart_widget_1"></canvas>
+          </div>
+        </div>-->
       </div>
       <div class="col-lg-4">
         <div class="card">
           <div class="card-body">
-            <div class="ct-pie-chart"></div>
+            <div class="chart">
+              <!-- {{SubClasse}} -->
+              <div style="float: right">
+                <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+</script>
+
+<style scoped>
+.chart {
+  height: 400px;
+}
+</style>
+
+
 <script>
+// import charts from "./charts";
+import "echarts";
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { PieChart } from "echarts/charts";
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent
+} from "echarts/components";
+import VChart, { THEME_KEY } from "vue-echarts";
+
+use([
+  CanvasRenderer,
+  PieChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent
+]);
 export default {
+  name: "HelloWorld",
+  components: {
+    VChart
+  },
+  provide: {
+    [THEME_KEY]: "white"
+  },
   data() {
-    return {};
+    return {
+      CountTechers: 0,
+      CountStudent: 0,
+      countadmin: 0,
+      femaleStudent: 0,
+      CountClasse: 0,
+      gradeClasses: [],
+      SubClasse: [],
+      SubjectTeacher: 0,
+      AdminActive: [],
+      option: {
+        title: {
+          text: "Les Classes",
+          left: "center"
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          orient: "vertical",
+          left: "left",
+          data: [
+            "première année collége",
+            "deuxième année collège",
+            "troisième année collège",
+            "tronc commun",
+            "première année bac",
+            "deuxième année bac"
+          ]
+        },
+        series: [
+          {
+            name: "Les Classes",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "60%"],
+            data: [
+              {
+                value: 23,
+                name: "première année collége"
+              },
+              {
+                value: 34,
+                name: "deuxième année collège"
+              },
+              {
+                value: 23,
+                name: "troisième année collège"
+              },
+              {
+                value: 53,
+                name: "tronc commun"
+              },
+              {
+                value: 23,
+                name: "première année bac"
+              },
+              {
+                value: 54,
+                name: "deuxième année bac"
+              }
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
+            }
+          }
+        ]
+      }
+    };
+  },
+  methods: {
+    getAdminActive() {
+      axios.get("/adminactive").then(response => {
+        if (response.data["status"] == "success") {
+          this.AdminActive = response.data["adminactive"];
+        }
+      });
+    },
+    AllTeacher() {
+      axios.get("/allTeachers").then(response => {
+        if (response.data["status"] == "success") {
+          this.CountTechers = response.data["teachers"];
+        }
+      });
+    },
+    CountStudents() {
+      axios.get("/allStudents").then(response => {
+        if (response.data["status"] == "success") {
+          this.CountStudent = response.data["students"];
+        }
+      });
+    },
+    CountAdmins() {
+      axios.get("/alladmin").then(response => {
+        if (response.data["status"] == "success") {
+          this.countadmin = response.data["countadmin"];
+        }
+      });
+    },
+    // FemaleStudents() {
+    //   axios.get("/femaleStudents").then(response => {
+    //     if (response.data["status"] == "success") {
+    //       this.femaleStudent = response.data["femaleStudents"];
+    //     }
+    //   });
+    // },
+    Allclasses() {
+      axios.get("/allClasses").then(response => {
+        if (response.data["status"] == "success") {
+          this.CountClasse = response.data["classes"];
+        }
+      });
+    },
+    AllGradesClasse() {
+      axios.get("/gradesClasses").then(response => {
+        if (response.data["status"] == "success") {
+          this.gradeClasses = response.data["classes"];
+        }
+      });
+    },
+    SubjectTeachers() {
+      axios.get("/subjectsTeachers").then(response => {
+        if (response.data["status"] == "success") {
+          this.SubClasse = response.data["teachers"];
+        }
+      });
+    }
+  },
+  created() {
+    // this.remplirData();
+    this.SubjectTeachers();
+    this.AllGradesClasse();
+    this.Allclasses();
+    this.CountAdmins();
+    this.CountStudents();
+    this.AllTeacher();
+    this.getAdminActive();
   }
 };
 </script>
