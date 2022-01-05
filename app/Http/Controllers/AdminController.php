@@ -211,6 +211,13 @@ class AdminController extends Controller
            return response()->json(["status"=>"success","admins"=>$admins,'idadmin'=>$idadmin]);
         }return response()->json(["status"=>"error"]);
     }
+    public function GestAdminActive(){
+        $admin=Auth::guard('admin')->user();
+        if ($admin) {
+           return response()->json(["status"=>"success","adminactive"=>$admin]);
+        }return response()->json(["status"=>"error"]);
+    }
+    
     ///1111
     public function ClassesTeacher($id){
         $teachers_classes=DB::table('teacher_classes')

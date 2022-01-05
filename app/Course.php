@@ -15,4 +15,13 @@ class Course extends Model
     {
         return $this->hasMany(Exercice::class);
     }
+
+    public function Teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
+    public function Grade()
+    {
+        return $this->belongsTo(Grade::class, 'grade_id');
+    }
 }

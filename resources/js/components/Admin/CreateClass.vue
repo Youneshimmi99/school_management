@@ -1,19 +1,20 @@
 <template>
-  <div class>
+  <div>
     <div class="row page-titles mx-0">
-      <div class="col-sm-12s p-md-0">
+      <div class="col-sm-6 p-md-0">
         <div class="welcome-text">
-          <h4>Hi, welcome back!</h4>
-          <p class="mb-1">Validation</p>
+          <span style="font-size:19px;" class="titleheader">
+            <i class="fab fa-buromobelexperte"></i> Créer Une Classe
+          </span>
         </div>
       </div>
-      <div class="col-sm-6 p-md-0 justify-content-sm-end mt-1 mt-sm-0 d-flex">
+      <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="javascript:void(0)">Form</a>
+            <a href="javascript:void(0)">Accueil</a>
           </li>
           <li class="breadcrumb-item active">
-            <a href="javascript:void(0)">Validation</a>
+            <a href="javascript:void(0)">Ajouter Classe</a>
           </li>
         </ol>
       </div>

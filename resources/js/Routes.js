@@ -12,8 +12,20 @@ import TimeTableTeahcer from "./components/Admin/TimeTbaleTeacher.vue";
 import AffectationClasses from "./components/Admin/AffectationClasses.vue";
 import TimeTableClasse from "./components/Admin/TimeTableClasse.vue";
 import TeacherAbsence from "./components/Admin/TeacherAbsence.vue";
+import CreateCour from "./components/Teacher/CreateCour.vue";
+import ArchiveCours from "./components/Teacher/ArchiveCours.vue";
 
 const routes = [
+    {
+        path: "/cours",
+        name: "cours",
+        component: CreateCour
+    },
+    {
+        path: "/archives_cours",
+        name: "archives_cours",
+        component: ArchiveCours
+    },
     {
         path: "/accueil",
         name: "dash",
@@ -45,7 +57,7 @@ const routes = [
         component: AllTeacher
     },
     {
-        path: "/archives",
+        path: "/archives_cours",
         name: "archive",
         component: ArchiveClasse
     },

@@ -1,5 +1,24 @@
 <template>
-  <div class>
+  <div>
+    <div class="row page-titles mx-0">
+      <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+          <span style="font-size:19px;" class="titleheader">
+            <i class="fas fa-users-cog"></i> Admin
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="javascript:void(0)">Accueil</a>
+          </li>
+          <li class="breadcrumb-item active">
+            <a href="javascript:void(0)">Ajouter admin</a>
+          </li>
+        </ol>
+      </div>
+    </div>
     <!-- Large modal edit teacher -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -93,25 +112,7 @@
         </div>
       </div>
     </div>
-    <div class>
-      <div class="row page-titles mx-0">
-        <div class="col-sm-12s p-md-0">
-          <div class="welcome-text">
-            <h4>Hi, welcome back!</h4>
-            <p class="mb-1">Validation</p>
-          </div>
-        </div>
-        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-1 mt-sm-0 d-flex">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="javascript:void(0)">Form</a>
-            </li>
-            <li class="breadcrumb-item active">
-              <a href="javascript:void(0)">Validation</a>
-            </li>
-          </ol>
-        </div>
-      </div>
+    <div>
       <div class="d-flex justify-content-center">
         <div class="spinner-border" v-if="spinner" role="status">
           <span class="sr-only">Loading...</span>
@@ -303,6 +304,7 @@ export default {
       Alladmins: [],
       AdminEdit: [],
       errorCheck: false,
+      AdminActive: [],
       errors: [],
       FromAdmin: {
         name: "",
@@ -314,6 +316,13 @@ export default {
     };
   },
   methods: {
+    getAdminActive() {
+      axios.get("/adminactive").then(response => {
+        if (response.data["status"] == "success") {
+          this.AdminActive = response.data["adminactive"];
+        }
+      });
+    },
     AddAdmin() {
       this.errors = [];
       this.errorCheck = false;
@@ -455,6 +464,7 @@ export default {
   },
   created() {
     this.GetAllAdmins();
+    this.getAdminActive();
   }
 };
 </script>
