@@ -1,20 +1,19 @@
 <template>
-  <div>
+  <div class>
     <div class="row page-titles mx-0">
-      <div class="col-sm-6 p-md-0">
+      <div class="col-sm-12s p-md-0">
         <div class="welcome-text">
-          <span style="font-size:19px;" class="titleheader">
-            <i class="fab fa-buromobelexperte"></i> Créer Une Classe
-          </span>
+          <h4>Hi, welcome back!</h4>
+          <p class="mb-1">Validation</p>
         </div>
       </div>
-      <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+      <div class="col-sm-6 p-md-0 justify-content-sm-end mt-1 mt-sm-0 d-flex">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="javascript:void(0)">Accueil</a>
+            <a href="javascript:void(0)">Form</a>
           </li>
           <li class="breadcrumb-item active">
-            <a href="javascript:void(0)">Ajouter Classe</a>
+            <a href="javascript:void(0)">Validation</a>
           </li>
         </ol>
       </div>
@@ -26,17 +25,6 @@
     </div>-->
 
     <!-- row -->
-    <div v-if="errorCheck" class="alert alert-danger alert-dismissible fade show" role="alert">
-      <ol>
-        <li v-if="errors.nameClasse">{{ errors.nameClasse[0] }}</li>
-        <li v-if="errors.IdGrade">{{ errors.IdGrade[0] }}</li>
-        <li v-if="errors.Option_id">{{ errors.Option_id[0] }}</li>
-        <li v-if="errors.number">{{ errors.number[0] }}</li>
-      </ol>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
@@ -123,8 +111,15 @@
                 </div>
 
                 <div class="d-flex justify-content-end mt-4">
-                  <button type="button" @click="AddClasse" class="btn btn-primary btn-rounded">
-                    <i class="fa fa-plus color-primary"></i>&ensp;Ajouter
+                  <!-- <button
+                    type="button"
+                    class="btn mb-2 mr-2"
+                    v-bind:class="{'btn-info':add,'btn-primary':!add}"
+                    v-bind:id="{'toastr-info-top-right':add }"
+                  >Info</button>-->
+                  <button type="button" @click="AddClasse" class="btn btn-primary">
+                    <i class="far fa-plus-square"></i>
+                    <span>&ensp;Ajouter</span>
                   </button>
                 </div>
               </form>
@@ -142,8 +137,6 @@ export default {
       add: true,
       addadmin: true,
       spinner: false,
-      errorCheck: false,
-      errors: [],
       Subjects: [],
       Cycles: [],
       GradesName: [],
@@ -207,36 +200,17 @@ export default {
       });
     },
     AddClasse() {
-      this.errors = [];
-      this.errorCheck = false;
-      this.FormClasse = [];
-      axios
-        .post("/class/add", this.FormClasse)
-        .then(response => {
-          if (response.data["status"] == "success") {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Ajouté !",
-              text: "Une classe a été enregistré",
-              showConfirmButton: true
-            });
-          }
-        })
-        .catch(error => {
-          if (error.response.status == 422) {
-            this.errors = error.response.data.errors;
-            this.errorCheck = true;
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Error !",
-              text: "Tous les champs c'est obligatoire !",
-              showConfirmButton: true
-            });
-            // this.FromProf = [];
-          }
-        });
+      axios.post("/class/add", this.FormClasse).then(response => {
+        if (response.data["status"] == "success") {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Ajouté !",
+            text: "Une classe a été enregistré",
+            showConfirmButton: true
+          });
+        }
+      });
     }
   },
   created() {

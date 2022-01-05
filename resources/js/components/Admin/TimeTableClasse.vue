@@ -1,24 +1,5 @@
 <template>
   <div>
-    <div class="row page-titles mx-0">
-      <div class="col-sm-6 p-md-0">
-        <div class="welcome-text">
-          <span style="font-size:19px;" class="titleheader">
-            <i class="fas fa-chalkboard-teacher"></i> L'emploi De Temps
-          </span>
-        </div>
-      </div>
-      <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="javascript:void(0)">Accueil</a>
-          </li>
-          <li class="breadcrumb-item active">
-            <a href="javascript:void(0)">L'emploi De Temps</a>
-          </li>
-        </ol>
-      </div>
-    </div>
     <!-- Large modal ajouter classe -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg">

@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Course;
 use App\Teacher;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\DB;
 class CourseController extends Controller
 {
     /**
@@ -17,13 +15,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        // $course = Course::orderBy('created_at','desc')->Grade()->get();
-        $courses_grades=DB::table('courses')
-                        ->join('grades','grades.id','=','courses.grade_id')
-                        ->select('courses.nameCourse','courses.descriptionCourse','courses.sessionCourse','courses.fileCourse','grades.nameGrade')
-                        ->get();
+        $course = Course::orderBy('created_at','desc')->get();
 
-        return response()->json(["status"=>"success","course"=>$courses_grades]);
+        return response()->json(["status"=>"success","course"=>$course]);
     }
 
     /**
@@ -73,11 +67,11 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
         $this->validate($request,[
             'nameCourse' => 'required|max:255',
             'fileCourse' => 'required',
             'sessionCourse' => 'required',
+            'teacher_id' => 'required',
             'grade_id' => 'required',
 
         
@@ -103,7 +97,7 @@ class CourseController extends Controller
         }
 
         $course->sessionCourse= $request->input('sessionCourse');
-        $course->teacher_id=Auth::guard('teacher')->user()->id;
+        $course->teacher_id= $request->input('teacher_id');
         $course->grade_id= $request->input('grade_id');
 
         if($request->has('option_id')){
@@ -114,12 +108,9 @@ class CourseController extends Controller
             $course->branch_id= $request->input('branch_id');
         }
 
-        
-        if($course->save()){
-            return response()->json(["status"=>"success"]);
-        }return response()->json(["status"=>"error"]);
+        $course->save();
 
-        
+        return response()->json(["status"=>"success","course"=>$course]);
     }
 
     /**
@@ -243,7 +234,7 @@ class CourseController extends Controller
         $subject_courses=DB::table('teachers')
         ->join('courses','courses.teacher_id','=','teachers.id')
         ->join('subjects','subjects.id','=','teachers.subject_id')
-        ->select('subjects.namesub','teachers.name','courses.nameCourse','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
+        ->select('subjects.namesub','teachers.name as nameTeacher','courses.nameCourse','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
         ->where('teachers.subject_id','=',$id)
         ->get();
 

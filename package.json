@@ -10,7 +10,6 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "@vue/composition-api": "^1.4.3",
         "axios": "^0.19",
         "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
@@ -25,10 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "chart.js": "^3.7.0",
-        "echarts": "^5.2.2",
         "sweetalert2": "^11.3.0",
-        "vue-echarts": "^6.0.0",
         "vue-router": "^3.5.3"
     }
 }

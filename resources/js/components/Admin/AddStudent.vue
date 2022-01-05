@@ -1,44 +1,36 @@
 <template>
-  <div>
-    <div class="row page-titles mx-0">
-      <div class="col-sm-6 p-md-0">
-        <div class="welcome-text">
-          <span style="font-size:19px;" class="titleheader">
-            <i class="fas fa-user-graduate"></i> l'élève
-          </span>
+  <div class>
+    <div class>
+      <div class="row page-titles mx-0">
+        <div class="col-sm-12s p-md-0">
+          <div class="welcome-text">
+            <h4>Hi, welcome back!</h4>
+            <p class="mb-1">Validation</p>
+          </div>
+        </div>
+        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-1 mt-sm-0 d-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="javascript:void(0)">Form</a>
+            </li>
+            <li class="breadcrumb-item active">
+              <a href="javascript:void(0)">Validation</a>
+            </li>
+          </ol>
         </div>
       </div>
-      <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="javascript:void(0)">Accueil</a>
-          </li>
-          <li class="breadcrumb-item active">
-            <a href="javascript:void(0)">Ajouter l'élève</a>
-          </li>
-        </ol>
-      </div>
-    </div>
-    <div class>
-      <!-- <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center">
         <div class="spinner-border" v-if="spinner" role="status">
           <span class="sr-only">Loading...</span>
         </div>
-      </div>-->
-
-      <div v-if="errorCheck" class="alert alert-danger alert-dismissible fade show" role="alert">
-        <ol>
-          <li v-if="errors.name">{{ errors.name[0] }}</li>
-          <li v-if="errors.email">{{ errors.email[0] }}</li>
-          <li v-if="errors.password">{{ errors.password[0] }}</li>
-          <li v-if="errors.tele">{{ errors.tele[0] }}</li>
-        </ol>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
+
+      <div class="d-flex justify-content-end mb-2">
+        <button type="button" class="btn btn-primary">Ajouter Admin</button>
+      </div>
+
       <!-- row -->
-      <div class="row">
+      <div class="row" v-if="addadmin">
         <div class="col-lg-12">
           <div class="card">
             <div class="card-header">
@@ -160,9 +152,7 @@
                   </div>
 
                   <div class="d-flex justify-content-end mt-4">
-                    <button type="button" @click="AddStudent" class="btn btn-primary btn-rounded">
-                      <i class="fa fa-plus color-primary"></i>&ensp;Ajouter
-                    </button>
+                    <button type="button" @click="AddStudent" class="btn btn-primary">Ajouter</button>
                   </div>
                 </form>
               </div>
@@ -274,7 +264,7 @@
             <div class="table-responsive">
               <table
                 class="table table-bordered verticle-middle table-responsive-sm"
-                style="color:black;text-align:center;"
+                style="color:black"
               >
                 <thead>
                   <tr>
@@ -302,10 +292,7 @@
                           title="Edit"
                           @click="EditStudent(item.id)"
                         >
-                          <span class="badge badge-info">
-                            <i class="fa fa-pencil color-muted"></i>
-                            <span>&ensp;Modifier</span>
-                          </span>
+                          <i class="fa fa-pencil color-muted"></i>
                         </a>
                         <a
                           href="javascript:void()"
@@ -314,10 +301,7 @@
                           title="Close"
                           @click="DeleteStudent(item.id)"
                         >
-                          <span class="badge badge-danger">
-                            <i class="far fa-trash-alt"></i>
-                            <span>&ensp;Supprimer</span>
-                          </span>
+                          <i class="fa fa-close color-danger"></i>
                         </a>
                       </span>
                     </td>
@@ -337,8 +321,6 @@ export default {
     return {
       addadmin: true,
       spinner: false,
-      errorCheck: false,
-      errors: [],
       Subjects: [],
       AllStudent: [],
       StudentLigne: [],
@@ -353,46 +335,57 @@ export default {
   },
   methods: {
     AddStudent() {
-      this.errors = [];
-      this.errorCheck = false;
-      axios
-        .post("/addstudent", this.Student)
-        .then(response => {
-          if (response.data["status"] == "success") {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Ajouté !",
-              text: "L'eleve a été enregistré",
-              showConfirmButton: true
-            });
-
-            this.GetStudent();
-          }
-          if (response.data["password"] == "error") {
-            Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "Error !",
-              text: "Vos mot de passe  ne sont pas correctes !",
-              showConfirmButton: true
-            });
-          }
-        })
-        .catch(error => {
-          if (error.response.status == 422) {
-            this.errorCheck = true;
-            this.errors = error.response.data.errors;
-            alert;
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Error !",
-              text: "Tous les champs c'est obligatoire !",
-              showConfirmButton: true
-            });
-          }
-        });
+      axios.post("/addstudent", { student: this.Student }).then(response => {
+        if (response.data["status"] == "success") {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Ajouté !",
+            text: "L'enseignement a été enregistré",
+            showConfirmButton: true
+          });
+          this.Student = [];
+          this.GetStudent();
+        }
+        if (response.data["email"] == "error") {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Error !",
+            text: "Ce email déjà utilisée !",
+            showConfirmButton: true
+          });
+        }
+        if (response.data["password"] == "error") {
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Error !",
+            text: "Vos mot de passe  ne sont pas correctes !",
+            showConfirmButton: true
+          }).catch(error => {
+            if (error.response.status == 422) {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Error !",
+                text: "Tous les champs c'est obligatoire !",
+                showConfirmButton: true
+              });
+              this.FromProf = [];
+            }
+            if (error.response.status == 500) {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Error !",
+                text: "Tous les champs c'est obligatoire !",
+                showConfirmButton: true
+              });
+            }
+          });
+        }
+      });
     },
     GetStudent() {
       this.AllStudent = [];
@@ -419,7 +412,7 @@ export default {
     },
     UpdateStudent(idStudent) {
       axios
-        .post("/student/update", this.Student)
+        .post("/student/update", { student: this.Student })
         .then(response => {
           if (response.data["status"] == "success") {
             Swal.fire({
@@ -429,10 +422,18 @@ export default {
               text: "L'enseignement a été modifier",
               showConfirmButton: true
             });
-
+            this.AllStudent = [];
             this.GetStudent();
           }
-
+          // if (response.data["email"] == "error") {
+          //   Swal.fire({
+          //     position: "center",
+          //     icon: "error",
+          //     title: "Error !",
+          //     text: "Ce email déjà utilisée !",
+          //     showConfirmButton: true
+          //   });
+          // }
           if (response.data["password"] == "error") {
             Swal.fire({
               position: "center",
@@ -441,12 +442,11 @@ export default {
               text: "Vos mot de passe  ne sont pas correctes !",
               showConfirmButton: true
             });
-            this.Student = [];
+            // this.FromProf = [];
           }
         })
         .catch(error => {
           if (error.response.status == 422) {
-            this.errors = error.response.data.errors;
             Swal.fire({
               position: "center",
               icon: "error",
