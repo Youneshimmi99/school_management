@@ -110,7 +110,7 @@
         <div class="card">
           <div class="card-body">
             <div class="chart">
-              {{SubClasse}}
+              <!-- {{SubClasse}} -->
               <div style="float: right">
                 <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
               </div>
@@ -290,47 +290,10 @@ export default {
           this.SubClasse = response.data["teachers"];
         }
       });
-    },
-    remplirData() {
-      new RGraph.Bar({
-        id: "cvs",
-        data: [8, 6, 4, 8, 9, 5, 3, 2, 5],
-        options: {
-          adjustable: true,
-          xaxisLabels: [
-            "Alf",
-            "Vinny",
-            "Moe",
-            "Bill",
-            "Neil",
-            "Olga",
-            "Lilly",
-            "Paul",
-            "John"
-          ]
-        }
-      })
-        .draw()
-        .responsive([
-          {
-            maxWidth: null,
-            width: 600,
-            height: 250,
-            options: { textSize: 10 },
-            parentCss: { float: "none" }
-          },
-          {
-            maxWidth: 800,
-            width: 350,
-            height: 200,
-            options: { textSize: 10 },
-            parentCss: { float: "none" }
-          }
-        ]);
     }
   },
   created() {
-    this.remplirData();
+    // this.remplirData();
     this.SubjectTeachers();
     this.AllGradesClasse();
     this.Allclasses();

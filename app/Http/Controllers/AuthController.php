@@ -22,6 +22,9 @@ class AuthController extends Controller
     public function IndexLoginAdmin(){
         return view("admin.LoginAdmin");
     }
+    public function IndexTeacherLogin(){
+        return view("Teacher.LoginTeacher");
+    }
     //return view dash Admin
     public function IndexDashboardAdmin(){
         return view("admin.DashAdmin");
@@ -43,10 +46,33 @@ class AuthController extends Controller
         ]);
         }
     }
+     public function LoginTeacher(Request $request){
+         $attempt = Auth::guard('teacher')
+                ->attempt([
+                    'email' => $request->email,
+                    'password' => $request->password
+                ]);
+        if ($attempt){
+            // return view("admin.DashAdmin");
+            // $request->session()->regenerate();
+            // dd("ok");
+            return redirect('/accueil');     
+        }else {
+          return back()->withErrors([
+            'email' => 'Vos informations d\'identification ne sont pas correctes !',
+        ]);
+        }
+    }
     public function LougoutAdmin(){
         if (Auth::guard("admin")->check()) {
              Auth::guard("admin")->logout();
              return redirect('/login/admin'); 
+        }   
+    }
+    public function LogoutTeacher(){
+        if (Auth::guard("teacher")->check()) {
+             Auth::guard("teacher")->logout();
+             return redirect('/login/prof'); 
         }   
     }
     public function AddProf(Request $request){

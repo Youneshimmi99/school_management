@@ -382,9 +382,7 @@
 
      <!-- Chart ChartJS plugin files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <script src="RGraph.common.core.js"></script>
-    <script src="RGraph.common.dynamic.js"></script>
-    <script src="RGraph.bar.js"></script>
+   
     {{-- <script src="./vendor/chartist/js/chartist.min.js"></script>
     
 
