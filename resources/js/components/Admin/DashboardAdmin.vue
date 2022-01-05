@@ -91,7 +91,7 @@
           <div class="col">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Professeur En ligne</h4>
+                <h4 class="card-title">Professeurs En ligne</h4>
               </div>
               <div class="card-body ex1">
                 <div class="basic-list-group">

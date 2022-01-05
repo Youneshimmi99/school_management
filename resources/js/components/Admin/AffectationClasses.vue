@@ -119,7 +119,6 @@
                       :value="item.id"
                     >{{ item.name }}</option>
                   </select>
-                  <div class="invalid-feedback">cette champs ç'est obligatoire*</div>
                 </div>
                 <div class="col-lg-6">
                   <label class="text-dark">Niveau</label>
