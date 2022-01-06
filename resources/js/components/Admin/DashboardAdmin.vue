@@ -113,10 +113,16 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">sacd</div>
+        </div>
+      </div>
+      <div class="col-lg-8">
         <div class="card">
           <div class="card-body">
-            <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
+            <!-- {{ SubClasse['informatique'] }} -->
+            <apexchart type="bar" width="700" :options="options" :series="series"></apexchart>
           </div>
         </div>
       </div>
@@ -202,7 +208,7 @@ export default {
       series: [
         {
           name: "Professeurs",
-          data: [30, 40, 45, 50, 49, 60, 70, 91, 34]
+          data: [2, 3, 5, 2, 5, 2, 6, 2, 1]
         }
       ],
       option: {
@@ -332,6 +338,7 @@ export default {
       axios.get("/subjectsTeachers").then(response => {
         if (response.data["status"] == "success") {
           this.SubClasse = response.data["teachers"];
+          var dw = SubClasse["informatique"];
         }
       });
     }

@@ -67,10 +67,6 @@ class AdminController extends Controller
          $timetable = TimeTable::select("class_id")
                     ->whereNotNull('class_id' )
                     ->get()->ToArray();
-        // return $timetable;
-       
-       
-        // $classes=Classe::WHERE('grade_id',$id)->get();
         $classesTimeTblesuccess=DB::table('classes')
                     ->join('timetables','timetables.class_id','=','classes.id')
                     ->join('grades','grades.id','=','classes.grade_id')

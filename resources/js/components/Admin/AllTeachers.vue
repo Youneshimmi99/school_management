@@ -197,7 +197,11 @@ export default {
               this.GetTeachers();
             }
           });
-          Swal.fire("Supprimé!", "L'enseignant a été supprimé.", "success");
+          Swal.fire(
+            "Supprimé!",
+            "L'emploi de temps a été supprimé.",
+            "success"
+          );
         }
       });
     },
