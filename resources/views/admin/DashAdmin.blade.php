@@ -230,7 +230,7 @@
                             <li><router-link to="/classes">afficher les classes</router-link></li>
                              <li><router-link  to="/creer_classe">Créer une Classe </a></li>
                             <li><router-link to="/affectation/classes">affectation des classes</router-link></li>
-                            <li><router-link to="/archives">Les classe Archives </router-link></li>
+                            <li><router-link to="/archives_classes">Les classe Archives </router-link></li>
 
                             
                         </ul>

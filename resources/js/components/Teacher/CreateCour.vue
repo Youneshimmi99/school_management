@@ -4,7 +4,7 @@
       <div class="col-sm-6 p-md-0">
         <div class="welcome-text">
           <span style="font-size:19px;" class="titleheader">
-            <i class="fas fa-calendar-plus"></i> L'absences
+            <i class="fas fa-book"></i> les cours
           </span>
         </div>
       </div>
@@ -14,7 +14,7 @@
             <a href="javascript:void(0)">Accueil</a>
           </li>
           <li class="breadcrumb-item active">
-            <a href="javascript:void(0)">L'absences</a>
+            <a href="javascript:void(0)">Ajouter Cour</a>
           </li>
         </ol>
       </div>
@@ -36,7 +36,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Ajouter Cours</h5>
+            <h5 class="modal-title">Ajouter Cour</h5>
             <button type="button" class="close" data-dismiss="modal">
               <span>&times;</span>
             </button>
@@ -104,7 +104,7 @@
               </div>-->
               <div class="row mt-2" v-if="ActiveForm">
                 <div class="col-lg-6">
-                  <label class="text-dark">Nom course</label>
+                  <label class="text-dark">Nom de cour</label>
                   <input
                     type="text"
                     class="form-control"
@@ -114,7 +114,7 @@
                   >
                 </div>
                 <div class="col-lg-6">
-                  <label class="text-dark" for="exampleFormControlTextarea1">Descriptio</label>
+                  <label class="text-dark" for="exampleFormControlTextarea1">Description</label>
                   <textarea
                     class="form-control"
                     id="exampleFormControlTextarea1"
@@ -135,7 +135,7 @@
                   >
                 </div>
                 <div class="col-lg-6">
-                  <label class="text-dark">Session course</label>
+                  <label class="text-dark">Session cour</label>
                   <input
                     type="text"
                     class="form-control"
@@ -224,9 +224,22 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">L'absence</h4>
+            <h4 class="card-title">Les cours</h4>
           </div>
           <div class="card-body">
+            <div>
+              <div class="float-right mb-3">
+                <input
+                  type="text"
+                  placeholder="Cour....."
+                  v-model="TitleCourse"
+                  class="form-control"
+                  id="val-titlecourse"
+                  name="val-titlecourse"
+                  @keyup="GetCourseByTitle"
+                >
+              </div>
+            </div>
             <div class="table-responsive">
               <table
                 class="table table-bordered verticle-middle table-responsive-sm"
@@ -237,8 +250,9 @@
                     <th scope="col">Name Course</th>
                     <th scope="col">Description</th>
                     <th scope="col">Session course</th>
-                    <th scope="col">Course file</th>
+                    <th scope="col">Course</th>
                     <th scope="col">Niveau</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -246,11 +260,13 @@
                     <td>{{ item.nameCourse }}</td>
                     <td>{{ item.descriptionCourse }}</td>
                     <td>{{ item.sessionCourse }}</td>
-                    <td>{{ item.fileCourse }}</td>
-                    <td v-if="grade_id==1">première année collége</td>
-                    <td v-if="grade_id==2"></td>
-                    <td v-if="grade_id==3"></td>
-
+                    <td>
+                      <!-- {{ item.fileCourse }} -->
+                      <span class="badge badge-info">
+                        <a :href="'/'+item.fileCourse">Telecharger</a>
+                      </span>
+                    </td>
+                    <td>{{ item.nameGrade }}</td>
                     <td>
                       <span>
                         <a
@@ -272,7 +288,7 @@
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Close"
-                          @click="DeleteAdmin(item.id)"
+                          @click="DeleteCourse(item.id)"
                         >
                           <span class="badge badge-danger">
                             <i class="far fa-trash-alt"></i>
@@ -296,6 +312,7 @@ export default {
   data() {
     return {
       IdCyle: "",
+      TitleCourse: "",
       GradesName: [],
       Cycles: [],
       Subjects: [],
@@ -316,6 +333,18 @@ export default {
     };
   },
   methods: {
+    GetCourseByTitle() {
+      this.AllCourses = [];
+      if (this.TitleCourse.length == 0) {
+        this.ShowCourses();
+      } else {
+        axios.get("course/title/" + this.TitleCourse).then(response => {
+          if (response.data["status"] == "success") {
+            this.AllCourses = response.data["courses"];
+          }
+        });
+      }
+    },
     GetSubjects() {
       this.Subjects = [];
       axios.get("/subjects").then(response => {
@@ -398,6 +427,7 @@ export default {
 
             this.FormCours = [];
             this.ActiveForm = false;
+            this.ShowCourses();
           }
         })
         .catch(error => {
@@ -413,14 +443,15 @@ export default {
         });
     },
     ShowCourses() {
-      axios.get("/course").then(response => {
-        if (response.data["status"] == "success") {
-          this.AllCourses = response.data["course"];
-          //   console.log(this.GradesName);
-        }
-      });
+      (this.AllCourses = []),
+        axios.get("/course").then(response => {
+          if (response.data["status"] == "success") {
+            this.AllCourses = response.data["course"];
+            //   console.log(this.GradesName);
+          }
+        });
     },
-    DeleteAdmin(idteacherAbsence) {
+    DeleteCourse(idcour) {
       Swal.fire({
         title: "Es-tu sûr?",
         text: "Vous ne pourrez pas revenir en arrière !",
@@ -432,24 +463,13 @@ export default {
         confirmButtonText: "Oui, supprimez-le !"
       }).then(result => {
         if (result.isConfirmed) {
-          axios
-            .post("/teacher_absence/destroy/" + idteacherAbsence)
-            .then(response => {
-              if (response.data["status"] == "success") {
-                // this.Alladmins = [];
-                this.GetAbsencesTeacher();
-              }
-              if (response.data["status"] == "impossible") {
-                Swal.fire({
-                  position: "center",
-                  icon: "error",
-                  title: "Error !",
-                  text: "Impossible supprimer votre compte",
-                  showConfirmButton: true
-                });
-              }
-            });
-          Swal.fire("Supprimé!", "L'enseignant a été supprimé.", "success");
+          axios.post("course/" + idcour + "/trash").then(response => {
+            if (response.data["status"] == "success") {
+              // this.Alladmins = [];
+              this.ShowCourses();
+            }
+          });
+          Swal.fire("Supprimé!", "le cour a été supprimé.", "success");
         }
       });
     },

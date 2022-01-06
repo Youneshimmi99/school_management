@@ -17,6 +17,9 @@ import Vue from "vue";
 import routes from "./Routes";
 import VueRouter from "vue-router";
 
+import VueApexCharts from "vue-apexcharts";
+Vue.use(VueApexCharts);
+Vue.component("apexchart", VueApexCharts);
 import Swal from "sweetalert2";
 window.Swal = Swal;
 const Toast = Swal.mixin({

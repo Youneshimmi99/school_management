@@ -57,7 +57,7 @@ const routes = [
         component: AllTeacher
     },
     {
-        path: "/archives_cours",
+        path: "/archives_classes",
         name: "archive",
         component: ArchiveClasse
     },

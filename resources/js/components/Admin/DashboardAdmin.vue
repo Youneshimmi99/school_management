@@ -116,7 +116,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-            <highcharts :options="chartOptions"></highcharts>
+            <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
           </div>
         </div>
       </div>
@@ -139,8 +139,8 @@
 
 <script>
 // import charts from "./charts";
-import HighchartsVue from "highcharts-vue";
-import { Chart } from "highcharts-vue";
+// import HighchartsVue from "highcharts-vue";
+// import { Chart } from "highcharts-vue";
 import "echarts";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
@@ -162,8 +162,9 @@ use([
 export default {
   name: "HelloWorld",
   components: {
-    VChart,
-    highcharts: Chart
+    VChart
+
+    // highcharts: Chart
   },
   provide: {
     [THEME_KEY]: "white"
@@ -180,13 +181,30 @@ export default {
       SubClasse: [],
       SubjectTeacher: 0,
       AdminActive: [],
-      chartOptions: {
-        series: [
-          {
-            data: [1, 2, 3] // sample data
-          }
-        ]
+      options: {
+        chart: {
+          id: "vuechart-example"
+        },
+        xaxis: {
+          categories: [
+            "Informatique",
+            "Math",
+            "Physique",
+            "Svt",
+            "Arabe",
+            "Français",
+            "Anglais",
+            "Histoire géographie",
+            "Education islamique"
+          ]
+        }
       },
+      series: [
+        {
+          name: "Professeurs",
+          data: [30, 40, 45, 50, 49, 60, 70, 91, 34]
+        }
+      ],
       option: {
         title: {
           text: "Les Classes",

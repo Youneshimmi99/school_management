@@ -20,7 +20,8 @@ class CourseController extends Controller
         // $course = Course::orderBy('created_at','desc')->Grade()->get();
         $courses_grades=DB::table('courses')
                         ->join('grades','grades.id','=','courses.grade_id')
-                        ->select('courses.nameCourse','courses.descriptionCourse','courses.sessionCourse','courses.fileCourse','grades.nameGrade')
+                        ->select('courses.id','courses.nameCourse','courses.descriptionCourse','courses.sessionCourse','courses.fileCourse','grades.nameGrade')
+                        ->whereNull('courses.deleted_at')
                         ->get();
 
         return response()->json(["status"=>"success","course"=>$courses_grades]);
@@ -44,24 +45,32 @@ class CourseController extends Controller
     public function archive()
     {
 
-    $courses=Course::onlyTrashed()->get();
+        // $courses=Course::onlyTrashed()->get();
+        $courses_grades=DB::table('courses')
+                        ->join('grades','grades.id','=','courses.grade_id')
+                        ->select('courses.id','courses.nameCourse','courses.descriptionCourse','courses.sessionCourse','courses.fileCourse','grades.nameGrade')
+                        ->whereNotNull('courses.deleted_at')
+                        ->get();
                             
-      return response()->json(["status"=>"success","courses"=>$courses]);
+      return response()->json(["status"=>"success","courses"=>$courses_grades]);
 
     }
 
 	public function trash($id)
 	{
+        
 		$course = Course::findOrFail($id)->delete();
-
-        return response()->json(["status"=>"success","course"=>$course]);
+        if ($course) {
+            return response()->json(["status"=>"success"]);
+        } return response()->json(["status"=>"error"]);
+       
 	}
 
     public function restore($id)
 	{
         $course = Course::onlyTrashed()->findOrFail($id)->restore();
 
-        return response()->json(["status"=>"success","course"=>$course]);
+        return response()->json(["status"=>"success"]);
 	}
 
 
@@ -241,12 +250,21 @@ class CourseController extends Controller
     public function subjectCourses($id){
 
         $subject_courses=DB::table('teachers')
-        ->join('courses','courses.teacher_id','=','teachers.id')
-        ->join('subjects','subjects.id','=','teachers.subject_id')
-        ->select('subjects.namesub','teachers.name','courses.nameCourse','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
-        ->where('teachers.subject_id','=',$id)
-        ->get();
+                            ->join('courses','courses.teacher_id','=','teachers.id')
+                            ->join('subjects','subjects.id','=','teachers.subject_id')
+                            ->select('subjects.namesub','teachers.name','courses.nameCourse','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
+                            ->where('teachers.subject_id','=',$id)
+                            ->get();
 
         return response()->json(["status"=>"success","subject_courses"=>$subject_courses]);
+    }
+    public function RechercheCoure($title){
+        $Course=DB::table('courses')
+                ->join('grades','grades.id','=','courses.grade_id')
+                ->select('courses.id','courses.nameCourse','courses.descriptionCourse','courses.sessionCourse','courses.fileCourse','grades.nameGrade')
+                ->where('courses.nameCourse','LIKE',"%{$title}%")
+                ->whereNull('courses.deleted_at')
+                ->get();
+        return response()->json(["status"=>"success","courses"=>$Course]);
     }
 }

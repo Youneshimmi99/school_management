@@ -199,33 +199,19 @@
                     </li>
                     <li class="nav-label">Apps</li>
                      <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                         <i class="fas fa-user"></i><span class="nav-text">Les coures</span></a>
+                         <i class="fas fa-book"></i><span class="nav-text">Les coures</span></a>
                         <ul aria-expanded="false">
                             <li><router-link tag="a" to="/cours"  class="nav-link">Ajouter Les courses </router-link></li>
                             <li><router-link tag="a" to="/archives_cours"  class="nav-link">Archives</router-link></li>
                         </ul>
                     </li>
-                    {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-app-store"></i><span class="nav-text">Niveau</span></a>
-                        <ul aria-expanded="false">
-                            
-                            <li>
-                                <router-link tag="a" to="/afficher_niveaux"  class="nav-link">
-                                   Afficher les Niveaux
-                                </router-link>
-                            </li>
-                            <li><router-link tag="a" to="/niveau"  class="nav-link">Créer un Niveau</router-link></li>
-                            
-                        </ul>
-                    </li> --}}
+                  
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                          <i class="fab fa-buromobelexperte"></i>
-                                <span class="nav-text">Classe</span></a>
+                                <span class="nav-text">les exercices</span></a>
                         <ul aria-expanded="false">
-                            <li><router-link to="/classes">afficher les classes</router-link></li>
-                             <li><router-link  to="/creer_classe">Créer une Classe </a></li>
-                            <li><router-link to="/affectation/classes">affectation des classes</router-link></li>
-                            <li><router-link to="/archives">Les classe Archives </router-link></li>
+                            <li><router-link to="/classes">Ajouter les exercices</router-link></li>
+                             <li><router-link  to="/creer_classe">Archives </a></li>
 
                             
                         </ul>
