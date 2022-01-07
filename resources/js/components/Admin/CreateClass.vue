@@ -209,7 +209,6 @@ export default {
     AddClasse() {
       this.errors = [];
       this.errorCheck = false;
-      this.FormClasse = [];
       axios
         .post("/class/add", this.FormClasse)
         .then(response => {

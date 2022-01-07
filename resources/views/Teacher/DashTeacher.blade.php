@@ -210,8 +210,8 @@
                          <i class="fab fa-buromobelexperte"></i>
                                 <span class="nav-text">les exercices</span></a>
                         <ul aria-expanded="false">
-                            <li><router-link to="/classes">Ajouter les exercices</router-link></li>
-                             <li><router-link  to="/creer_classe">Archives </a></li>
+                            <li><router-link to="/exercices">Ajouter les exercices</router-link></li>
+                             <li><router-link  to="/exercices_archives">Archives </a></li>
 
                             
                         </ul>

@@ -14,12 +14,24 @@ import TimeTableClasse from "./components/Admin/TimeTableClasse.vue";
 import TeacherAbsence from "./components/Admin/TeacherAbsence.vue";
 import CreateCour from "./components/Teacher/CreateCour.vue";
 import ArchiveCours from "./components/Teacher/ArchiveCours.vue";
+import CreateExercice from "./components/Teacher/CreateExercice.vue";
+import ArchiveExercice from "./components/Teacher/ArchiveExercices.vue";
 
 const routes = [
     {
         path: "/cours",
         name: "cours",
         component: CreateCour
+    },
+    {
+        path: "/exercices",
+        name: "exercices",
+        component: CreateExercice
+    },
+    {
+        path: "/exercices_archives",
+        name: "arexercice",
+        component: ArchiveExercice
     },
     {
         path: "/archives_cours",

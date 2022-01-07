@@ -98,6 +98,7 @@ class AdminController extends Controller
         else return response()->json(["status"=>"error"]);
     }
     public function AddClasse(Request $request){
+        // return $request;
         $request->validate([
                 'nameClasse' =>'required',
                 'number'=>'required|numeric',

@@ -188,7 +188,7 @@
                     v-for="(item,index) in Classes"
                     :key="index"
                   >
-                    <span @click="DeleteTimeTableClasse(item.id)">{{ item.id }}</span>
+                    <span @click="DeleteTimeTableClasse(item.id)">{{ item.nameClasse }}</span>
                   </span>
                 </h6>
               </div>
