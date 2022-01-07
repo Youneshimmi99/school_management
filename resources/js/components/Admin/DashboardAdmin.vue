@@ -113,16 +113,23 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4">
-        <div class="card">
-          <div class="card-body">sacd</div>
-        </div>
-      </div>
-      <div class="col-lg-8">
+      <div class="col-lg-5">
         <div class="card">
           <div class="card-body">
+            <FullCalendar :options="calendarOptions"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">les matières et les professeurs</h4>
+          </div>
+          <div class="card-body">
             <!-- {{ SubClasse['informatique'] }} -->
-            <apexchart type="bar" width="700" :options="options" :series="series"></apexchart>
+            <div class="d-flex justify-content-center">
+              <apexchart type="bar" width="520" :options="options" :series="series"></apexchart>
+            </div>
           </div>
         </div>
       </div>
@@ -144,6 +151,13 @@
 
 
 <script>
+import "@fullcalendar/core/vdom"; // solves problem with Vite
+import FullCalendar from "@fullcalendar/vue";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
+
+import frLocale from "@fullcalendar/core/locales/fr";
+
 // import charts from "./charts";
 // import HighchartsVue from "highcharts-vue";
 // import { Chart } from "highcharts-vue";
@@ -151,6 +165,7 @@ import "echarts";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { PieChart } from "echarts/charts";
+
 import {
   TitleComponent,
   TooltipComponent,
@@ -168,7 +183,8 @@ use([
 export default {
   name: "HelloWorld",
   components: {
-    VChart
+    VChart,
+    FullCalendar
 
     // highcharts: Chart
   },
@@ -187,6 +203,12 @@ export default {
       SubClasse: [],
       SubjectTeacher: 0,
       AdminActive: [],
+
+      calendarOptions: {
+        plugins: [dayGridPlugin, interactionPlugin],
+        initialView: "dayGridMonth",
+        locale: frLocale
+      },
       options: {
         chart: {
           id: "vuechart-example"

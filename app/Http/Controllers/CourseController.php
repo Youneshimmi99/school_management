@@ -86,7 +86,7 @@ class CourseController extends Controller
         $this->validate($request,[
             'nameCourse' => 'required|max:255',
             'fileCourse' => 'required',
-            'sessionCourse' => 'required',
+            'sessionCourse' => 'required|numeric',
             'grade_id' => 'required',
 
         

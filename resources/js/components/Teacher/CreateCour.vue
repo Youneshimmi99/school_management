@@ -229,7 +229,24 @@
           <div class="card-body">
             <div>
               <div class="float-right mb-3">
-                <input
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Cour....."
+                    v-model="TitleCourse"
+                    class="form-control"
+                    id="val-titlecourse"
+                    name="val-titlecourse"
+                    @keyup="GetCourseByTitle"
+                    aria-describedby="basic-addon1"
+                  >
+                </div>
+                <!-- <input
                   type="text"
                   placeholder="Cour....."
                   v-model="TitleCourse"
@@ -237,7 +254,7 @@
                   id="val-titlecourse"
                   name="val-titlecourse"
                   @keyup="GetCourseByTitle"
-                >
+                >-->
               </div>
             </div>
             <div class="table-responsive">
