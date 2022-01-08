@@ -16,7 +16,7 @@ import CreateCour from "./components/Teacher/CreateCour.vue";
 import ArchiveCours from "./components/Teacher/ArchiveCours.vue";
 import CreateExercice from "./components/Teacher/CreateExercice.vue";
 import ArchiveExercice from "./components/Teacher/ArchiveExercices.vue";
-
+import DashTeacher from "./components/Teacher/DashTeacher.vue";
 import ArchiveExam from "./components/Teacher/ArchiveExam.vue";
 import CreateExam from "./components/Teacher/CreateExam.vue";
 
@@ -25,6 +25,11 @@ const routes = [
         path: "/cours",
         name: "cours",
         component: CreateCour
+    },
+    {
+        path: "/professeur",
+        name: "cours",
+        component: DashTeacher
     },
     {
         path: "/exercices",

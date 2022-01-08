@@ -72,6 +72,18 @@ Route::middleware(['teacher'])->group(function () {
     Route::get('/getclassesbyprof/{id}','Teacher2Controller@GetClassesProf');
     Route::get('/accueil','Teacher2Controller@IndexDashTeacher');
     Route::get('/getgrade/{idgrade}/{idbranch}/{idoption}','Teacher2Controller@getgrade');
+    Route::get('/teacheractive','Teacher2Controller@TeacherActive');
+    Route::get('/getcountcour','Teacher2Controller@CountCourTeacher');
+    Route::get('/getcountclassteacher','Teacher2Controller@CountclassTeacher');
+    Route::get('/getcountexamteacher','Teacher2Controller@CountexamTeacher');
+    Route::get('/getcountexerciceteacher','Teacher2Controller@CountexerciceTeacher');
+    Route::get('/getteachersmatiere','Teacher2Controller@GetTeachersMatiere');
+
+
+
+
+
+
 
     Route::post('/logoutteacher', 'AuthController@LogoutTeacher');
 });
