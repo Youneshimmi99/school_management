@@ -178,32 +178,54 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier l'absense</h5>
+            <h5 class="modal-title">Modifier Cour</h5>
             <button type="button" class="close" data-dismiss="modal">
               <span>&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <form class="needs-validation" novalidate>
-              <div class="row">
-                <div class="col-lg-4">
-                  <label for>Professeur</label>
+              <div class="row mt-2">
+                <div class="col-lg-6">
+                  <label class="text-dark">Nom de cour</label>
                   <input
                     type="text"
-                    disabled="disabled"
-                    style="background-color:#40404024"
                     class="form-control"
-                    id="val-date"
-                    name="val-date"
+                    v-model="FormCours.nameCourse"
+                    id="val-namecourse"
+                    name="val-namecourse"
                   >
                 </div>
-                <div class="col-lg-4">
-                  <label for>Date de début</label>
-                  <input type="date" class="form-control" id="val-date" name="val-date">
+                <div class="col-lg-6">
+                  <label class="text-dark" for="exampleFormControlTextarea1">Description</label>
+                  <textarea
+                    class="form-control"
+                    id="exampleFormControlTextarea1"
+                    v-model="FormCours.descriptionCourse"
+                    rows="2"
+                  ></textarea>
                 </div>
-                <div class="col-lg-4">
-                  <label for>Date de fin</label>
-                  <input type="date" class="form-control" id="val-date" name="val-date">
+              </div>
+              <div class="row mt-2">
+                <div class="col-lg-6">
+                  <label class="text-dark">Ficher</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="file"
+                    ref="file"
+                    v-on:change="handleFileUpload()"
+                  >
+                </div>
+                <div class="col-lg-6">
+                  <label class="text-dark">Session cour</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="FormCours.sessionCourse"
+                    id="val-session"
+                    name="val-session"
+                  >
                 </div>
               </div>
             </form>
@@ -212,7 +234,7 @@
             <button type="button" class="btn btn-secondary" data-dismiss="modal">
               <i class="fas fa-times"></i>&ensp;Annuler
             </button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">
+            <button type="button" class="btn btn-primary" @click="UpdateCoure" data-dismiss="modal">
               <i class="fa fa-plus color-primary"></i>&ensp;Modifier
             </button>
           </div>
@@ -279,9 +301,13 @@
                     <td>{{ item.sessionCourse }}</td>
                     <td>
                       <!-- {{ item.fileCourse }} -->
-                      <span class="badge badge-info">
-                        <a :href="'/'+item.fileCourse">Telecharger</a>
-                      </span>
+
+                      <a :href="'/'+item.fileCourse">
+                        <span class="badge badge-primary">
+                          <i class="fas fa-download"></i>
+                          <span>Telecharger</span>
+                        </span>
+                      </a>
                     </td>
                     <td>{{ item.nameGrade }}</td>
                     <td>
@@ -293,7 +319,7 @@
                           data-target=".bd-absence-modal-lg"
                           data-placement="top"
                           title="Edit"
-                          @click="EditAbsenceTeacher(item.id)"
+                          @click="EditeCour(item.id)"
                         >
                           <span class="badge badge-info">
                             <i class="fa fa-pencil color-muted"></i>
@@ -338,7 +364,9 @@ export default {
       AllCourses: [],
       ActiveForm: false,
       CourseTeacher: new FormData(),
+      EditeCours: [],
       FormCours: {
+        id: "",
         nameCourse: "",
         descriptionCourse: "",
         fileCourse: "",
@@ -490,39 +518,42 @@ export default {
         }
       });
     },
-    EditAbsenceTeacher(idTeacherAbsence) {
-      (this.AbsenceTeacher.teacher_id = ""),
-        (this.AbsenceTeacher.start_date = ""),
-        (this.AbsenceTeacher.end_date = ""),
-        // (this.EditAbsencex = []);
-        (this.IdTeacherAbsence = "");
-      axios.get("/teacher_absence/" + idTeacherAbsence).then(response => {
+    EditeCour(idCourse) {
+      this.FormCours = [];
+      axios.get("course/" + idCourse).then(response => {
         if (response.data["status"] == "success") {
-          this.EditAbsencex = response.data["teacher_absence"];
-          this.IdTeacherAbsence = this.EditAbsencex[0]["id"];
-          this.AbsenceTeacher.teacher_id = this.EditAbsencex[0]["teacher_id"];
-          this.AbsenceTeacher.start_date = this.EditAbsencex[0]["start_date"];
-          this.AbsenceTeacher.end_date = this.EditAbsencex[0]["end_date"];
+          this.FormCours = response.data["course"];
         }
       });
     },
 
-    UpdateAbsenceTeacher() {
+    UpdateCoure() {
+      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      this.CourseTeacher.append("fileCourse", this.FormCours.fileCourse);
+      this.CourseTeacher.append("nameCourse", this.FormCours.nameCourse);
+      this.CourseTeacher.append(
+        "descriptionCourse",
+        this.FormCours.descriptionCourse
+      );
+      this.CourseTeacher.append("sessionCourse", this.FormCours.sessionCourse);
+      this.CourseTeacher.append("grade_id", this.FormCours.grade_id);
+      this.CourseTeacher.append("branch_id", this.FormCours.branch_id);
+      this.CourseTeacher.append("option_id", this.FormCours.option_id);
+
       axios
-        .post(
-          "/update/teacher/absence/" + this.IdTeacherAbsence,
-          this.AbsenceTeacher
-        )
+        .post("course/" + this.FormCours.id, this.CourseTeacher, config)
         .then(response => {
           if (response.data["status"] == "success") {
-            this.GetAbsencesTeacher();
             Swal.fire({
               position: "center",
               icon: "success",
               title: "Ajouté !",
-              text: "la classe a été affecter",
+              text: "Course a été modifié",
               showConfirmButton: true
             });
+
+            this.FormCours = [];
+            this.ShowCourses();
           }
         })
         .catch(error => {
@@ -534,7 +565,6 @@ export default {
               text: "Tous les champs c'est obligatoire !",
               showConfirmButton: true
             });
-            this.FromProf = [];
           }
         });
     }

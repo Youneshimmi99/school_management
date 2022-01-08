@@ -26,6 +26,7 @@ class CourseController extends Controller
 
         return response()->json(["status"=>"success","course"=>$courses_grades]);
     }
+    // public function
 
     /**
      * Show the form for creating a new resource.
@@ -166,10 +167,11 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $id;
         $this->validate($request,[
             'nameCourse' => 'required|max:255',
             'sessionCourse' => 'required',
-            'teacher_id' => 'required',
+           
             'grade_id' => 'required',
 
         
@@ -205,7 +207,7 @@ class CourseController extends Controller
         if($request->has('sessionCourse')){
             $course->sessionCourse= $request->input('sessionCourse');
         }
-        $course->teacher_id= $request->input('teacher_id');
+        $course->teacher_id=Auth::guard('teacher')->user()->id;
         $course->grade_id= $request->input('grade_id');
 
         if($request->has('option_id')){

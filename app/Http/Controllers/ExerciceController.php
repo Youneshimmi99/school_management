@@ -54,7 +54,7 @@ class ExerciceController extends Controller
 	{
         $exercice = Exercice::onlyTrashed()->findOrFail($id)->restore();
 
-        return response()->json(["status"=>"success","exercice"=>$exercice]);
+        return response()->json(["status"=>"success","courseExercices"=>$exercice]);
 	}
 
     /**
@@ -65,13 +65,12 @@ class ExerciceController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request ;
         $this->validate($request,[
             'nameExercice' => 'required|max:255',
             'fileExercice' => 'required',
             'course_id' => 'required',
-
-
-        
+            'descriptionExercice'=>'required',
         ]);
 
         $exercice = new Exercice;
@@ -83,9 +82,9 @@ class ExerciceController extends Controller
             $extension = $request->file('fileExercice')->getClientOriginalExtension();
             // $filenameToStore=$filename.''.\Carbon\Carbon::now()->timestamp.'main.'.$extension;
             $filenameToStore=\Carbon\Carbon::now()->timestamp.'main.'.$extension;
-            $path =$request->file('fileExercice')->storeAs('public/courses/exercices',$filenameToStore);
+            $path =$request->file('fileExercice')->storeAs('public/courses/exercices/',$filenameToStore);
         
-            $exercice->fileExercice='storage/courses/exercices'.$filenameToStore; 
+            $exercice->fileExercice='storage/courses/exercices/'.$filenameToStore; 
         }
 
         $exercice->nameExercice= $request->input('nameExercice');
@@ -114,10 +113,11 @@ class ExerciceController extends Controller
         return response()->json(["status"=>"success","exercice"=>$exercice]);
     }
 
-    public function courseExercices($id)
+   public function courseExercices($id)
     {
+        
         $exercices = Course::find($id)->exercices;
-
+// return $exercices;
         return response()->json(["status"=>"success","exercices"=>$exercices]);
     }
 
