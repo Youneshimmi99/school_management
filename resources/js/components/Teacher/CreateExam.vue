@@ -14,7 +14,7 @@
             <a href="javascript:void(0)">Accueil</a>
           </li>
           <li class="breadcrumb-item active">
-            <a href="javascript:void(0)">Ajouter Cour</a>
+            <a href="javascript:void(0)">Ajouter examen</a>
           </li>
         </ol>
       </div>
@@ -173,7 +173,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier l'absense</h5>
+            <h5 class="modal-title">Ajouter examen</h5>
             <button type="button" class="close" data-dismiss="modal">
               <span>&times;</span>
             </button>
@@ -292,7 +292,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Les cours</h4>
+            <h4 class="card-title">les examens</h4>
           </div>
           <div class="card-body">
             <div>
@@ -389,7 +389,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">les exercices de cour : {{ FormCours.nameCourse }}</h4>
+            <h4 class="card-title">les examens de cour : {{ FormCours.nameCourse }}</h4>
           </div>
           <div class="card-body">
             <!-- ->> {{ CourExamens }} -->
