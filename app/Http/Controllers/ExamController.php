@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Exam;
 use App\Teacher;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
@@ -33,10 +34,18 @@ class ExamController extends Controller
 
     public function archive()
     {
+        $examen_cour=DB::table('exams')
+                            ->join('courses','courses.id','=','exams.course_id')
+                            ->join('grades','grades.id','=','courses.grade_id')
+                            ->select('exams.id','courses.nameCourse','exams.nameExam','exams.descriptionExam','exams.fileExam','exams.sessionExam','grades.nameGrade')
+                            ->where('exams.teacher_id',Auth::guard('teacher')->user()->id)
+                            ->whereNotNull('exams.deleted_at')
+                            ->get();
 
-    $exams=Exam::onlyTrashed()->get();
+                return response()->json(["status"=>"success","exams"=>$examen_cour]);
+    // $exams=Exam::onlyTrashed()->get();
                             
-      return response()->json(["status"=>"success","exams"=>$exams]);
+    //   return response()->json(["status"=>"success","exams"=>$exams]);
 
     }
 
@@ -44,7 +53,7 @@ class ExamController extends Controller
 	{
 		$exam = Exam::findOrFail($id)->delete();
 
-        return response()->json(["status"=>"success","exam"=>$exam]);
+        return response()->json(["status"=>"success"]);
 	}
 
     public function restore($id)
@@ -62,11 +71,12 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
+        // return  $request->branch_id;
+        // return $request->course_id;
         $this->validate($request,[
             'nameExam' => 'required|max:255',
             'fileExam' => 'required',
-            'sessionExam' => 'required',
-            'teacher_id' => 'required',
+            'sessionExam' => 'required|numeric',
             'grade_id' => 'required',
 
         
@@ -90,15 +100,17 @@ class ExamController extends Controller
         }
 
         $exam->sessionExam= $request->input('sessionExam');
-        $exam->teacher_id= $request->input('teacher_id');
+        $exam->teacher_id= Auth::guard('teacher')->user()->id;
         $exam->grade_id= $request->input('grade_id');
 
         if($request->has('option_id')){
             $exam->option_id= $request->input('option_id');
         }
-
-        if($request->has('branch_id')){
-            $exam->branch_id= $request->input('branch_id');
+        $exam->course_id=$request->course_id;
+        if($request->branch_id=="null"){  
+            
+        }else {
+            $exam->branch_id=$request->branch_id;
         }
 
         $exam->save();
@@ -114,9 +126,21 @@ class ExamController extends Controller
      */
     public function show($id)
     {
-        $exam = Exam::find($id);
+        $examen_cour=DB::table('exams')
+                            ->join('courses','courses.id','=','exams.course_id')
+                            ->join('grades','grades.id','=','courses.grade_id')
+                            ->select('exams.id','courses.nameCourse','exams.nameExam','exams.descriptionExam','exams.fileExam','exams.sessionExam','grades.nameGrade')
+                            ->where('exams.course_id',$id)
+                            ->where('exams.teacher_id',Auth::guard('teacher')->user()->id)
+                            ->whereNull('exams.deleted_at')
+                            ->get();
 
-        return response()->json(["status"=>"success","exam"=>$exam]);
+        return response()->json(["status"=>"success","examcourse"=>$examen_cour]);
+
+        // $exam = Exam::find($id);
+
+        // return response()->json(["status"=>"success","exam"=>$exam]);
+
     }
 
     /**
@@ -219,10 +243,10 @@ class ExamController extends Controller
     public function subjectExams($id){
 
         $subject_exams=DB::table('teachers')
-        ->join('exams','exams.teacher_id','=','teachers.id')
-        ->join('subjects','subjects.id','=','teachers.subject_id')
-        ->select('subjects.namesub','teachers.name as nameTeacher','exams.nameExam','exams.descriptionExam','exams.fileExam','exams.sessionExam')
-        ->where('teachers.subject_id','=',$id)
+            ->join('exams','exams.teacher_id','=','teachers.id')
+            ->join('subjects','subjects.id','=','teachers.subject_id')
+            ->select('subjects.namesub','teachers.name','exams.nameExam','exams.descriptionExam','exams.fileExam','exams.sessionExam')
+            ->where('teachers.subject_id','=',$id)
         ->get();
 
         return response()->json(["status"=>"success","subject_exams"=>$subject_exams]);

@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\DB;
 use App\Course;
 use App\Teacher;
 use App\Classe;
+use App\Option;
+use App\Grade;
+use App\Branch;
+
+
+
+
 
 
 
@@ -15,6 +22,13 @@ class Teacher2Controller extends Controller
 {
     public function IndexDashTeacher(){
         return view("Teacher.DashTeacher");
+    }
+     public function getgrade($idgrade,$idbranch,$idoption){
+        $Grade=Grade::find($idgrade);
+        $Option=Option::find($idoption);
+        $Branch=Branch::find($idbranch);
+        return response()->json(["status"=>"success","grade"=>$Grade,"option"=>$Option,"branch"=>$Branch]);
+
     }
     public function GetClassesProf($id){
         // $idTeacher=Auth::guard('teacher')->user()->id;

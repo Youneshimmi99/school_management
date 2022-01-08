@@ -17,6 +17,9 @@ import ArchiveCours from "./components/Teacher/ArchiveCours.vue";
 import CreateExercice from "./components/Teacher/CreateExercice.vue";
 import ArchiveExercice from "./components/Teacher/ArchiveExercices.vue";
 
+import ArchiveExam from "./components/Teacher/ArchiveExam.vue";
+import CreateExam from "./components/Teacher/CreateExam.vue";
+
 const routes = [
     {
         path: "/cours",
@@ -27,6 +30,16 @@ const routes = [
         path: "/exercices",
         name: "exercices",
         component: CreateExercice
+    },
+    {
+        path: "/examens",
+        name: "examens",
+        component: CreateExam
+    },
+    {
+        path: "/examens_archives",
+        name: "examens_archives",
+        component: ArchiveExam
     },
     {
         path: "/exercices_archives",

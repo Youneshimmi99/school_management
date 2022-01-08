@@ -21,7 +21,7 @@
     </div>
 
     <div class="d-flex justify-content-end">
-      <button
+      <!-- <button
         type="button"
         data-toggle="modal"
         data-target=".bd-example-modal-lg"
@@ -29,7 +29,7 @@
         class="btn btn-primary btn-rounded mb-3"
       >
         <i class="fa fa-plus color-primary"></i>&ensp;Ajouter cours
-      </button>
+      </button>-->
     </div>
     <!-- Large modal ajouter cours -->
     <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
@@ -378,20 +378,6 @@
                     </td>
                     <td width="24%" class>
                       <span>
-                        <a
-                          href="javascript:void()"
-                          class="mr-4"
-                          data-toggle="modal"
-                          data-target=".bd-absence-modal-lg"
-                          data-placement="top"
-                          title="Edit"
-                          @click="EditeCour(item.id)"
-                        >
-                          <span class="badge badge-primary">
-                            <i class="fa fa-plus color-primary"></i>
-                            <span>&ensp;Ajouter exercice</span>
-                          </span>
-                        </a>
                         <a
                           href="javascript:void()"
                           data-toggle="tooltip"

@@ -199,9 +199,9 @@
                     </li>
                     <li class="nav-label">Apps</li>
                      <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                         <i class="fas fa-book"></i><span class="nav-text">Les coures</span></a>
+                         <i class="fas fa-book"></i><span class="nav-text">Les cours</span></a>
                         <ul aria-expanded="false">
-                            <li><router-link tag="a" to="/cours"  class="nav-link">Ajouter Les courses </router-link></li>
+                            <li><router-link tag="a" to="/cours"  class="nav-link">Ajouter Les cours </router-link></li>
                             <li><router-link tag="a" to="/archives_cours"  class="nav-link">Archives</router-link></li>
                         </ul>
                     </li>
@@ -212,6 +212,16 @@
                         <ul aria-expanded="false">
                             <li><router-link to="/exercices">Ajouter les exercices</router-link></li>
                              <li><router-link  to="/exercices_archives">Archives </a></li>
+
+                            
+                        </ul>
+                    </li>
+                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                         <i class="fab fa-buromobelexperte"></i>
+                                <span class="nav-text">les examens</span></a>
+                        <ul aria-expanded="false">
+                            <li><router-link to="/examens">Ajouter les examens</router-link></li>
+                             <li><router-link  to="/examens_archives">Archives </a></li>
 
                             
                         </ul>

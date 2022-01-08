@@ -107,7 +107,7 @@ export default {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Your work has been saved",
+            title: "Votre exercice désarchiver",
             showConfirmButton: false,
             timer: 1500
           });

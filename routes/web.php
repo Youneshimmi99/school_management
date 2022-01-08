@@ -71,6 +71,8 @@ Route::middleware(['teacher'])->group(function () {
     include('exam.php');
     Route::get('/getclassesbyprof/{id}','Teacher2Controller@GetClassesProf');
     Route::get('/accueil','Teacher2Controller@IndexDashTeacher');
+    Route::get('/getgrade/{idgrade}/{idbranch}/{idoption}','Teacher2Controller@getgrade');
+
     Route::post('/logoutteacher', 'AuthController@LogoutTeacher');
 });
  
