@@ -35,13 +35,13 @@
                                 
                                 
                                 <div class="auth-form">
-                                    <h3 class="text-center mb-4">Espace Professeur</h3>
-                                    <form id="login-form" class="form" method="post" action="{{ url('/loginteacher') }}"">
+                                    <h3 class="text-center mb-4">Espace élève</h3>
+                                    <form id="login-form" class="form" method="post" action="{{ url('/loginstudent') }}"">
                                              {{ csrf_field() }}
                                         <div class="form-group">
                                            
                                             <label><strong>Email</strong></label>
-                                            <input type="email" name="email" class="form-control" value="prof@gmail.com">
+                                            <input type="email" name="email" class="form-control" value="akchar@akchar.com">
                                         </div>
                                         <div class="form-group">
                                             <label><strong>Password</strong></label>

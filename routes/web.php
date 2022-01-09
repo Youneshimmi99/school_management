@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 include('grade.php');  
-Route::get('/login/admin', 'AuthController@IndexLoginAdmin')->name("loginadmin");
-Route::post('/loginadmin', 'AuthController@LoginAdmin');
+
 
 
  
@@ -36,7 +35,6 @@ include('teacher.php');
     Route::get('/teachers','AdminController@Allteachers');
     Route::get('teachers/emploidone','AdminController@ConfirmTimeTable');
     Route::get('/teachers/notimetable','AdminController@AllteachersNotTimetable');
-
     Route::get('/classes_teachers/{id}','AdminController@ClassesTeacher');
     Route::get('/teachers/edit/{id}','AdminController@EditTeacher');
     Route::get('/admin/edit/{id}','AdminController@EditAdmin');
@@ -58,15 +56,21 @@ include('teacher.php');
     Route::get('/teachers/classes','AdminController@AllteachersClasses');  
 });
 //admin and prof
+
 Route::get('/cycles', 'AuthController@GetCycles');
 Route::get('/grades/{id}', 'AuthController@GetGrades');
 Route::get('/subjects', 'AuthController@GetSubjects');
 Route::get('/branches/{id}','AdminController@GetBranchs');
-    
+///    
      
-
+//login 
  Route::get('/login/prof','AuthController@IndexTeacherLogin');
  Route::post('/loginteacher','AuthController@LoginTeacher');
+ Route::post('/loginstudent','AuthController@LoginStudent');
+ Route::get('/login/admin', 'AuthController@IndexLoginAdmin');
+ Route::get('/login/eleve', 'AuthController@IndexLoginStudent');
+Route::post('/loginadmin', 'AuthController@LoginAdmin');
+
 
 Route::middleware(['teacher'])->group(function () {
     include('course.php'); 
@@ -86,19 +90,15 @@ Route::middleware(['teacher'])->group(function () {
     Route::get('/exam/college/teacher','Teacher2Controller@GetExamsCollege');
     Route::get('/exam/lycee/teacher','Teacher2Controller@GetExamsLycee');
     Route::get('/gettimetableteacher','Teacher2Controller@GetTimeTableProf');
-
-
-
-
-
-
-
-
-
-
     Route::post('/logoutteacher', 'AuthController@LogoutTeacher');
 });
+Route::middleware(['student'])->group(function () {
+    Route::post('/logoutstudent', 'AuthController@LogoutStudent');
+    Route::get('/','StudentController@IndexDashStudent');
+
+});
  
+
  
 
 

@@ -92,7 +92,7 @@ class TimetableController extends Controller
 
     }
 
-    public function teacherTimetable($id)
+        public function teacherTimetable($id)
     {
          $timetable=TimeTable::find($id);
     //    return $timetable;

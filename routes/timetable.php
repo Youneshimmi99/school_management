@@ -7,7 +7,6 @@ Route::get('/teachersWithoutTimetable', 'TimetableController@teachersWithoutTime
 Route::post('timetable', 'TimetableController@store')->name('timetable.store');
 Route::get('timetable/{timebtable}', 'TimetableController@show')->name('timetable.show');
 Route::put('timetable/{timebtable}', 'TimetableController@update')->name('timetable.update');
-
 Route::post('/timetable/classe', 'TimetableController@CreateTimeTableClasse');
 Route::get('/getclassesInfo/{id}', 'TimetableController@GetInfoClasse');
 Route::post('/delete/timetable/classe/{id}', 'TimetableController@DeleteTimetableClasse');

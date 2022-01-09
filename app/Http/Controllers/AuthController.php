@@ -22,6 +22,9 @@ class AuthController extends Controller
     public function IndexLoginAdmin(){
         return view("admin.LoginAdmin");
     }
+     public function IndexLoginStudent(){
+        return view("Student.LoginStudent");
+    }
     public function IndexTeacherLogin(){
         return view("Teacher.LoginTeacher");
     }
@@ -63,6 +66,23 @@ class AuthController extends Controller
         ]);
         }
     }
+    public function LoginStudent(Request $request){
+         $attempt = Auth::guard('student')
+                ->attempt([
+                    'email' => $request->email,
+                    'password' => $request->password
+                ]);
+        if ($attempt){
+            // return view("admin.DashAdmin");
+            // $request->session()->regenerate();
+            // dd("ok");
+            return redirect('/');     
+        }else {
+          return back()->withErrors([
+            'email' => 'Vos informations d\'identification ne sont pas correctes !',
+        ]);
+        }
+    }
     public function LougoutAdmin(){
         if (Auth::guard("admin")->check()) {
              Auth::guard("admin")->logout();
@@ -73,6 +93,12 @@ class AuthController extends Controller
         if (Auth::guard("teacher")->check()) {
              Auth::guard("teacher")->logout();
              return redirect('/login/prof'); 
+        }   
+    }
+     public function LogoutStudent(){
+        if (Auth::guard("student")->check()) {
+             Auth::guard("student")->logout();
+             return redirect('/login/eleve'); 
         }   
     }
     public function AddProf(Request $request){
