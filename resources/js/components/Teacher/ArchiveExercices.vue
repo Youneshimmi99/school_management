@@ -47,7 +47,7 @@
                     <td>
                       <!-- {{ item.fileCourse }} -->
 
-                      <a :href="'/'+item.fileExercice">
+                      <a target="_blank" :href="'/'+item.fileExercice">
                         <span class="badge badge-primary">
                           <i class="fas fa-download"></i>
                           <span>Telecharger</span>

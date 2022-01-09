@@ -302,7 +302,7 @@
                     <td>
                       <!-- {{ item.fileCourse }} -->
 
-                      <a :href="'/'+item.fileCourse">
+                      <a target="_blank" :href="'/'+item.fileCourse">
                         <span class="badge badge-primary">
                           <i class="fas fa-download"></i>
                           <span>Telecharger</span>

@@ -210,7 +210,7 @@
                     <td>
                       <!-- {{ item.fileCourse }} -->
 
-                      <a :href="'/'+item.fileExam">
+                      <a target="_blank" :href="'/'+item.fileExam">
                         <span class="badge badge-primary">
                           <i class="fas fa-download"></i>
                           <span>Telecharger</span>
@@ -278,7 +278,7 @@
                     <td>
                       <!-- {{ item.fileCourse }} -->
 
-                      <a :href="'/'+item.fileExam">
+                      <a target="_blank" :href="'/'+item.fileExam">
                         <span class="badge badge-primary">
                           <i class="fas fa-download"></i>
                           <span>Telecharger</span>
@@ -348,7 +348,7 @@
                     <td>
                       <!-- {{ item.fileCourse }} -->
 
-                      <a :href="'/'+item.fileExam">
+                      <a target="_blank" :href="'/'+item.fileExam">
                         <span class="badge badge-primary">
                           <i class="fas fa-download"></i>
                           <span>Telecharger</span>

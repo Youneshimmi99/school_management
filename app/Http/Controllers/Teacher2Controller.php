@@ -11,6 +11,8 @@ use App\Classe;
 use App\Option;
 use App\Grade;
 use App\Branch;
+use App\Timetable;
+
 
 
 
@@ -83,6 +85,11 @@ class Teacher2Controller extends Controller
                             ->where('exams.teacher_id',Auth::guard('teacher')->user()->id)
                             ->get();
         return response()->json(["status"=>"success","teacherexam"=>$teacherexamtechear]);                    
+    }
+    public function GetTimeTableProf(){
+        $timetableprof=Timetable::where('teacher_id',Auth::guard('teacher')->user()->id)->get();
+                return response()->json(["status"=>"success","timetableteacher"=>$timetableprof]);                    
+
     }
     public function GetExamsCollege(){
         // return Auth::guard('teacher')->user()->subject_id;

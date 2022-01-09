@@ -36,7 +36,7 @@ include('teacher.php');
     Route::get('/teachers','AdminController@Allteachers');
     Route::get('teachers/emploidone','AdminController@ConfirmTimeTable');
     Route::get('/teachers/notimetable','AdminController@AllteachersNotTimetable');
-    Route::get('/teachers/classes','AdminController@AllteachersClasses');
+
     Route::get('/classes_teachers/{id}','AdminController@ClassesTeacher');
     Route::get('/teachers/edit/{id}','AdminController@EditTeacher');
     Route::get('/admin/edit/{id}','AdminController@EditAdmin');
@@ -55,12 +55,15 @@ include('teacher.php');
     Route::get('/admin/edit/{id}','AdminController@EditAdmin');
     Route::post('/admin/update','AdminController@UpdateAdmin');
     Route::post('/delete/admin/{id}','AdminController@DeleteAdmin');
+    Route::get('/teachers/classes','AdminController@AllteachersClasses');  
 });
 //admin and prof
 Route::get('/cycles', 'AuthController@GetCycles');
 Route::get('/grades/{id}', 'AuthController@GetGrades');
 Route::get('/subjects', 'AuthController@GetSubjects');
 Route::get('/branches/{id}','AdminController@GetBranchs');
+    
+     
 
  Route::get('/login/prof','AuthController@IndexTeacherLogin');
  Route::post('/loginteacher','AuthController@LoginTeacher');
@@ -69,6 +72,7 @@ Route::middleware(['teacher'])->group(function () {
     include('course.php'); 
     include('exercice.php'); 
     include('exam.php');
+    Route::get('/teachers/classes/prof','AdminController@AllteachersClassesProf');  
     Route::get('/getclassesbyprof/{id}','Teacher2Controller@GetClassesProf');
     Route::get('/accueil','Teacher2Controller@IndexDashTeacher');
     Route::get('/getgrade/{idgrade}/{idbranch}/{idoption}','Teacher2Controller@getgrade');
@@ -81,6 +85,9 @@ Route::middleware(['teacher'])->group(function () {
     Route::get('/exam/primaire/teacher','Teacher2Controller@GetExamsPrimaire');
     Route::get('/exam/college/teacher','Teacher2Controller@GetExamsCollege');
     Route::get('/exam/lycee/teacher','Teacher2Controller@GetExamsLycee');
+    Route::get('/gettimetableteacher','Teacher2Controller@GetTimeTableProf');
+
+
 
 
 

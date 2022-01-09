@@ -104,11 +104,11 @@ export default {
             showConfirmButton: false,
             timer: 1500
           });
-          this.ShowCourses();
+          this.ShowExams();
         }
       });
     },
-    ShowCourses() {
+    ShowExams() {
       (this.AllExamen = []),
         axios.get("exam/archive").then(response => {
           if (response.data["status"] == "success") {
@@ -132,7 +132,7 @@ export default {
           axios.post("exam/" + idexam + "/destroy").then(response => {
             if (response.data["status"] == "success") {
               // this.Alladmins = [];
-              this.ShowCourses();
+              this.ShowExams();
             }
           });
           Swal.fire("Supprimé!", "exam a été supprimé.", "success");
@@ -141,7 +141,7 @@ export default {
     }
   },
   created() {
-    this.ShowCourses();
+    this.ShowExams();
   }
 };
 </script>

@@ -74,7 +74,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
       <div class="col-lg-7">
         <div class="card">
           <div class="card-header">
@@ -152,6 +152,29 @@
                     </li>
                   </ul>
                 </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h4>L'emploi du temps</h4>
+              </div>
+              <div class="card-body">
+                <a target="_blank" :href="'/'+this.linkTimetable[0]['file']" class="mr-4">
+                  <h5>
+                    Les classes affecter :
+                    <span
+                      class="badge badge-info mr-1"
+                      v-for="(item,index) in TeachersClasses"
+                      :key="index"
+                    >
+                      <span>{{ item.nameClasse }}</span>
+                    </span>
+                  </h5>
+                  <span class="badge badge-secondary">
+                    <i class="fas fa-download"></i>
+                    <span>&ensp;Telecharger l'emploi du temps</span>
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -239,6 +262,7 @@ export default {
   },
   data() {
     return {
+      linkTimetable: [],
       IdSubject: "",
       idteacher: "",
       showInfo: false,
@@ -248,90 +272,29 @@ export default {
       counteexrcicetechear: 0,
       TeacherActive: [],
       teachermatiere: [],
+      TeachersClasses: [],
 
       calendarOptions: {
         plugins: [dayGridPlugin, interactionPlugin],
         initialView: "dayGridMonth",
         locale: frLocale
-      },
-      options: {
-        chart: {
-          id: "vuechart-example"
-        },
-        xaxis: {
-          categories: ["a", "b", "c", "d", "e", "f", "g", " f", "f f"]
-        }
-      },
-      series: [
-        {
-          name: "Professeurs",
-          data: [2, 3, 5, 2, 5, 2, 6, 2, 1]
-        }
-      ],
-      option: {
-        title: {
-          text: "Les Classes",
-          left: "center"
-        },
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-          orient: "vertical",
-          left: "left",
-          data: ["a", "b", "c", "d", "e", "f"]
-        },
-        series: [
-          {
-            name: "Les Classes",
-            type: "pie",
-            radius: "55%",
-            center: ["50%", "60%"],
-            data: [
-              {
-                value: 23,
-                name: "a"
-              },
-              {
-                value: 34,
-                name: "b"
-              },
-              {
-                value: 23,
-                name: "c"
-              },
-              {
-                value: 53,
-                name: "d"
-              },
-              {
-                value: 23,
-                name: "e"
-              },
-              {
-                value: 54,
-                name: "f"
-              }
-            ],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)"
-              }
-            }
-          }
-        ]
       }
     };
   },
   methods: {
-    PlusInfo(idprof) {
-      alert(idprof);
-      this.idteacher = idprof;
-      // alert(this.idteacher);
-      thsi.showInfo = true;
+    GetClassTeacher() {
+      axios.get("/teachers/classes/prof").then(response => {
+        if (response.data["status"] == "success") {
+          this.TeachersClasses = response.data["teacher_classes"];
+        }
+      });
+    },
+    GetTimeTableTeacher() {
+      axios.get("/gettimetableteacher").then(response => {
+        if (response.data["status"] == "success") {
+          this.linkTimetable = response.data["timetableteacher"];
+        }
+      });
     },
     GetCountCoursTeacher() {
       this.countcourtechear = [];
@@ -385,6 +348,8 @@ export default {
     this.GetCountexerciceTeacher();
     this.GetCountexamTeacher();
     this.GetTechearsMatiere();
+    this.GetTimeTableTeacher();
+    this.GetClassTeacher();
   }
 };
 </script>

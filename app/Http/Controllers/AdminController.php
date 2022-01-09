@@ -172,9 +172,20 @@ class AdminController extends Controller
                             ->join('teachers','teachers.id','=','teacher_classes.teacher_id')
                             ->join('subjects','subjects.id','=','teachers.subject_id')
                             ->select('teacher_classes.id','teacher_classes.teacher_id','classes.nameClasse')
-                            ->get();
-                            // return $teachers;                 
+                            ->get();               
         return response()->json(["status"=>"success","teachers"=>$teachers,"teacher_classes"=>$teachers_classes]);
+
+    }
+        public function AllteachersClassesProf(){
+       
+        $teachers_classes=DB::table('teacher_classes')
+                            ->join('classes','classes.id','=','teacher_classes.class_id')
+                            ->join('teachers','teachers.id','=','teacher_classes.teacher_id')
+                            ->join('subjects','subjects.id','=','teachers.subject_id')
+                            ->select('teacher_classes.id','classes.nameClasse')
+                            ->where('teacher_classes.teacher_id',Auth::guard('teacher')->user()->id)
+                            ->get();               
+        return response()->json(["status"=>"success","teacher_classes"=>$teachers_classes]);
 
     }
     public function AllteachersNotTimetable(){

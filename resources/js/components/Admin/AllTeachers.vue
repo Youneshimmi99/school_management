@@ -36,7 +36,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <a :href="'/'+this.TeleTimeTable" class="btn btn-primary">Telecharger</a>
+            <a target="_blank" :href="'/'+this.TeleTimeTable" class="btn btn-primary">Telecharger</a>
           </div>
         </div>
       </div>
