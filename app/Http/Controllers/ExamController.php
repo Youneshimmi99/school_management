@@ -147,9 +147,11 @@ class ExamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function EditExam($id)
     {
-        //
+        $exam = Exam::find($id);
+
+        return response()->json(["status"=>"success","exam"=>$exam]);
     }
 
     /**
@@ -161,11 +163,11 @@ class ExamController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $this->validate($request,[
             'nameExam' => 'required|max:255',
             // 'fileExam' => 'required',
             'sessionExam' => 'required',
-            'teacher_id' => 'required',
             'grade_id' => 'required',
 
         
@@ -195,7 +197,7 @@ class ExamController extends Controller
         }
 
         $exam->sessionExam= $request->input('sessionExam');
-        $exam->teacher_id= $request->input('teacher_id');
+        $exam->teacher_id= Auth::guard('teacher')->user()->id;
         $exam->grade_id= $request->input('grade_id');
 
         if($request->has('option_id')){
@@ -208,7 +210,7 @@ class ExamController extends Controller
 
         $exam->save();
 
-        return response()->json(["status"=>"success","exam"=>$exam]);
+        return response()->json(["status"=>"success"]);
     }
 
     /**
