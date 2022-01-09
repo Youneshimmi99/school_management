@@ -72,6 +72,44 @@ class Teacher2Controller extends Controller
                             ->get();
         return response()->json(["status"=>"success","teachermatiere"=>$teachermatiere]);                    
     }
+     public function GetExamsPrimaire(){
+        // return Auth::guard('teacher')->user()->subject_id;
+        $teacherexamtechear=DB::table("exams")
+                            ->join('teachers','teachers.id','=','exams.teacher_id')
+                            ->join('grades','grades.id','=','exams.grade_id')
+                            ->select("exams.id","exams.nameExam","exams.descriptionExam","exams.fileExam","exams.sessionExam","grades.nameGrade")
+                            ->where('grades.cycle_id',1)
+                            ->whereNull('exams.deleted_at')
+                            ->where('exams.teacher_id',Auth::guard('teacher')->user()->id)
+                            ->get();
+        return response()->json(["status"=>"success","teacherexam"=>$teacherexamtechear]);                    
+    }
+    public function GetExamsCollege(){
+        // return Auth::guard('teacher')->user()->subject_id;
+        $teacherexamteacher=DB::table("exams")
+                            ->join('teachers','teachers.id','=','exams.teacher_id')
+                            ->join('grades','grades.id','=','exams.grade_id')
+                            ->select("exams.id","exams.nameExam","exams.descriptionExam","exams.fileExam","exams.sessionExam","grades.nameGrade")
+                            ->where('grades.cycle_id',2)
+                            ->where('exams.teacher_id',Auth::guard('teacher')->user()->id)
+                            ->whereNull('exams.deleted_at')
+                            ->get();
+        return response()->json(["status"=>"success","teacherexam"=>$teacherexamteacher]);                    
+    }
+     public function GetExamsLycee(){
+        //  dd("hello");
+              $teacherexamlycee=DB::table("exams")
+                            ->join('teachers','teachers.id','=','exams.teacher_id')
+                            ->join('grades','grades.id','=','exams.grade_id')
+                            ->join('branchs','branchs.id','=','exams.branch_id')
+                            ->select("exams.id","exams.nameExam","exams.descriptionExam","exams.fileExam","exams.sessionExam","grades.nameGrade","branchs.nameBranch")
+                            ->where('grades.cycle_id',3)
+                            ->whereNull('exams.deleted_at')
+                            ->where('exams.teacher_id',Auth::guard('teacher')->user()->id)
+                            ->get();
+        return response()->json(["status"=>"success","teacherexam"=>$teacherexamlycee]); 
+                      
+    }
     public function GetClassesProf($id){
         // $idTeacher=Auth::guard('teacher')->user()->id;
         $teachers_classes=DB::table('teacher_classes')

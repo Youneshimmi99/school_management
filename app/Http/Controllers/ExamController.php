@@ -35,9 +35,8 @@ class ExamController extends Controller
     public function archive()
     {
         $examen_cour=DB::table('exams')
-                            ->join('courses','courses.id','=','exams.course_id')
-                            ->join('grades','grades.id','=','courses.grade_id')
-                            ->select('exams.id','courses.nameCourse','exams.nameExam','exams.descriptionExam','exams.fileExam','exams.sessionExam','grades.nameGrade')
+                            ->join('grades','grades.id','=','exams.grade_id')
+                            ->select('exams.id','exams.nameExam','exams.descriptionExam','exams.fileExam','exams.sessionExam','grades.nameGrade')
                             ->where('exams.teacher_id',Auth::guard('teacher')->user()->id)
                             ->whereNotNull('exams.deleted_at')
                             ->get();
@@ -106,7 +105,6 @@ class ExamController extends Controller
         if($request->has('option_id')){
             $exam->option_id= $request->input('option_id');
         }
-        $exam->course_id=$request->course_id;
         if($request->branch_id=="null"){  
             
         }else {

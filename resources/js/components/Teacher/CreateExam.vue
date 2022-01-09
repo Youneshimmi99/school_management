@@ -31,12 +31,12 @@
         <i class="fa fa-plus color-primary"></i>&ensp;Ajouter cours
       </button>-->
     </div>
-    <!-- Large modal ajouter cours -->
-    <!-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Large modal ajouter exam -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Ajouter Cour</h5>
+            <h5 class="modal-title">Ajouter Exam</h5>
             <button type="button" class="close" data-dismiss="modal">
               <span>&times;</span>
             </button>
@@ -63,8 +63,8 @@
                   <label class="text-dark">Niveau</label>
                   <select
                     class="form-control form-control"
-                    @change="GetClass(FormCours.grade_id)"
-                    v-model="FormCours.grade_id"
+                    @change="GetClass(FormExam.grade_id)"
+                    v-model="FormExam.grade_id"
                     required
                   >
                     <option
@@ -78,7 +78,7 @@
               <div class="row mt-2" v-if="ActiveForm">
                 <div class="col-lg-6">
                   <label class="text-dark">Option</label>
-                  <select class="form-control form-control" v-model="FormCours.option_id">
+                  <select class="form-control form-control" v-model="FormExam.option_id">
                     <option
                       v-for="(item,index) in Subjects"
                       :key="index"
@@ -88,7 +88,7 @@
                 </div>
                 <div class="col-lg-6" v-if="IdCyle==3 && ActiveForm">
                   <label class="text-dark">branche</label>
-                  <select class="form-control form-control" v-model="FormCours.branch_id">
+                  <select class="form-control form-control" v-model="FormExam.branch_id">
                     <option
                       v-for="(item,index) in BranchesName"
                       :key="index"
@@ -99,11 +99,11 @@
               </div>
               <div class="row mt-2" v-if="ActiveForm">
                 <div class="col-lg-6">
-                  <label class="text-dark">Nom de cour</label>
+                  <label class="text-dark">Nom examen</label>
                   <input
                     type="text"
                     class="form-control"
-                    v-model="FormCours.nameCourse"
+                    v-model="FormExam.nameExam"
                     id="val-namecourse"
                     name="val-namecourse"
                   >
@@ -113,7 +113,7 @@
                   <textarea
                     class="form-control"
                     id="exampleFormControlTextarea1"
-                    v-model="FormCours.descriptionCourse"
+                    v-model="FormExam.descriptionExam"
                     rows="2"
                   ></textarea>
                 </div>
@@ -130,11 +130,11 @@
                   >
                 </div>
                 <div class="col-lg-6">
-                  <label class="text-dark">Session cour</label>
+                  <label class="text-dark">Session exam</label>
                   <input
                     type="text"
                     class="form-control"
-                    v-model="FormCours.sessionCourse"
+                    v-model="FormExam.sessionExam"
                     id="val-session"
                     name="val-session"
                   >
@@ -156,130 +156,10 @@
             </button>
             <button
               v-if="ActiveForm"
-              @click="CreateCourse"
-              data-dismiss="modal"
-              type="button"
-              class="btn btn-primary"
-            >
-              <i class="fa fa-plus color-primary"></i>&ensp;Ajouter
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>-->
-
-    <!-- Large modal edit L'absence teacher -->
-    <div class="modal fade bd-absence-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Ajouter examen</h5>
-            <button type="button" class="close" data-dismiss="modal">
-              <span>&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form class="needs-validation" novalidate>
-              <div class="row">
-                <div class="col-lg-6">
-                  <label class="text-dark">Cour</label>
-                  <input
-                    type="text"
-                    disabled="disabled"
-                    style="background-color:#40404024"
-                    class="form-control"
-                    v-model="FormCours.nameCourse"
-                    id="val-namegrade"
-                    name="val-namegrade"
-                  >
-                </div>
-                <div class="col-lg-6">
-                  <label class="text-dark">Niveau</label>
-                  <select
-                    class="form-control"
-                    disabled="disabled"
-                    style="background-color:#40404024"
-                  >
-                    <option>{{ VarHelp.grade }}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <label class="text-dark">Option</label>
-                  <select
-                    class="form-control"
-                    disabled="disabled"
-                    style="background-color:#40404024"
-                  >
-                    <option>{{ VarHelp.ooption }}</option>
-                  </select>
-                </div>
-                <div class="col-lg-6">
-                  <label class="text-dark">Branch</label>
-                  <select
-                    class="form-control form-control"
-                    disabled="disabled"
-                    style="background-color:#40404024"
-                  >
-                    <option>{{ VarHelp.branch }}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <label class="text-dark">Examen</label>
-                  <input
-                    type="text"
-                    v-model="FormExam.nameExam"
-                    class="form-control"
-                    id="val-nameoption"
-                    name="val-nameoption"
-                  >
-                </div>
-                <div class="col-lg-6">
-                  <label class="text-dark" for="exampleFormControlTextarea1">Description</label>
-                  <textarea
-                    class="form-control"
-                    id="exampleFormControlTextarea1"
-                    v-model="FormExam.descriptionExam"
-                    rows="2"
-                  ></textarea>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <label class="text-dark">Session examen</label>
-                  <input
-                    type="text"
-                    v-model="FormExam.sessionExam"
-                    class="form-control"
-                    id="val-nameoption"
-                    name="val-nameoption"
-                  >
-                </div>
-                <div class="col-lg-6">
-                  <label class="text-dark">Ficher</label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    id="file"
-                    ref="file"
-                    v-on:change="handleFileUpload()"
-                  >
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              <i class="fas fa-times"></i>&ensp;Annuler
-            </button>
-            <button
-              type="button"
               @click="CreateExamen"
-              class="btn btn-primary"
               data-dismiss="modal"
+              type="button"
+              class="btn btn-primary"
             >
               <i class="fa fa-plus color-primary"></i>&ensp;Ajouter
             </button>
@@ -287,109 +167,22 @@
         </div>
       </div>
     </div>
-
+    <div class="d-flex justify-content-end">
+      <button
+        type="button"
+        data-toggle="modal"
+        data-target=".bd-example-modal-lg"
+        data-placement="top"
+        class="btn btn-primary btn-rounded mb-3"
+      >
+        <i class="fa fa-plus color-primary"></i>&ensp;Ajouter cours
+      </button>
+    </div>
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">les examens</h4>
-          </div>
-          <div class="card-body">
-            <div>
-              <div class="float-right mb-3">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">
-                      <i class="fas fa-search"></i>
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Cour....."
-                    v-model="TitleCourse"
-                    class="form-control"
-                    id="val-titlecourse"
-                    name="val-titlecourse"
-                    @keyup="GetCourseByTitle"
-                    aria-describedby="basic-addon1"
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <table
-                class="table table-bordered verticle-middle table-responsive-sm"
-                style="color:black"
-              >
-                <thead>
-                  <tr>
-                    <th scope="col">Name Course</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Session course</th>
-                    <th scope="col">Course</th>
-                    <th scope="col">Niveau</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(item,index) in AllCourses" :key="index">
-                    <td>{{ item.nameCourse }}</td>
-                    <td>{{ item.descriptionCourse }}</td>
-                    <td>{{ item.sessionCourse }}</td>
-                    <td>
-                      <!-- {{ item.fileCourse }} -->
-
-                      <a :href="'/'+item.fileCourse">
-                        <span class="badge badge-primary">
-                          <i class="fas fa-download"></i>
-                          <span>Telecharger</span>
-                        </span>
-                      </a>
-                    </td>
-                    <td>{{ item.nameGrade }}</td>
-                    <td>
-                      <span>
-                        <a
-                          href="javascript:void()"
-                          class="mr-4"
-                          data-toggle="modal"
-                          data-target=".bd-absence-modal-lg"
-                          data-placement="top"
-                          title="Edit"
-                          @click="EditeCour(item.id)"
-                        >
-                          <span class="badge badge-primary">
-                            <i class="fa fa-plus color-primary"></i>
-                            <span>&ensp;Ajouter examen</span>
-                          </span>
-                        </a>
-                      </span>
-                      <a
-                        href="javascript:void()"
-                        class="mr-4"
-                        title="Edit"
-                        @click="EditeCour(item.id)"
-                      >
-                        <span class="badge badge-info">
-                          <i class="fas fa-eye"></i>
-                          <span>&ensp;Les examens</span>
-                        </span>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt-5">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">les examens de cour : {{ FormCours.nameCourse }}</h4>
+            <h4 class="card-title">les examens primaire</h4>
           </div>
           <div class="card-body">
             <!-- ->> {{ CourExamens }} -->
@@ -409,11 +202,149 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item,index) in CourExamens" :key="index">
+                  <tr v-for="(item,index) in ExamensPrimaire" :key="index">
                     <td>{{ item.nameExam }}</td>
                     <td>{{ item.descriptionExam }}</td>
                     <td>{{ item.nameGrade }}</td>
                     <td>{{ item.sessionExam }}</td>
+                    <td>
+                      <!-- {{ item.fileCourse }} -->
+
+                      <a :href="'/'+item.fileExam">
+                        <span class="badge badge-primary">
+                          <i class="fas fa-download"></i>
+                          <span>Telecharger</span>
+                        </span>
+                      </a>
+                    </td>
+                    <td width="24%" class>
+                      <span>
+                        <a
+                          href="javascript:void()"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Close"
+                          @click="DeleteExam(item.id)"
+                        >
+                          <span class="badge badge-danger">
+                            <i class="far fa-trash-alt"></i>
+                            <span>&ensp;Supprimer</span>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="row" v-if="ActiveTable">
+                <div class="col-lg-12">
+                  <h4 class="d-flex justify-content-center">Aucun Examens</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">les examens collège</h4>
+          </div>
+          <div class="card-body">
+            <!-- ->> {{ CourExamens }} -->
+            <div class="table-responsive">
+              <table
+                class="table table-bordered verticle-middle table-responsive-sm text-center"
+                style="color:black;"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col">Name Exam</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Niveau</th>
+                    <th scope="col">Session</th>
+                    <th scope="col">Exam</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item,index) in ExamensCollege" :key="index">
+                    <td>{{ item.nameExam }}</td>
+                    <td>{{ item.descriptionExam }}</td>
+                    <td>{{ item.nameGrade }}</td>
+                    <td>{{ item.sessionExam }}</td>
+                    <td>
+                      <!-- {{ item.fileCourse }} -->
+
+                      <a :href="'/'+item.fileExam">
+                        <span class="badge badge-primary">
+                          <i class="fas fa-download"></i>
+                          <span>Telecharger</span>
+                        </span>
+                      </a>
+                    </td>
+                    <td width="24%" class>
+                      <span>
+                        <a
+                          href="javascript:void()"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Close"
+                          @click="DeleteExam(item.id)"
+                        >
+                          <span class="badge badge-danger">
+                            <i class="far fa-trash-alt"></i>
+                            <span>&ensp;Supprimer</span>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="row" v-if="ActiveTable">
+                <div class="col-lg-12">
+                  <h4 class="d-flex justify-content-center">Aucun Examens</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">les examens lycée</h4>
+          </div>
+          <div class="card-body">
+            <!-- ->> {{ CourExamens }} -->
+            <div class="table-responsive">
+              <table
+                class="table table-bordered verticle-middle table-responsive-sm text-center"
+                style="color:black;"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col">Name Exam</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Niveau</th>
+                    <th scope="col">Session</th>
+                    <th scope="col">Branch</th>
+                    <th scope="col">Exam</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item,index) in ExamensLycee" :key="index">
+                    <td>{{ item.nameExam }}</td>
+                    <td>{{ item.descriptionExam }}</td>
+                    <td>{{ item.nameGrade }}</td>
+                    <td>{{ item.sessionExam }}</td>
+                    <td>{{ item.nameBranch }}</td>
                     <td>
                       <!-- {{ item.fileCourse }} -->
 
@@ -469,6 +400,7 @@ export default {
         branch: "",
         ooption: ""
       },
+      ActiveForm: false,
       Classes: [],
       BranchesName: [],
       CourExamens: [],
@@ -496,10 +428,103 @@ export default {
         grade_id: "",
         branch_id: "",
         option_id: ""
-      }
+      },
+      ExamensPrimaire: [],
+      ExamensCollege: [],
+      ExamensLycee: []
     };
   },
   methods: {
+    ShowExamensPrimaire() {
+      (this.ExamensPrimaire = []),
+        axios.get("/exam/primaire/teacher").then(response => {
+          if (response.data["status"] == "success") {
+            this.ExamensPrimaire = response.data["teacherexam"];
+            if (this.ExamensPrimaire.length == 0) {
+              this.ActiveTable = true;
+            } else this.ActiveTable = false;
+            //   alert("og");
+            //   console.log(this.CourExercices.nameExercice);
+          }
+        });
+    },
+    ShowExamensCollege() {
+      (this.ExamensCollege = []),
+        axios.get("/exam/college/teacher").then(response => {
+          if (response.data["status"] == "success") {
+            this.ExamensCollege = response.data["teacherexam"];
+            if (this.ExamensCollege.length == 0) {
+              this.ActiveTable = true;
+            } else this.ActiveTable = false;
+            //   alert("og");
+            //   console.log(this.CourExercices.nameExercice);
+          }
+        });
+    },
+    ShowExamensLycee() {
+      (this.ExamensLycee = []),
+        axios.get("/exam/lycee/teacher").then(response => {
+          if (response.data["status"] == "success") {
+            this.ExamensLycee = response.data["teacherexam"];
+            // if (this.ExamensLycee.length == 0) {
+            //   this.ActiveTable = true;
+            // } else this.ActiveTable = false;
+            //   alert("og");
+            //   console.log(this.CourExercices.nameExercice);
+          }
+        });
+    },
+    GetSubjects() {
+      this.Subjects = [];
+      axios.get("/subjects").then(response => {
+        if (response.data["status"] == "success") {
+          this.Subjects = response.data["subjects"];
+        }
+      });
+    },
+    GetCycles() {
+      this.Cycles = [];
+      axios.get("/cycles").then(response => {
+        if (response.data["status"] == "success") {
+          this.Cycles = response.data["cycles"];
+        }
+      });
+    },
+    GetGrades(item) {
+      this.GradesName = [];
+      axios.get("/grades/" + item).then(response => {
+        if (response.data["status"] == "success") {
+          this.GradesName = response.data["gradesname"];
+          //   console.log(this.GradesName);
+        }
+      });
+    },
+    GetClass(IdGrade) {
+      // alert(IdGrade);
+
+      this.Classes = [];
+      axios.get("/getclassesbyprof/" + IdGrade).then(response => {
+        if (response.data["status"] == "success") {
+          this.Classes = response.data["teachers_classes"];
+          this.GetBranchs();
+          // console.log(this.Classes.length);
+          if (!this.Classes.length == 0) {
+            this.ActiveForm = true;
+          } else this.ActiveForm = false;
+
+          // alert(this.Classes);
+        }
+      });
+    },
+    GetBranchs() {
+      this.BranchesName = [];
+      axios.get("/branches/" + this.FormExam.grade_id).then(response => {
+        if (response.data["status"] == "success") {
+          this.BranchesName = response.data["branchesnames"];
+          //   console.log(this.GradesName);
+        }
+      });
+    },
     gitGrade() {
       // this.VarHelp=[];
       (this.VarHelp.grade = ""),
@@ -532,14 +557,13 @@ export default {
           this.FormExam.option_id = this.FormCours.option_id;
           this.FormExam.course_id = this.FormCours.id;
           this.gitGrade();
-          this.ShowExamens();
         }
       });
     },
     GetCourseByTitle() {
       this.AllCourses = [];
       if (this.TitleCourse.length == 0) {
-        this.ShowCourses();
+        this.ShowExam();
       } else {
         axios.get("course/title/" + this.TitleCourse).then(response => {
           if (response.data["status"] == "success") {
@@ -578,9 +602,10 @@ export default {
               text: "Examen  a été enregistré",
               showConfirmButton: true
             });
-            this.EditeCour(this.FormCours.id);
-            this.ShowExamens();
-            this.FormExercice = [];
+
+            this.ShowExamensPrimaire();
+            this.ShowExamensCollege();
+            this.ShowExamensLycee();
           }
         })
         .catch(error => {
@@ -595,28 +620,16 @@ export default {
           }
         });
     },
-    ShowCourses() {
-      (this.AllCourses = []),
-        axios.get("/course").then(response => {
-          if (response.data["status"] == "success") {
-            this.AllCourses = response.data["course"];
-            //   console.log(this.GradesName);
-          }
-        });
-    },
-    ShowExamens() {
-      (this.CourExamens = []),
-        axios.get("/exam/" + this.FormCours.id).then(response => {
-          if (response.data["status"] == "success") {
-            this.CourExamens = response.data["examcourse"];
-            if (this.CourExamens.length == 0) {
-              this.ActiveTable = true;
-            } else this.ActiveTable = false;
-            //   alert("og");
-            //   console.log(this.CourExercices.nameExercice);
-          }
-        });
-    },
+    // ShowExam() {
+    //   (this.AllCourses = []),
+    //     axios.get("/course").then(response => {
+    //       if (response.data["status"] == "success") {
+    //         this.AllCourses = response.data["course"];
+    //         //   console.log(this.GradesName);
+    //       }
+    //     });
+    // },
+
     DeleteExam(idexam) {
       Swal.fire({
         title: "Es-tu sûr?",
@@ -631,7 +644,9 @@ export default {
         if (result.isConfirmed) {
           axios.post("exam/" + idexam + "/trash").then(response => {
             if (response.data["status"] == "success") {
-              this.ShowExamens();
+              this.ShowExamensPrimaire();
+              this.ShowExamensCollege();
+              this.ShowExamensLycee();
             }
           });
           Swal.fire("Supprimé!", "Exam a été supprimé.", "success");
@@ -672,7 +687,11 @@ export default {
     }
   },
   created() {
-    this.ShowCourses();
+    this.ShowExamensPrimaire();
+    this.ShowExamensCollege();
+    this.ShowExamensLycee();
+    this.GetCycles();
+    this.GetSubjects();
   }
 };
 </script>

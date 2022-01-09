@@ -78,6 +78,10 @@ Route::middleware(['teacher'])->group(function () {
     Route::get('/getcountexamteacher','Teacher2Controller@CountexamTeacher');
     Route::get('/getcountexerciceteacher','Teacher2Controller@CountexerciceTeacher');
     Route::get('/getteachersmatiere','Teacher2Controller@GetTeachersMatiere');
+    Route::get('/exam/primaire/teacher','Teacher2Controller@GetExamsPrimaire');
+    Route::get('/exam/college/teacher','Teacher2Controller@GetExamsCollege');
+    Route::get('/exam/lycee/teacher','Teacher2Controller@GetExamsLycee');
+
 
 
 
