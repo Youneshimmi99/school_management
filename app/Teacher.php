@@ -27,4 +27,16 @@ class Teacher extends Authenticatable
     {
         return $this->hasMany(Exam::class);
     }
+
+    public function TeacherAbsences()
+    {
+        return $this->hasMany(TeacherAbsences::class);
+    }
+
+    public function Classes()
+    {
+        return $this->belongsToMany(CLasse::class, 'teacher_classes','teacher_id','class_id');    
+    }
+
+
 }

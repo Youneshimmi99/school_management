@@ -8,5 +8,10 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Student extends Authenticatable
 {
-    //
+    protected $table='students';
+
+    public function Classe()
+    {
+        return $this->belongsTo(Classe::class, 'class_id');
+    }
 }

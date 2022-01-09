@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
+include('student.php');  
 include('grade.php');  
 
 

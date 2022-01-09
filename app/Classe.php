@@ -25,4 +25,17 @@ class Classe extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
+
+    public function Students()
+    {
+        return $this->hasMany(Student::class);
+    }
+
+    public function Teachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'teacher_classes','class_id','teacher_id');    
+    }
+
+
+
 }
