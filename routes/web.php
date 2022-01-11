@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-include('student.php');  
+
 include('grade.php');  
 
 
@@ -93,6 +93,7 @@ Route::middleware(['teacher'])->group(function () {
     Route::post('/logoutteacher', 'AuthController@LogoutTeacher');
 });
 Route::middleware(['student'])->group(function () {
+    include('student.php');  
     Route::post('/logoutstudent', 'AuthController@LogoutStudent');
     Route::get('/','StudentController@IndexDashStudent');
 

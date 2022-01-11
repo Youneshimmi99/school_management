@@ -19,12 +19,24 @@ import ArchiveExercice from "./components/Teacher/ArchiveExercices.vue";
 import DashTeacher from "./components/Teacher/DashTeacher.vue";
 import ArchiveExam from "./components/Teacher/ArchiveExam.vue";
 import CreateExam from "./components/Teacher/CreateExam.vue";
+import dashStudent from "./components/Student/DashStudent.vue";
+import CoursAndExercices from "./components/Student/CoursAndExercices.vue";
 
 const routes = [
     {
         path: "/cours",
         name: "cours",
         component: CreateCour
+    },
+    {
+        path: "/cours/exercices",
+        name: "execours",
+        component: CoursAndExercices
+    },
+    {
+        path: "/accueil/eleve",
+        name: "elve",
+        component: dashStudent
     },
     {
         path: "/professeur",

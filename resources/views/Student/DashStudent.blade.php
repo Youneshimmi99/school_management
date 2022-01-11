@@ -16,6 +16,9 @@
         <link rel="stylesheet" href="./vendor/toastr/css/toastr.min.css">
          <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
              <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+             <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 
 </head>
 
@@ -100,120 +103,37 @@
                 <ul class="metismenu" id="menu">
                     <li class="nav-label first">Main Menu</li>
                     <li>
-                        <router-link tag="a" to="/accueil"  class="nav-link">
+                        <router-link tag="a" to="/accueil/eleve"  class="nav-link">
                             <i class="fas fa-bars"></i>
                              <span class="nav-text">accueil</span>
                         </router-link>
                     </li>
                     <li class="nav-label">Apps</li>
                      <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                         <i class="fas fa-user"></i><span class="nav-text">Ajouter un Compte</span></a>
+                         <i class="fas fa-user"></i><span class="nav-text">Les cours</span></a>
                         <ul aria-expanded="false">
                             <li>
-                                <router-link tag="a" to="/ajouter_admin"  class="nav-link">
-                                    Ajouter admin
+                                <router-link tag="a" to="/cours/exercices"  class="nav-link">
+                                    Les cours et les exercices
                                 </router-link>
                             </li>
-                            <li><router-link tag="a" to="/ajouter_professeur"  class="nav-link">Ajouter professeur </router-link></li>
-                            <li><router-link tag="a" to="/ajouter_eleve"  class="nav-link">Ajouter l'élève</router-link></li>
                         </ul>
                     </li>
-                    {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-app-store"></i><span class="nav-text">Niveau</span></a>
-                        <ul aria-expanded="false">
-                            
-                            <li>
-                                <router-link tag="a" to="/afficher_niveaux"  class="nav-link">
-                                   Afficher les Niveaux
-                                </router-link>
-                            </li>
-                            <li><router-link tag="a" to="/niveau"  class="nav-link">Créer un Niveau</router-link></li>
-                            
-                        </ul>
-                    </li> --}}
+                   
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                          <i class="fab fa-buromobelexperte"></i>
-                                <span class="nav-text">Classe</span></a>
+                                <span class="nav-text">Les examens</span></a>
                         <ul aria-expanded="false">
-                            <li><router-link to="/classes">afficher les classes</router-link></li>
-                             <li><router-link  to="/creer_classe">Créer une Classe </a></li>
-                            <li><router-link to="/affectation/classes">affectation des classes</router-link></li>
-                            <li><router-link to="/archives_classes">Les classe Archives </router-link></li>
+                            <li><router-link to="/classes">Les examens</router-link></li>
 
                             
                         </ul>
                     </li>
-                    {{-- <li class="nav-label">Components</li> --}}
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"> <i class="fas fa-table"></i><span class="nav-text">Emploi du Temps</span></a>
-                        <ul aria-expanded="false">
-                            {{-- <li><a href="./page-register.html">Register</a></li>
-                            <li><a href="./page-login.html">Login</a></li> --}}
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Les professeurs</a>
-                                <ul aria-expanded="false">
-                                    <li><router-link to="/professeurs">Listes des Professeurs</router-link></li>
-                                    {{-- <li><a href="./page-error-403.html">Error 403</a></li> --}}
-                                    <li><router-link to="/timetableteahcer">Ajouter l'emploi du Temps </router-link></li>
-                                </ul>
-                            </li>
-                             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Classe</a>
-                                <ul aria-expanded="false">
-                                    <li><router-link to="/timetable/classe">Ajouter l'emploi du temps</router-link></li>
-                                    {{-- <li><a href="./page-error-403.html">Error 403</a></li> --}}
-                                    {{-- <li><a href="./page-error-404.html">Ajouter l'emploi du Temps</a></li> --}}
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                   
+                   
 
 
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="fas fa-calendar-plus"></i>
-                       <span class="nav-text">L'absense</span></a>
-                        <ul aria-expanded="false">
-                            {{-- <li><a href="./uc-select2.html">Afficher l'absense</a></li> --}}
-                            <li><router-link to="/absence/prof">Ajouter l'absence</router-link></li>
-                        </ul>
-                    </li>
-                    {{-- <li><a href="widget-basic.html" aria-expanded="false"><i class="icon icon-globe-2"></i><span
-                                class="nav-text">Widget</span></a></li>
-                    <li class="nav-label">Forms</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-form"></i><span class="nav-text">Forms</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="./form-element.html">Form Elements</a></li>
-                            <li><a href="./form-wizard.html">Wizard</a></li>
-                            <li><a href="./form-editor-summernote.html">Summernote</a></li>
-                            <li><a href="form-pickers.html">Pickers</a></li>
-                            <li><a href="form-validation-jquery.html">Jquery Validate</a></li>
-                        </ul>
-                    </li> --}}
-                    {{-- <li class="nav-label">Table</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-layout-25"></i><span class="nav-text">Table</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="table-bootstrap-basic.html">Bootstrap</a></li>
-                            <li><a href="table-datatable-basic.html">Datatable</a></li>
-                        </ul>
-                    </li> --}}
-
-                    {{-- <li class="nav-label">Extra</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-single-copy-06"></i><span class="nav-text">Pages</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="./page-register.html">Register</a></li>
-                            <li><a href="./page-login.html">Login</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-400.html">Error 400</a></li>
-                                    <li><a href="./page-error-403.html">Error 403</a></li>
-                                    <li><a href="./page-error-404.html">Error 404</a></li>
-                                    <li><a href="./page-error-500.html">Error 500</a></li>
-                                    <li><a href="./page-error-503.html">Error 503</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./page-lock-screen.html">Lock Screen</a></li>
-                        </ul>
-                    </li> --}}
+                   
                 </ul>
             </div>
         </div>
