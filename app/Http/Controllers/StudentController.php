@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Student;
 use App\Classe;
+use App\Course;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth; 
 class StudentController extends Controller
@@ -84,7 +85,38 @@ class StudentController extends Controller
         
 
     }
-    public function getCoursExercices(){
+    public function getCoursExercices($id){
+        $exercices=Course::find($id);
+
+        return response()->json(["status"=>"success","exercices"=>$exercices]);
+
+    }
+
+    public function getStudentSubjectExams($id){
         
+        $student_subject_exams=DB::table('teachers')
+        ->join('exams','exams.teacher_id','=','teachers.id')
+        ->join('subjects','subjects.id','=','teachers.subject_id')
+        ->join('teacher_classes','teacher_classes.teacher_id','=','teachers.id')
+        ->select('subjects.namesub','teachers.name','exams.nameExam','exams.descriptionExam','exams.fileExam','exams.sessionExam')
+        ->where('teachers.subject_id','=',$id)
+        ->where('teacher_classes.class_id','=',Auth::guard('student')->user()->class_id)
+    ->get();
+
+    return response()->json(["status"=>"success","student_subject_exams"=>$student_subject_exams]);
+    }
+
+    public function getStudentSubjectCourses($id){
+        
+        $student_subject_courses=DB::table('teachers')
+        ->join('courses','courses.teacher_id','=','teachers.id')
+        ->join('subjects','subjects.id','=','teachers.subject_id')
+        ->join('teacher_classes','teacher_classes.teacher_id','=','teachers.id')
+        ->select('subjects.namesub','teachers.name','courses.nameCourse','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
+        ->where('teachers.subject_id','=',$id)
+        ->where('teacher_classes.class_id','=',Auth::guard('student')->user()->class_id)
+    ->get();
+
+    return response()->json(["status"=>"success","student_subject_courses"=>$student_subject_courses]);
     }
 }

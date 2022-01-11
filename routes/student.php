@@ -4,6 +4,9 @@ Route::get('/student/classe', 'StudentController@studentClasse')->name('student.
 Route::get('/student_timetable/student', 'StudentController@studentTimetable')->name('student.studentTimetable');
 Route::get('/student/teachers/absences', 'StudentController@studentTeachersAbsences')->name('student.studentTeachersAbsences');
 Route::get('/cours/exercices', 'StudentController@getCoursExercices');
+Route::get('/StudentSubjectExams/{subject_id}', 'StudentController@getStudentSubjectExams');
+Route::get('/StudentSubjectCourses/{subject_id}', 'StudentController@getStudentSubjectCourses');
+Route::get('/CoursExercices/{cours_id}', 'StudentController@getCoursExercices');
 
 
 
