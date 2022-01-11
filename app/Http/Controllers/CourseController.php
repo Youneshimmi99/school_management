@@ -21,6 +21,7 @@ class CourseController extends Controller
         $courses_grades=DB::table('courses')
                         ->join('grades','grades.id','=','courses.grade_id')
                         ->select('courses.id','courses.nameCourse','courses.descriptionCourse','courses.sessionCourse','courses.fileCourse','grades.nameGrade')
+                        ->where('courses.teacher_id',Auth::guard("teacher")->user()->id)
                         ->whereNull('courses.deleted_at')
                         ->get();
 
@@ -50,6 +51,7 @@ class CourseController extends Controller
         $courses_grades=DB::table('courses')
                         ->join('grades','grades.id','=','courses.grade_id')
                         ->select('courses.id','courses.nameCourse','courses.descriptionCourse','courses.sessionCourse','courses.fileCourse','grades.nameGrade')
+                        ->where('courses.teacher_id',Auth::guard("teacher")->user()->id)
                         ->whereNotNull('courses.deleted_at')
                         ->get();
                             

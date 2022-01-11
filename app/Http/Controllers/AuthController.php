@@ -98,7 +98,7 @@ class AuthController extends Controller
      public function LogoutStudent(){
         if (Auth::guard("student")->check()) {
              Auth::guard("student")->logout();
-             return redirect('/login/eleve'); 
+            return redirect('/login/eleve'); 
         }   
     }
     public function AddProf(Request $request){

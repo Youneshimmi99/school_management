@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Student;
 use App\Classe;
 use App\Course;
+use App\Exercice;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth; 
 class StudentController extends Controller
@@ -18,7 +20,17 @@ class StudentController extends Controller
         $student = Student::find(Auth::guard('student')->user()->id);  
         return response()->json(["status"=>"success","student"=>$student]);
     }
+    public function getNameCycle(){
+        $student_cycle_id= DB::table('cycles')
+                ->join('grades','grades.cycle_id','=','cycles.id')
+                ->join('classes','classes.grade_id','=','grades.id')
+                ->join('students','students.class_id','=','classes.id')
+                ->select('cycles.id','cycles.name','grades.nameGrade')
+                ->where('students.id','=',Auth::guard('student')->user()->id)
+                ->get();
+       return response()->json(["status"=>"success","timetable"=>$student_cycle_id]);
 
+    }
     public function studentTimetable()
     {
         $student_cycle_id= DB::table('cycles')
@@ -85,12 +97,7 @@ class StudentController extends Controller
         
 
     }
-    public function getCoursExercices($id){
-        $exercices=Course::find($id);
-
-        return response()->json(["status"=>"success","exercices"=>$exercices]);
-
-    }
+    
 
     public function getStudentSubjectExams($id){
         
@@ -112,11 +119,18 @@ class StudentController extends Controller
         ->join('courses','courses.teacher_id','=','teachers.id')
         ->join('subjects','subjects.id','=','teachers.subject_id')
         ->join('teacher_classes','teacher_classes.teacher_id','=','teachers.id')
-        ->select('subjects.namesub','teachers.name','courses.nameCourse','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
+        ->select('courses.id','courses.nameCourse','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
         ->where('teachers.subject_id','=',$id)
         ->where('teacher_classes.class_id','=',Auth::guard('student')->user()->class_id)
     ->get();
+    $exercices=Exercice::all();
 
-    return response()->json(["status"=>"success","student_subject_courses"=>$student_subject_courses]);
+    return response()->json(["status"=>"success","student_subject_courses"=>$student_subject_courses,"exercices"=>$exercices]);
+    }
+    public function getCoursExercices($id){
+        $exercices=Course::find($id);
+
+        return response()->json(["status"=>"success","exercices"=>$exercices]);
+
     }
 }
