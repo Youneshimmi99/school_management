@@ -37,7 +37,7 @@
         <div class="card">
           <div class="stat-widget-one card-body">
             <div class="stat-icon d-inline-block">
-              <i class="far fa-graduation-capt"></i>
+             <i class="fas fa-graduation-cap"></i>
             </div>
             <div class="stat-content d-inline-block">
               <div class="stat-text">Niveau</div>
