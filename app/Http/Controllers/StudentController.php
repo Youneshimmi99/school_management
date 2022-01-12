@@ -108,9 +108,9 @@ class StudentController extends Controller
         ->select('subjects.namesub','teachers.name','exams.nameExam','exams.descriptionExam','exams.fileExam','exams.sessionExam')
         ->where('teachers.subject_id','=',$id)
         ->where('teacher_classes.class_id','=',Auth::guard('student')->user()->class_id)
-    ->get();
-
-    return response()->json(["status"=>"success","student_subject_exams"=>$student_subject_exams]);
+        ->get();
+        $exercices=Exercice::all();
+    return response()->json(["status"=>"success","student_subject_exams"=>$student_subject_exams,'exercices'=>$exercices]);
     }
 
     public function getStudentSubjectCourses($id){
@@ -119,17 +119,17 @@ class StudentController extends Controller
         ->join('courses','courses.teacher_id','=','teachers.id')
         ->join('subjects','subjects.id','=','teachers.subject_id')
         ->join('teacher_classes','teacher_classes.teacher_id','=','teachers.id')
-        ->select('courses.id','courses.nameCourse','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
+        ->select('courses.id','courses.nameCourse','teachers.name','courses.descriptionCourse','courses.fileCourse','courses.sessionCourse')
         ->where('teachers.subject_id','=',$id)
+        ->whereNull('courses.deleted_at')
         ->where('teacher_classes.class_id','=',Auth::guard('student')->user()->class_id)
     ->get();
-    $exercices=Exercice::all();
+    $exercices=Exercice::whereNull('exercices.deleted_at')->get();
 
     return response()->json(["status"=>"success","student_subject_courses"=>$student_subject_courses,"exercices"=>$exercices]);
     }
     public function getCoursExercices($id){
         $exercices=Course::find($id);
-
         return response()->json(["status"=>"success","exercices"=>$exercices]);
 
     }

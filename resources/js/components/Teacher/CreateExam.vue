@@ -4,7 +4,7 @@
       <div class="col-sm-6 p-md-0">
         <div class="welcome-text">
           <span style="font-size:19px;" class="titleheader">
-            <i class="fas fa-book"></i> Les exercices
+            <i class="fas fa-book"></i> Les examens
           </span>
         </div>
       </div>
@@ -240,7 +240,7 @@
         data-placement="top"
         class="btn btn-primary btn-rounded mb-3"
       >
-        <i class="fa fa-plus color-primary"></i>&ensp;Ajouter cours
+        <i class="fa fa-plus color-primary"></i>&ensp;Ajouter examens
       </button>
     </div>
 

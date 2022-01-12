@@ -24,7 +24,7 @@
         <div class="card">
           <div class="stat-widget-one card-body">
             <div class="stat-icon d-inline-block">
-              <i class="far fa-file-pdf"></i>
+              <i class="far fa-university"></i>
             </div>
             <div class="stat-content d-inline-block">
               <div class="stat-text">Cycle</div>
@@ -33,11 +33,11 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-sm-6">
+      <div class="col-lg-4 col-sm-6">
         <div class="card">
           <div class="stat-widget-one card-body">
             <div class="stat-icon d-inline-block">
-              <i class="far fa-file-alt"></i>
+              <i class="far fa-graduation-capt"></i>
             </div>
             <div class="stat-content d-inline-block">
               <div class="stat-text">Niveau</div>
@@ -52,11 +52,24 @@
         <div class="card">
           <div class="stat-widget-one card-body">
             <div class="stat-icon d-inline-block">
-              <i class="fas fa-edit"></i>
+              <i class="fas fa-chalkboard-teacher"></i>
             </div>
             <div class="stat-content d-inline-block">
               <div class="stat-text">Classe</div>
               <div class="stat-digit">{{ StudentTimeTble[0]['nameClasse'] }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-6">
+        <div class="card">
+          <div class="stat-widget-one card-body">
+            <!-- <div class="stat-icon d-inline-block">
+              <i class="fas fa-edit"></i>
+            </div>-->
+            <div class="stat-content d-inline-block">
+              <div class="stat-text">nbr élève</div>
+              <div class="stat-digit">{{ StudentTimeTble[0]['numberCls'] }}</div>
             </div>
           </div>
         </div>

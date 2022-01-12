@@ -118,10 +118,10 @@
                     </li>
                    
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                         <i class="fab fa-buromobelexperte"></i>
+                         <i class="fab fa-acquisitions-incorporated"></i>
                                 <span class="nav-text">Les examens</span></a>
                         <ul aria-expanded="false">
-                            <li><router-link to="/classes">Les examens</router-link></li>
+                            <li><router-link to="/examen">Les examens</router-link></li>
 
                             
                         </ul>

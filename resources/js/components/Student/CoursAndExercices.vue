@@ -43,7 +43,8 @@
                       aria-controls="collapseOne"
                     >
                       <h4>
-                        <i class="fas fa-code"></i>&ensp;Informatique
+                        <i class="fas fa-code"></i>
+                        &ensp;Informatique
                       </h4>
                     </button>
                   </h2>
